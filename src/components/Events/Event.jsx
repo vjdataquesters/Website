@@ -1,10 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 import events from "../../data/events.js";
 
 export default function Event() {
@@ -67,24 +68,36 @@ export default function Event() {
         </div>
 
         {event.pics?.length > 0 && (
-          <div className="my-8">
+          <div className="my-8 relative">
             <Swiper
-              modules={[Pagination]}
+              modules={[Pagination, Navigation, Autoplay]}
               pagination={{ clickable: true }}
               spaceBetween={20}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+              }}
+              navigation={{
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+              }}
               className="w-full max-w-5xl md:h-[32rem] mx-auto rounded-lg overflow-hidden py-8"
             >
               {event.pics.map((pic, index) => (
                 <SwiperSlide key={index}>
                   <img
                     src={pic}
-                    alt={`${event.name} - Image ${index + 1}`}
+                    // alt={${event.name} Image ${index + 1}}
                     className="w-full h-full"
                     draggable={false}
                   />
                 </SwiperSlide>
               ))}
             </Swiper>
+            <div className="swiper-button-next !text-white !bg-sky-900 !rounded-lg !w-12 !h-12 !right-4"></div>
+<div className="swiper-button-prev !text-white !bg-sky-900 !rounded-lg !w-12 !h-12 !left-4"></div>
           </div>
         )}
 
