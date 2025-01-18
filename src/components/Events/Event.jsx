@@ -89,7 +89,7 @@ export default function Event() {
                 <SwiperSlide key={index}>
                   <img
                     src={pic}
-                    // alt={${event.name} Image ${index + 1}}
+                    alt={`${event.name} - Image ${index + 1}`}
                     className="w-full h-full"
                     draggable={false}
                   />
