@@ -15,7 +15,7 @@ export const faculty = [
     name: "Mr. P. Veeranjaneyulu",
     role: "Coordinator",
     image: "veeru.png",
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/veeru-pagadala-b4ba6238/",
   },
 ];
 export const coreteam = [

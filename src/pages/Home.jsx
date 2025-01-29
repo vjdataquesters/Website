@@ -2,29 +2,72 @@ import { motion } from "framer-motion";
 import GlowBackground from "../components/GlowBackground";
 import Carousel from "../components/Carousel";
 import { Link } from "react-router-dom";
-import { whatwedo } from "../data/constants";
+import { whatwedo } from "../data/whatwedo";
+import { ArrowRight } from "lucide-react";
+import { faculty } from "../data/team";
+import Reveal from "../components/Reveal";
 
+const TeamCard = ({ person }) => {
+  return (
+    <Reveal>
+      <a
+        href={person.linkedin || null}
+        target="_blank"
+        aria-label={`View ${person.name}'s LinkedIn profile`}
+      >
+        <div className="w-full max-w-[300px] flex flex-col gap-y-4 border border-[#135168] bg-gray-100 hover:scale-[105%] transition-all duration-[400ms] rounded-lg cursor-pointer">
+          <div className="flex justify-center p-4">
+            <div className="w-[200px] h-[200px] relative overflow-hidden rounded-full bg-white">
+              <img
+                className="w-full h-full object-cover absolute"
+                src={
+                  person.image
+                    ? `teamImages/${person.image}`
+                    : "https://picsum.photos/200"
+                }
+                alt={person.name + " image"}
+              />
+            </div>
+          </div>
+          <p className="text-center text-black text-xl font-semibold tracking-wide">
+            {person.name}
+          </p>
+          <p className="text-center font-['Roboto'] text-base text-gray-600 pb-4 font-light">
+            {person.role}
+          </p>
+        </div>
+      </a>
+    </Reveal>
+  );
+};
 
 export default function Home() {
+  const topTeam = faculty?.slice(0, 3) || [];
   return (
     <div>
       {/* Landing section */}
       <div className="h-screen w-full">
         <div className="z-10 w-full absolute h-full flex flex-row justify-evenly items-center">
           <motion.div className="hidden lg:block ">
-            <img src="logo.png" alt="Data Questers logo" className="max-w-sm" draggable={false} />
+            <img
+              src="logo.png"
+              alt="Data Questers logo"
+              className="max-w-sm"
+              draggable={false}
+            />
           </motion.div>
 
           <div className="box max-w-[90%] sm:w-auto flex flex-col justify-center items-center opacity-80 select-none text-white">
             <h1 className="font-semibold text-center text-3xl sm:text-5xl my-3 md:my-6">
               VJ DATA QUESTERS
             </h1>
-            <p className="text-base text-center sm:text-xl">VNRVJIET, Hyderabad</p>
+            <p className="text-base text-center sm:text-xl">
+              VNRVJIET, Hyderabad
+            </p>
             <p className="mt-1 text-xs font-thin sm:text-sm text-center">
               Differentiated by inputs / Integrated by outputs
             </p>
           </div>
-
         </div>
         <GlowBackground />
         <div className="absolute inset-0 opacity-10 bg-[url('/grid.png')]"></div>
@@ -60,39 +103,97 @@ export default function Home() {
           </div>
         </div>
       </div>
-
+      {/* what we do section*/}
       <div className="w-full max-w-3xl mx-auto my-6 text-center">
         <h2 className="text-3xl font-semibold">What we do?</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-8 mx-auto">
           {whatwedo.map((d, index) => (
-            <Link to={d?.example} key={index} className="mx-auto">
-              <div
-                className="w-40 h-16 sm:w-60 sm:h-20 px-2 sm:p-4 flex items-center justify-evenly border border-black/50 rounded-lg  bg-white shadow-2xl"
-              >
-                <img src={d.imgURL} alt="What we do Image" className="w-[20%]" draggable={false} />
-                <h3 className="text-sm sm:text-xl text-black font-semibold">
-                  {d.title}
-                </h3>
-              </div>
-            </Link>
+            <Reveal key={index}>
+              <Link to={d?.example} key={index} className="flex justify-center">
+                <div className="w-40 h-16 sm:w-60 sm:h-20 px-2 sm:p-4 flex items-center justify-evenly border border-black/50 rounded-lg  bg-white shadow-2xl hover:scale-105 transition-all duration-[300ms] ease-in-out">
+                  <img
+                    src={d.imgURL}
+                    alt="What we do Image"
+                    className="w-[15%] sm:w-[20%] object-contain"
+                    draggable={false}
+                  />
+
+                  <h3 className="text-sm sm:text-base lg:text-lg text-black font-semibold flex-1 text-left ml-3">
+                    {d.title}
+                  </h3>
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
-      </div>
-
-      <div className="clip-art-2 bg-[#0f323f] pb-1 pt-4">
-        <div className="max-w-6xl text-center mt-16 mb-4 mx-auto  z-10">
-          <h2 className="text-3xl text-white m-0">Glimpses</h2>
-          <Carousel />
+        <div className="flex justify-center">
+          <Reveal key={1}>
+            <Link
+              to="/events"
+              className="px-6 py-3 font-[300] text-base text-white rounded-lg bg-[#0f323fee] hover:bg-[#135168] transition-all duration-[300ms] ease-in-out flex items-center gap-x-2 group"
+            >
+              <span className="group-hover:scale-105 transition-all duration-[300ms] ease-in-out">
+                View All Activity
+              </span>
+              <ArrowRight
+                size={20}
+                className="text-white transform group-hover:translate-x-1 transition-transform duration-[500ms]"
+              />
+            </Link>
+          </Reveal>
         </div>
       </div>
 
-      {/* <div className="fixed z-[101] bottom-6 right-4 ">
-        <PromoDiv
-          eventName="DQ Know your domains"
-          eventStatus="ongoing"
-          eventLink="https://vjdataquesters.vercel.app/know-your-domains"
-        />
-      </div> */}
+      {/* Glimpses section */}
+      <div className="clip-art-combined pt-16 pb-14">
+        <section className="max-w-7xl md:max-w-[90%] h-full mx-auto">
+          <div className="w-full">
+            <h2 className="text-center text-3xl font-semibold text-white">
+              Glimpses
+            </h2>
+            <div className="flex justify-center">
+              <div className="w-full max-w-6xl mx-auto">
+                <Reveal>
+                  <Carousel />
+                </Reveal>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Our Team section */}
+      <section className="max-w-7xl md:max-w-[90%] h-full py-6 px-4 mx-auto">
+        <div className="w-full">
+          <h1 className="text-center text-3xl font-semibold text-black mb-8">
+            Our Team
+          </h1>
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl mx-auto px-4">
+              {topTeam &&
+                topTeam.map((person, index) => (
+                  <TeamCard key={index} person={person} />
+                ))}
+            </div>
+          </div>
+          <div className="flex justify-center mt-8">
+            <Reveal key={1}>
+              <Link
+                to="/team"
+                className="px-6 py-3 font-[300] text-base text-[#fff] rounded-lg bg-[#135168]  hover:bg-[#1a6785] transition-all duration-[300ms] ease-in-out flex items-center gap-x-2 group"
+              >
+                <span className="group-hover:scale-105 transition-all duration-[300ms] ease-in-out">
+                  View Full Team
+                </span>
+                <ArrowRight
+                  size={20}
+                  className="text-white transform group-hover:translate-x-1 transition-transform duration-[500ms]"
+                />
+              </Link>
+            </Reveal>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
