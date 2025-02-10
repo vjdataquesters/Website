@@ -58,6 +58,11 @@ export default function Events() {
                           <span className="inline-block px-3 py-1 bg-[#0f323f] text-white text-sm rounded-full mt-4 mb-2">
                             {event.category}
                           </span>
+                          {event?.isLimitedRegistrations === true && (
+                            <span className="inline-block px-3 py-1 bg-[#A13B38] text-white text-sm rounded-full mt-4 mb-2 mx-3">
+                              Limited Registrations
+                            </span>
+                          )}
                           <h2 className="text-2xl font-semibold mb-2 ">
                             {event.name}
                           </h2>

@@ -15,7 +15,7 @@ const TeamCard = ({ person }) => {
         target="_blank"
         aria-label={`View ${person.name}'s LinkedIn profile`}
       >
-        <div className="w-full max-w-[300px] flex flex-col gap-y-4 border border-[#135168] bg-gray-100 hover:scale-[105%] transition-all duration-[400ms] rounded-lg cursor-pointer">
+        <div className="w-full max-w-[300px] flex flex-col gap-y-4 bg-[#EEEEEE] hover:scale-[105%] transition-all duration-[400ms] rounded-lg cursor-pointer place-self-center">
           <div className="flex justify-center p-4">
             <div className="w-[200px] h-[200px] relative overflow-hidden rounded-full bg-white">
               <img
@@ -79,7 +79,6 @@ export default function Home() {
           <div className="lg:hidden">
             <img src="logo.png" className="max-w-64 mx-auto" />
           </div>
-
           <div className="px-2 pb-20 lg:pt-4">
             <h2 className="text-white pb-3 text-center text-3xl font-semibold flex flex-row items-start justify-center">
               About VJDQ
@@ -96,7 +95,7 @@ export default function Home() {
             </p>
 
             <Link to="/about">
-              <button className="rounded-sm w-28 h-8 bg-white text-black border-none hover:bg-white/85 italic mt-8 ">
+              <button className="rounded-sm w-32 h-10 font-['Roboto'] bg-white text-black border-none hover:bg-white/65  mt-8 group-hover:scale-105 transition-all duration-[300ms] ease-in-out">
                 Know More
               </button>
             </Link>
@@ -169,7 +168,7 @@ export default function Home() {
             Our Team
           </h1>
           <div className="flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-6  max-w-5xl mx-auto px-4">
               {topTeam &&
                 topTeam.map((person, index) => (
                   <TeamCard key={index} person={person} />

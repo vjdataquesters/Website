@@ -27,7 +27,7 @@
 
 // type of category shall be restricted to the specified values
 
-// type EventCategory = 
+// type EventCategory =
 //   | 'Workshop'
 //   | 'Hackathon'
 //   | 'Fun Event'
@@ -37,21 +37,23 @@
 
 const events = {
   upcoming: [
-    // {
-    //   name: "Competative Codex",
-    //   eventId: "compcodex",
-    //   category: "Coding Contest",
-    //   image: "/events/Codex/img1.png",
-    //   date: "November 27th 2024",
-    //   venue: "Online",
-    //   timings: "8PM to 9:30 PM",
-    //   pics: ["/events/CompCodex/img1.jpg"],
-    //   outcome: "",
-    //   // register: "https://forms.gle/HcYfsE8CG6cZZAUH8",
-    //   isGFormEmbeddable: true,
-    //   description: "Coding Compation for 1st year students of VNRVJIET",
-    //   link: "/events/compcodex",
-    // },
+    {
+      name: "LANGVISION",
+      eventId: "langvision2025",
+      category: "Workshop",
+      image: "/events/LangVision/img1.jpg",
+      date: "February 14th & 15th 2025",
+      venue: "PEB seminar hall",
+      timings: "10:00 AM to 4:30 PM",
+      pics: ["/events/LangVision/img1.jpg"],
+      outcome: "",
+      register: "https://forms.gle/imgsks2miQkZWHvu5",
+      isGFormEmbeddable: false,
+      description:
+        "The event “LANGVISION - Shaping the Future of Gen AI & LLMs” will be held on February 14th and 15th. This hands-on workshop features Pranali Bose, a Machine Learning Engineer at DBS Bank, providing insights into Generative AI and Large Language Models",
+      link: "/events/langvision2025",
+      isLimitedRegistrations: true,
+    },
   ],
   past: {
     e2024: [
