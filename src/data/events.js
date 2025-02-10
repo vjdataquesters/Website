@@ -43,7 +43,7 @@ const events = {
       category: "Workshop",
       image: "/events/LangVision/img1.jpg",
       date: "February 14th & 15th 2025",
-      venue: "PEB seminar hall",
+      venue: "VNR Vignan Jyothi Institute of Engineering and Technology",
       timings: "10:00 AM to 4:30 PM",
       pics: ["/events/LangVision/img1.jpg"],
       outcome: "",
