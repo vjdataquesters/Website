@@ -16,8 +16,8 @@ const router = [
   { path: "/events/tv24", component: Technovista },
   { path: "/events/:eventname", component: Event },
   { path: "/team", component: Team },
-  { path: "*", component: Home },
   { path: "/hit", component: Hit3 },
+  { path: "*", component: Home },
 ]
 
 export default router;

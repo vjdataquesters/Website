@@ -1,5 +1,4 @@
 [
-  { "question": "what is data?", "key": "qwert" },
-  { "isQR": "true", "qrData": "trewq", "key": "rawbytes" },
-  { "question": "what is react?", "key": "trewq" }
+  { "qr": "qwert", "question": "What is Energy?" },
+  { "qr": "trewq", "question": "What is Mass" }
 ]
