@@ -5,9 +5,6 @@ import data from "./hit3.json";
 function Hit3() {
   const [params, setParams] = useSearchParams({ key: "" });
   const key = params.get("key");
-  //   console.log("key is ", key);
-  //   console.log(data);
-  //   console.log(data[0].key);
   const [queryRes, setQueryRes] = useState(null);
   useEffect(() => {
     if (key) {
@@ -16,6 +13,10 @@ function Hit3() {
     }
   }, [key]);
 
+  // console.log("key is ", key);
+  // console.log(data);
+  // console.log(data[1].key);
+  console.log(queryRes);
   return (
     <section className="py-20 px-3 bg-gray-100 min-h-screen flex justify-center items-center">
       <div className="shadow-xl rounded-lg bg-white p-8 max-w-lg w-full">
@@ -29,13 +30,20 @@ function Hit3() {
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <h1 className="font-bold text-lg text-center">scan the QR</h1>
-              {queryRes && queryRes[0].isQR===true ? (
-                <div>
-                  <img
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=300x3000&data=https://vjdataquesters.vercel.app/hit?key=${queryRes[0].qrData}`}
-                  />
-                </div>
+              {queryRes && queryRes[0].isQR ? (
+                <>
+                  <h3 className="font-bold text-[1rem]">
+                    your are one step closer
+                  </h3>
+                  <h1 className="font-bold text-[3rem] text-center pb-5">
+                    scan the QR
+                  </h1>
+                  <div>
+                    <img
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=300x3000&data=https://vjdataquesters.vercel.app/hit?key=${queryRes[0].qrData}`}
+                    />
+                  </div>
+                </>
               ) : (
                 <div className="text-[red]">Invalid path</div>
               )}
