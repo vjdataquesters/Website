@@ -5,7 +5,7 @@ import Team from "./Team";
 import Testimonials from "./Testimonials";
 import Event from "../components/Events/Event";
 import Technovista from "../components/Events/Technovista";
-import Hit3 from "../hit3/Hit3";
+import Hit from "./Hit";
 
 
 const router = [
@@ -16,7 +16,7 @@ const router = [
   { path: "/events/tv24", component: Technovista },
   { path: "/events/:eventname", component: Event },
   { path: "/team", component: Team },
-  { path: "/hit", component: Hit3 },
+  { path: "/hit", component: Hit},
   { path: "*", component: Home },
 ]
 
