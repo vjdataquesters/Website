@@ -24,7 +24,7 @@ function App() {
   return (
     <Router>
       <Analytics />
-      {/* <Loading load ={load} /> */}
+      <Loading load ={load} />
       <Header />
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-blue-50/70">
