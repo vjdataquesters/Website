@@ -38,24 +38,95 @@
 const events = {
   upcoming: [
     {
-      name: "LANGVISION",
-      eventId: "langvision2025",
-      category: "Workshop",
-      image: "/events/LangVision/img1.jpg",
-      date: "February 14th & 15th 2025",
-      venue: "VNR Vignan Jyothi Institute of Engineering and Technology",
-      timings: "10:00 AM to 4:30 PM",
-      pics: ["/events/LangVision/img1.jpg"],
+      name: "Hit Reloaded",
+      eventId: "hit-reloaded",
+      category: "Fun Event",
+      image: "/events/HitReloaded2025/img1.png",
+      date: "February 21st 2025",
+      venue: "Sinti Stage",
+      timings: "10:00 AM to 3:00 PM",
+      pics: ["/events/HitReloaded2025/img1.png"],
       outcome: "",
-      register: "https://forms.gle/imgsks2miQkZWHvu5",
+      register:
+        "https://docs.google.com/forms/d/e/1FAIpQLSeQkrnEppaak4C1xEkDCHhJZEjBXXWkGwnHsQPSC3qDhqXo0A/viewform",
       isGFormEmbeddable: false,
       description:
-        "The event “LANGVISION - Shaping the Future of Gen AI & LLMs” will be held on February 14th and 15th. This hands-on workshop features Pranali Bose, a Machine Learning Engineer at DBS Bank, providing insights into Generative AI and Large Language Models",
-      link: "/events/langvision2025",
+        "HIT - Reloaded is an adrenaline-fueled treasure hunt for teams of 3-4. Solve riddles and puzzles through multiple checkpoints, starting with a briefing and first clue. The fastest team to crack the final puzzle wins. Join us on February 21, 2025, from 10 AM to 3 PM at Sinti Stage, VNRVJIET.",
+      link: "/events/hit-reloaded",
+      isLimitedRegistrations: true,
+    },
+    {
+      name: "DV CONTEST",
+      eventId: "dv-contest",
+      category: "Creative competition",
+      image: "/events/DVContest2025/img1.png",
+      date: "February 21st 2025",
+      venue: "APJ Abdul Kalam Auditorium",
+      timings: "10:00 AM to 1:00 PM",
+      pics: ["/events/DVContest2025/img1.png"],
+      outcome: "",
+      register:
+        "https://docs.google.com/forms/d/e/1FAIpQLSe-ug9pGIVPhA73gX9Z3-c8I05h-K0xlkV6ro1nrCFsanZjFw/viewform",
+      isGFormEmbeddable: false,
+      description:
+        "DV CONTEST 2K25: Visualize. Analyze. Compete. is a Data Visualization Contest on February 21, 2025, at VNRVJIET's APJ Abdul Kalam Auditorium. Teams of two will transform raw data into visual stories for prizes and recognition",
+      link: "/events/dv-contest",
+      isLimitedRegistrations: true,
+    },
+    {
+      name: "MAP-AN-APP",
+      eventId: "map-an-app",
+      category: "Hackathon",
+      image: "/events/MapAnApp2025/img1.png",
+      date: "February 22nd 2025",
+      venue: "APJ Abdul Kalam Auditorium",
+      timings: "9:30 AM to 1:00 PM",
+      pics: ["/events/MapAnApp2025/img1.png"],
+      outcome: "",
+      register:
+        "https://docs.google.com/forms/d/e/1FAIpQLSe-3Ptjj8AVS_vO-d-7WiWjKb8CDWs40yNvR3YaWpNceX1kFw/viewform",
+      isGFormEmbeddable: false,
+      description:
+        "MAP-AN-APP at Convergence 2k25 is on February 22, 2025, at VNRVJIET's APJ Abdul Kalam Auditorium (9:30 AM–1:00 PM). Teams of two will develop apps in Healthcare & Fintech themes for a ₹3500 prize pool and internship opportunities. Convergence pass required",
+      link: "/events/map-an-app",
       isLimitedRegistrations: true,
     },
   ],
   past: {
+    e2025: [
+      {
+        name: "LANGVISION",
+        eventId: "langvision2025",
+        category: "Workshop",
+        image: "/events/LangVision/img1.jpg",
+        date: "February 14th & 15th 2025",
+        venue:
+          "E-238 & 239, VNR Vignan Jyothi Institute of Engineering and Technology",
+        timings: "10:00 AM to 4:30 PM",
+        pics: [
+          "/events/LangVision/img1.jpg",
+          "/events/LangVision/img2.png",
+          "/events/LangVision/img3.jpg",
+          "/events/LangVision/img4.jpg",
+        ],
+        outcome:
+          "LANGVISION - Exploring Large Language Models and Vector Search was an exciting two-day hands-on workshop that brought together students from all years to explore the power of Large Language Models (LLMs),Retrieval-Augmented Generation (RAG), and Vector Search.The objectives of the event were:\n\n● To introduce students to the fundamentals of LLMs, transformers, and tokenization\n● To explore real-world applications like ChatGPT and Gemini.\n● To Deploy a fine-tuned model on Hugging Face and build a Streamlit app using it.\n● To familiarize participants with accessing pre-trained LLMs via the Hugging Face access tokens.\n● To introduce LoRA (Low-Rank Adaptation) for efficient fine-tuning of LLMs.\n● To guide participants in preprocessing resume data to train an AI model for resume evaluation.\n● To explain the limitations of LLMs alone and the role of RAG in retrieving external knowledge.\n● To familiarize participants with relevant interview questions on LLMs and RAG.",
+        // register: "https://forms.gle/imgsks2miQkZWHvu5",
+        isGFormEmbeddable: false,
+        description:
+          "The event “LANGVISION - Shaping the Future of Gen AI & LLMs” will be held on February 14th and 15th. This hands-on workshop features Pranali Bose, a Machine Learning Engineer at DBS Bank, providing insights into Generative AI and Large Language Models",
+        link: "/events/langvision2025",
+        externalDownloads: {
+          "Workshop Code":
+            "https://github.com/pranalibose/LangVisionWorkshop/archive/refs/heads/main.zip",
+          "Streamlit Guide":
+            "https://raw.githubusercontent.com/vjdataquesters/events-material/main/streamlit-workshop-guide.pdf",
+          "Resume Analyzer":
+            "https://github.com/pranalibose/Resume_App/archive/refs/heads/main.zip",
+        },
+        // isLimitedRegistrations: true,
+      },
+    ],
     e2024: [
       {
         name: "GET SET PY",
@@ -80,11 +151,11 @@ const events = {
         isGFormEmbeddable: false,
         externalDownloads: {
           "Python Installation Guide":
-            "https://raw.githubusercontent.com/vjdataquesters/getsetpy/refs/heads/main/Python%20Installation%20Guide.pdf",
+            "https://raw.githubusercontent.com/vjdataquesters/events-material/refs/heads/main/Python%20Installation%20Guide.pdf",
           "Numpy Material":
-            "https://raw.githubusercontent.com/vjdataquesters/getsetpy/refs/heads/main/Numpy.ipynb",
+            "https://raw.githubusercontent.com/vjdataquesters/events-material/refs/heads/main/Numpy.ipynb",
           "Pandas Material":
-            "https://raw.githubusercontent.com/vjdataquesters/getsetpy/refs/heads/main/Pandas.ipynb",
+            "https://raw.githubusercontent.com/vjdataquesters/events-material/refs/heads/main/Pandas.ipynb",
         },
       },
       {

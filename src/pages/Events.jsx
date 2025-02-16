@@ -55,15 +55,17 @@ export default function Events() {
                           className="w-full rounded-t-lg"
                         />
 
-                        <div className="p-7 pt-0">
-                          <span className="inline-block px-3 py-1 bg-[#0f323f] text-white text-sm rounded-full mt-4 mb-2">
-                            {event.category}
-                          </span>
-                          {event?.isLimitedRegistrations === true && (
-                            <span className="inline-block px-3 py-1 bg-[#A13B38] text-white text-sm rounded-full mt-4 mb-2 mx-3">
-                              Limited Registrations
-                            </span>
-                          )}
+                        <div className="p-6 pt-0">
+                          <div className="flex flex-row gap-6 flex-wrap my-4">
+                            <div className="inline-block bg-[#0f323f] text-white text-sm rounded-xl text-center w-[45%] content-center py-1 px-[0.5rem]">
+                              <p>{event.category}</p>
+                            </div>
+                            {event?.isLimitedRegistrations === true && (
+                              <div className="inline-block bg-[#A13B38] text-white text-sm rounded-xl text-center w-[45%] content-center py-1 px-[0.5rem]">
+                                <p>Limited Registrations</p>
+                              </div>
+                            )}
+                          </div>
                           <h2 className="text-2xl font-semibold mb-2 ">
                             {event.name}
                           </h2>
@@ -82,11 +84,11 @@ export default function Events() {
 
           <div className="flex flex-col flex-wrap gap-5">
             <h2 className="text-4xl text-center font-bold">Past Events</h2>
-            <div className="text-center mt-3">
+            <div className="text-center flex flex-row justify-around sm:gap-7 sm:justify-center">
               {Object.keys(events.past).map((eventyear) => (
                 <button
                   key={eventyear}
-                  className={`text-center mx-4 w-24 h-9 font-bold text-lg border-2 border-black text-black shadow-[5px_5px_5px_0px] hover:shadow-none  transition-all rounded-md  ${
+                  className={`text-center w-24 h-9 font-bold text-lg border-2 border-black text-black shadow-[5px_5px_5px_0px] hover:shadow-none  transition-all rounded-md  ${
                     year.toString() === eventyear.slice(1)
                       ? "bg-[#0f323f] text-white"
                       : "bg-white"
@@ -119,9 +121,11 @@ export default function Events() {
                         />
 
                         <div className="p-7 pt-0">
-                          <span className="inline-block px-3 py-1 bg-[#0f323f] text-white text-sm rounded-full mt-4 mb-2">
-                            {event.category}
-                          </span>
+                          <div className="flex flex-row gap-6 flex-wrap my-4">
+                            <div className="inline-block bg-[#0f323f] text-white text-sm rounded-xl text-center w-[45%] content-center py-1 px-[0.5rem]">
+                              <p>{event.category}</p>
+                            </div>
+                          </div>
                           <h2 className="text-2xl font-semibold mb-2 ">
                             {event.name}
                           </h2>
