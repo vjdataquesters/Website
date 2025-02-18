@@ -6,6 +6,8 @@ import Testimonials from "./Testimonials";
 import Event from "../components/Event";
 import Technovista from "../components/Technovista";
 import NewsLetter from "./NewsLetter";
+import Hit from "../pages/Hit";
+import GenerateAllQrs from "./GenerateAllQrs";
 
 const router = [
   { path: "/", component: Home },
@@ -16,6 +18,8 @@ const router = [
   { path: "/events/:eventname", component: Event },
   { path: "/team", component: Team },
   { path: "/newsletter", component: NewsLetter },
+  { path: "/hit", component: Hit },
+  { path: "/gen-all-qr", component: GenerateAllQrs },
   { path: "*", component: Home },
 ];
 
