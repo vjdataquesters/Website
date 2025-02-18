@@ -1,4 +1,4 @@
-import { faculty, currentteam, pastteams } from '../data/team;
+import { faculty, currentteam, pastteams } from '../data/team';
 import { useState } from 'react';
 import Reveal from '../components/Reveal';
 
