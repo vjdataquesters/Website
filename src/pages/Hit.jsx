@@ -80,7 +80,7 @@ function Hit() {
 
     return (
       <div
-        className={`max-w-md w-full mx-auto text-center transition-opacity duration-500 ${animation ? 'opacity-100' : 'opacity-0'}`}
+        className={`max-w-xl mt-10 w-full mx-auto text-center transition-opacity duration-500 ${animation ? 'opacity-100' : 'opacity-0'}`}
       >
         <div className={`bg-white rounded-lg shadow-xl p-6 border-t-4 border-${pathColor}-500`}>
           <div className="mb-6">
