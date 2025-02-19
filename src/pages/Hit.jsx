@@ -88,7 +88,7 @@ function Hit() {
               Question
             </h1>
             <div className={`w-16 h-1 bg-${pathColor}-500 mx-auto rounded-full`}></div>
-            <p className="text-sm text-gray-500 mt-2">Path: {queryRes.path}</p>
+            <p className="text-sm text-gray-500 mt-2">Path: {queryRes.color.toUpperCase()[0]}{queryRes.path}</p>
           </div>
 
           <div className="bg-gray-50 p-5 rounded-lg mb-6">
