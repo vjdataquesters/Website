@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { SquareArrowUpRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -9,6 +10,11 @@ import "swiper/css/autoplay";
 import events from "../data/events.js";
 
 export default function Event() {
+  function handleRegister() {
+    const element = document.getElementById("embedded-form");
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   const { eventname } = useParams();
 
   const findEvent = () => {
@@ -40,34 +46,63 @@ export default function Event() {
 
   return (
     <div className="pt-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-row items-center justify-between mb-6">
-          <h2 className="font-semibold text-2xl sm:text-3xl">{event.name}</h2>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl">
+            {event.name}
+          </h2>
           <Link
             to="/events"
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors self-center"
           >
             <ArrowLeft size={24} className="text-gray-700" />
           </Link>
         </div>
+        <div className="rounded-2xl p-4 shadow-sm space-y-4 flex flex-col">
+          <div className="grid gap-2 sm:grid-cols-3 sm:gap-4">
+            <div className="p-4 rounded-xl bg-[#dadce176]">
+              <p className="text-lg font-semibold  mb-1">Date</p>
+              <p className="font-medium text-gray-700">{event.date}</p>
+            </div>
+            <div className="p-4 rounded-xl bg-[#dadce176]">
+              <p className="text-lg font-semibold  mb-1">Time</p>
+              <p className="font-medium text-gray-700">{event.timings}</p>
+            </div>
+            <div className="p-4 rounded-xl bg-[#dadce176]">
+              <p className="text-lg font-semibold  mb-1">Venue</p>
+              <p className="font-medium text-gray-700">{event.venue}</p>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">About the Event</h3>
+            <p className="text-gray-700 leading-relaxed">{event.description}</p>
+          </div>
 
-        <div>
-          <p className="flex gap-2">
-            <span className="font-semibold text-lg">Date:</span>
-            <span>{event.date}</span>
-          </p>
-          <p className="flex gap-2">
-            <span className="font-semibold text-lg">Venue:</span>
-            <span>{event.venue}</span>
-          </p>
-          <p className="flex gap-2">
-            <span className="font-semibold text-lg">Timings:</span>
-            <span>{event.timings}</span>
-          </p>
-          <p className="space-x-2">
-            <span className="font-semibold text-lg">Description:</span>
-            <span>{event.description}</span>
-          </p>
+          {event.register && (
+            <>
+              {event?.isGFormEmbeddable === false ? (
+                <div className="self-end">
+                  <a
+                    className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
+                    href={event.register}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Register Now
+                  </a>
+                </div>
+              ) : (
+                <div className="self-end">
+                  <button
+                    onClick={handleRegister}
+                    className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
+                  >
+                    Register Now
+                  </button>
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         {event.pics?.length > 0 && (
@@ -133,20 +168,16 @@ export default function Event() {
         {event.register && (
           <div className="my-8 text-center">
             {event?.isGFormEmbeddable ? (
-              <div className="space-y-4">
-                <a
-                  href={event.register}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block"
-                >
-                  <h3 className="text-2xl text-blue-500 hover:text-blue-600 underline">
-                    Register Now!
-                  </h3>
-                  <p className="text-sm text-gray-600 italic">
-                    Fill out the form
-                  </p>
-                </a>
+              <div className="space-y-4" id="embedded-form">
+                <h3 className="text-3xl font-semibold">
+                  Fill out the form
+                  <span>
+                    <a href={event.register} target="_blank">
+                      <SquareArrowUpRight className="inline-block mx-3" />
+                    </a>
+                  </span>
+                </h3>
+                <div className="flex justify-end"></div>
                 <div className="relative w-full pt-[150%]">
                   <iframe
                     src={event.register}
@@ -158,19 +189,7 @@ export default function Event() {
                 </div>
               </div>
             ) : (
-              <a
-                href={event.register}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block"
-              >
-                <h3 className="text-2xl text-blue-500 hover:text-blue-600 underline">
-                  Register Now!
-                </h3>
-                <p className="text-sm text-gray-600 italic">
-                  Click here to register
-                </p>
-              </a>
+              <></>
             )}
           </div>
         )}
@@ -189,9 +208,14 @@ export default function Event() {
                     <button
                       onClick={async () => {
                         try {
-                          const response = await fetch(downloadUrl);
-                          const blob = await response.blob();
-                          const url = window.URL.createObjectURL(blob);
+                          let url = downloadUrl;
+                          const isZip =
+                            downloadUrl.slice(-3).toLowerCase() === "zip";
+                          if (!isZip) {
+                            const response = await fetch(downloadUrl);
+                            const blob = await response.blob();
+                            url = window.URL.createObjectURL(blob);
+                          }
                           const a = document.createElement("a");
                           a.href = url;
                           a.download =
@@ -199,7 +223,8 @@ export default function Event() {
                           document.body.appendChild(a);
                           a.click();
                           document.body.removeChild(a);
-                          window.URL.revokeObjectURL(url);
+
+                          if (!isZip) window.URL.revokeObjectURL(url);
                         } catch (error) {
                           console.error("Download failed:", error);
                           alert("Failed to download. Please try again.");

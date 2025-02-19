@@ -361,3 +361,6 @@ body::-webkit-scrollbar {
   background: var(--primary) !important;
 }
 
+.scrollbar-hidden {
+  scrollbar-width: none;
+}
