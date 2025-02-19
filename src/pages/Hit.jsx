@@ -5,8 +5,8 @@ import data from "../data/hit.json";
 /**
  * format for each question in json
  * {  
- *   "color": "red", // path color, every path color has 3 different paths
- *   "path": "1, 2, 3", // every path has 8 different questions
+ *   "color": "red | blue | yellow", // path color, every path color has 3 different paths
+ *   "path": "1 | 2 | 3", // every path has 8 different questions
  *   "qr": "qr-code", // to make link, qr color is same as "color" in json
  *   "question": "Question text", // display in dangerouslySetInnerHTML, can be a single line question, can be multiline code, can be multiline text
  *   "image": "link to drive image" | null, - if not null, then question is "" to redirect to image link
