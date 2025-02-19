@@ -101,8 +101,7 @@
     "color": "red",
     "path": "2",
     "qr": "sdone",
-    "question":"\nHAI 1.2\n  I HAS A NUM1 ITZ 80\n  I HAS A NUM2 ITZ 97\n  I HAS A NUM3 ITZ 110\n  I HAS A NUM4 ITZ 100\n  I HAS A NUM5 ITZ 97\n  I HAS A NUM6 ITZ 32\n  I HAS A NUM7 ITZ 112\n  I HAS A NUM8 ITZ 117\n  I HAS A NUM9 ITZ 110\n  I HAS A NUM10 ITZ 110\n  I HAS A NUM11 ITZ 97\n  I HAS A NUM12 ITZ 105\n  I HAS A NUM13 ITZ 104\n  I HAS A NUM14 ITZ 32\n  I HAS A NUM15 ITZ 115\n  I HAS A NUM16 ITZ 113\n  I HAS A NUM17 ITZ 117\n  I HAS A NUM18 ITZ 97\n  I HAS A NUM19 ITZ 114\n  I HAS A NUM20 ITZ 101\n\n  I HAS A PART1 ITZ NUM1\n  I HAS A PART2 ITZ NUM2\n  I HAS A PART3 ITZ NUM3\n  I HAS A PART4 ITZ NUM4\n  I HAS A PART5 ITZ NUM5\n  I HAS A PART6 ITZ NUM6\n  I HAS A PART7 ITZ NUM7\n  I HAS A PART8 ITZ NUM8\n  I HAS A PART9 ITZ NUM9\n  I HAS A PART10 ITZ NUM10\n  I HAS A PART11 ITZ NUM11\n  I HAS A PART12 ITZ NUM12\n  I HAS A PART13 ITZ NUM13\n  I HAS A PART14 ITZ NUM14\n  I HAS A PART15 ITZ NUM15\n  I HAS A PART16 ITZ NUM16\n  I HAS A PART17 ITZ NUM17\n  I HAS A PART18 ITZ NUM18\n  I HAS A PART19 ITZ NUM19\n  I HAS A PART20 ITZ NUM20\n\n  I HAS A ALPHA ITZ NUM1\n  I HAS A BETA ITZ NUM3\n  I HAS A DELTA ITZ NUM6\n  I HAS A GAMMA ITZ NUM9\n  I HAS A THETA ITZ NUM14\n  I HAS A OMEGA ITZ NUM20\n\n  VISIBLE PART1\n  VISIBLE PART2\n  VISIBLE PART3\n  VISIBLE PART4\n  VISIBLE PART5\n  VISIBLE PART6\n  VISIBLE PART7\n  VISIBLE PART8\n  VISIBLE PART9\n  VISIBLE PART10\n  VISIBLE PART11\n  VISIBLE PART12\n  VISIBLE PART13\n  VISIBLE PART14\n  VISIBLE PART15\n  VISIBLE PART16\n  VISIBLE PART17\n  VISIBLE PART18\n  VISIBLE PART19\n  VISIBLE PART20\nKTHXBYE"
-,
+    "question": "```\nHAI 1.2\n  I HAS A NUM1 ITZ 80\n  I HAS A NUM2 ITZ 97\n  I HAS A NUM3 ITZ 110\n  I HAS A NUM4 ITZ 100\n  I HAS A NUM5 ITZ 97\n  I HAS A NUM6 ITZ 32\n  I HAS A NUM7 ITZ 112\n  I HAS A NUM8 ITZ 117\n  I HAS A NUM9 ITZ 110\n  I HAS A NUM10 ITZ 110\n  I HAS A NUM11 ITZ 97\n  I HAS A NUM12 ITZ 105\n  I HAS A NUM13 ITZ 104\n  I HAS A NUM14 ITZ 32\n  I HAS A NUM15 ITZ 115\n  I HAS A NUM16 ITZ 113\n  I HAS A NUM17 ITZ 117\n  I HAS A NUM18 ITZ 97\n  I HAS A NUM19 ITZ 114\n  I HAS A NUM20 ITZ 101\n\n  VISIBLE NUM1\n  VISIBLE NUM2\n  VISIBLE NUM3\n  VISIBLE NUM4\n  VISIBLE NUM5\n  VISIBLE NUM6\n  VISIBLE NUM7\n  VISIBLE NUM8\n  VISIBLE NUM9\n  VISIBLE NUM10\n  VISIBLE NUM11\n  VISIBLE NUM12\n  VISIBLE NUM13\n  VISIBLE NUM14\n  VISIBLE NUM15\n  VISIBLE NUM16\n  VISIBLE NUM17\n  VISIBLE NUM18\n  VISIBLE NUM19\n  VISIBLE NUM20\nKTHXBYE\n```",
     "image": null
   },
   {
@@ -151,8 +150,7 @@
     "color": "red",
     "path": "3",
     "qr": "qwbhl",
-    "question": "0\"!yrenoitcaS\">:#,_@\n>v\n  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@"
-,
+    "question": "0\"!yrenoitcaS\">:#,_@\n>v\n  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,@",
     "image": null
   },
   {
@@ -168,5 +166,173 @@
     "qr": "wnjbf",
     "question": "",
     "image": "https://drive.google.com/file/d/1DWyMICxUy_jsjpOeLCbcQZD_cUTQhNam/view?usp=drive_link"
+  },
+  {
+    "color": "yellow",
+    "path": "1",
+    "qr": "loasd",
+    "question": "I shine with 7 colors but I’m not in the sky. I am a path to the arena?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "1",
+    "qr": "loqmc",
+    "question": "I’m a type of operating system and also there exists a lab in my name",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "1",
+    "qr": "kieds",
+    "question": "He could not walk or talk, but he helped us understand the universe.",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "1",
+    "qr": "gotwe",
+    "question": "With each step, I power your way, Fueling motion every day. 45 units, heat I provide, Burn me to keep your strength alive. What am I?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "1",
+    "qr": "kicms",
+    "question": "With a veena in hand, she sings, Look for her near where learning springs.",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "1",
+    "qr": "powls",
+    "question": "",
+    "image": "https://drive.google.com/file/d/1SItsLaaZT_UyXlWEEJ0QmQ5UhY7pyEux/view?usp=drive_link"
+  },
+  {
+    "color": "yellow",
+    "path": "1",
+    "qr": "hugjs",
+    "question": "Recipe .\n\nIngredients.\nArray1 is a list of 10.\n65 g of A.\n100 g of d.\n97 g of a.\n109 g of m.\n115 g of s.\n32 g of Space.\n65 g of A.\n105 g of i.\n108 g of l.\n101 g of e.\n\nMethod.\nPut Array1 into the oven.\n\nServes.",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "1",
+    "qr": "gjsud",
+    "question": "Which spot in our college was once the gatekeeper of fevers?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "2",
+    "qr": "lodks",
+    "question": "I rise and fall without a sigh, in a place where scholars fly. What am I?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "2",
+    "qr": "klsdj",
+    "question": "If you don’t look, you’ll pass me by,\nA hidden path where few rely.\nNot the grand but the subtle way,\nA lesser road near D Block lay.\nWhat am I?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "2",
+    "qr": "jscfg",
+    "question": "Find me where my roots grow strong, much like Attarintiki Daredi’s story—forever long!",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "2",
+    "qr": "njncs",
+    "question": "A podium stands in a square so neat where students and teachers often meet? Where am I?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "2",
+    "qr": "judes",
+    "question": "I’m a place where water dances high, Near books and pens that you buy. Close to the stationery, I gleam and shine, What am I? Take your time!",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "2",
+    "qr": "mrgst",
+    "question": "Act I: The Beginning.\nScene I: A mysterious place.\n\n[Enter W, D]\nW: Am I a number?\nD: If so, let us proceed.\n\nAct II: The Water Dispenser.\nScene I: A mysterious place.\n\n[Enter T, E]\nT: Speak, I beg thee, of 87, 97, 116, 101, 114.\nE: Speak, I beg thee, of 32, 68, 105, 115, 112, 101, 110, 115, 101, 114.\n\nAct III: The Ground.\nScene I: A mysterious place.\n\n[Enter G, R]\nG: Speak, I beg thee, of 71, 114, 111, 117, 110, 100.\nR: Speak, I beg thee, of 32.\n\n[Exeunt]",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "2",
+    "qr": "mksir",
+    "question": "Bike number : (1634+8208​/)/pi +105 (nearest integer)",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "2",
+    "qr": "mkdir",
+    "question": "",
+    "image": "https://drive.google.com/file/d/1WrP51EUrVGyPNxZ0sdMuTcGejPXyXwn4/view?usp=drive_link"
+  },
+  {
+    "color": "yellow",
+    "path": "3",
+    "qr": "nmdjg",
+    "question": "I stand tall with a wooden face, in this college, find my place!",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "3",
+    "qr": "jndks",
+    "question": "Where students rush not for food, but for lab records and last-minute prints.",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "3",
+    "qr": "ranmd",
+    "question": "Who was the discoverer of gravity before Isaac Newton?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "3",
+    "qr": "bvnsm",
+    "question": "I am where young minds play with circuits and code,\nA high-tech haven where hands-on skills are bestowed.\nUnder a mission that sparks India's innovative art,\nI nurture STEM dreams right from the start.\nWhat am I?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "3",
+    "qr": "mkbsl",
+    "question": "Find the place that becomes an ocean during the rainy season, where water rises and cascades. Then, head towards the venue where the legend *Kobe Bryant* showcased his skills and left his mark.",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "3",
+    "qr": "mkbhd",
+    "question": "A leap of belief, a boundless stride,\nFind the road where fear must hide.\nTread where devotion leaves its mark, a path of faith both bright and stark.\nWith strength untamed and heart so true, whose footsteps guide the way for you?",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "3",
+    "qr": "elonm",
+    "question": "```\nstack = []\n\nstack.append(73) \nstack.append(32)   \nstack.append(108) \nstack.append(111)  \nstack.append(118)  \nstack.append(101)  \nstack.append(32)   \nstack.append(86)   \nstack.append(78)   \nstack.append(82)   \n\noutput = \"\".join(chr(i) for i in stack)\nprint(output) \n```",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "3",
+    "qr": "lbird",
+    "question": "",
+    "image": "https://drive.google.com/file/d/1XL-2K9InbVNJugc8dBvJdo4dZAi79o0w/view?usp=drive_link"
   }
 ]
