@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { ImNewTab } from "react-icons/im";
+import { SquareArrowUpRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -48,7 +48,7 @@ export default function Event() {
     <div className="pt-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="font-bold text-2xl sm:text-3xl justify-self-center">
+          <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl">
             {event.name}
           </h2>
           <Link
@@ -59,24 +59,24 @@ export default function Event() {
           </Link>
         </div>
 
-        <div className="flex flex-col shadow-md p-4 rounded-lg">
-          <div className="rounded-lg ">
-            <p className="flex gap-2 py-2 border-b-[1px]">
-              <span className="font-semibold text-lg">Date:</span>
-              <span>{event.date}</span>
-            </p>
-            <p className="flex gap-2 py-2 border-b-[1px]">
-              <span className="font-semibold text-lg">Venue:</span>
-              <span>{event.venue}</span>
-            </p>
-            <p className="flex gap-2 py-2 border-b-[1px]">
-              <span className="font-semibold text-lg">Timings:</span>
-              <span>{event.timings}</span>
-            </p>
-            <p className="space-x-2 py-2">
-              <span className="font-semibold text-lg">Description:</span>
-              <span>{event.description}</span>
-            </p>
+        <div className="bg-white rounded-2xl p-6 shadow-sm space-y-6 flex flex-col">
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="p-4 rounded-xl">
+              <p className="text-lg font-semibold  mb-1">Date</p>
+              <p className="font-medium text-gray-700">{event.date}</p>
+            </div>
+            <div className="p-4 rounded-xl">
+              <p className="text-lg font-semibold  mb-1">Time</p>
+              <p className="font-medium text-gray-700">{event.timings}</p>
+            </div>
+            <div className="p-4 rounded-xl">
+              <p className="text-lg font-semibold  mb-1">Venue</p>
+              <p className="font-medium text-gray-700">{event.venue}</p>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">About the Event</h3>
+            <p className="text-gray-700 leading-relaxed">{event.description}</p>
           </div>
 
           {event.register && (
@@ -84,7 +84,7 @@ export default function Event() {
               {event?.isGFormEmbeddable === false ? (
                 <div className="self-end">
                   <a
-                    className="inline-block text-white font-['Roboto'] bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
+                    className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
                     href={event.register}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -96,7 +96,7 @@ export default function Event() {
                 <div className="self-end">
                   <button
                     onClick={handleRegister}
-                    className="inline-block text-white font-['Roboto'] bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
+                    className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
                   >
                     Register Now
                   </button>
@@ -174,7 +174,7 @@ export default function Event() {
                   Fill out the form
                   <span>
                     <a href={event.register} target="_blank">
-                      <ImNewTab className="inline-block mx-3" />
+                      <SquareArrowUpRight className="inline-block mx-3" />
                     </a>
                   </span>
                 </h3>

@@ -1,12 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import {
-  FireExtinguisher,
-  Notebook,
-  SwitchCamera,
-} from "lucide-react";
-
+import { FireExtinguisher, Notebook } from "lucide-react";
 
 export const PromoDiv = (props) => {
   return (
@@ -27,7 +22,6 @@ export const PromoDiv = (props) => {
           </h1>
           <span className="flex justify-end items-center ">
             <p className="text-white text-left">View </p>
-            <SwitchCamera size={20} color="white" />
           </span>
         </div>
       </div>

@@ -15,6 +15,13 @@ export default function Events() {
     setPastevents(events.past[e]);
     setyear(e.slice(1));
   };
+  const colors = [
+    "bg-gray-900",
+    "bg-indigo-900",
+    "bg-blue-950",
+    "bg-emerald-900",
+    "bg-purple-950",
+  ];
 
   return (
     <>
@@ -55,16 +62,24 @@ export default function Events() {
                           className="w-full rounded-t-lg"
                         />
 
-                        <div className="p-6 pt-0">
-                          <div className="flex flex-row gap-6 flex-wrap my-4">
-                            <div className="inline-block bg-[#0f323f] text-white text-sm rounded-xl text-center w-[45%] content-center py-1 px-[0.5rem]">
-                              <p>{event.category}</p>
-                            </div>
-                            {event?.isLimitedRegistrations === true && (
-                              <div className="inline-block bg-[#A13B38] text-white text-sm rounded-xl text-center w-[45%] content-center py-1 px-[0.5rem]">
-                                <p>Limited Registrations</p>
+                        <div className="p-2 pt-0">
+                          <div className="flex flex-row gap-2 my-4 overflow-x-auto scrollbar-hidden">
+                            {event.event_tags.map((obj, index) => (
+                              <div
+                                key={index}
+                                className={`inline-block  ${
+                                  obj === "Limited Registrations"
+                                    ? "bg-red-800"
+                                    : colors[
+                                        Math.floor(
+                                          Math.random() * colors.length
+                                        )
+                                      ]
+                                }  text-white text-sm rounded-xl text-center content-center py-1 px-[0.5rem]`}
+                              >
+                                <p className="text-sm">{obj}</p>
                               </div>
-                            )}
+                            ))}
                           </div>
                           <h2 className="text-2xl font-semibold mb-2 ">
                             {event.name}
@@ -121,10 +136,23 @@ export default function Events() {
                         />
 
                         <div className="p-7 pt-0">
-                          <div className="flex flex-row gap-6 flex-wrap my-4">
-                            <div className="inline-block bg-[#0f323f] text-white text-sm rounded-xl text-center w-[45%] content-center py-1 px-[0.5rem]">
-                              <p>{event.category}</p>
-                            </div>
+                          <div className="flex flex-row gap-2 my-4 overflow-x-auto scrollbar-hidden">
+                            {event.event_tags.map((obj, index) => (
+                              <div
+                                key={index}
+                                className={`inline-block  ${
+                                  obj === "Limited Registrations"
+                                    ? "bg-red-800"
+                                    : colors[
+                                        Math.floor(
+                                          Math.random() * colors.length
+                                        )
+                                      ]
+                                }  text-white text-sm rounded-xl text-center content-center py-1 px-[0.5rem]`}
+                              >
+                                <p className="text-sm">{obj}</p>
+                              </div>
+                            ))}
                           </div>
                           <h2 className="text-2xl font-semibold mb-2 ">
                             {event.name}

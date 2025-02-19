@@ -8,6 +8,9 @@ import Header from "./components/Header";
 import ScrollToTop from "./components/ScrollToTop";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
+import { PromoDiv } from "./components/PromoDiv";
+
+import events from "./data/events";
 
 function App() {
   const [load, setLoad] = useState(true);
@@ -35,6 +38,17 @@ function App() {
             />
           ))}
         </Routes>
+      </div>
+
+      <div className="fixed bottom-2 right-2 flex flex-col gap-2">
+        {events.upcoming.map((e, i) => (
+          <PromoDiv
+            key={i}
+            eventName={e.name}
+            eventLink={e.link}
+            eventStatus="upcoming"
+          />
+        ))}
       </div>
       <Footer />
     </Router>
