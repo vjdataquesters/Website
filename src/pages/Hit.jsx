@@ -3,13 +3,13 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import data from "../data/hit.json";
 
 /**
- * format for each questins in json
+ * format for each question in json
  * {  
  *   "color": "red", // path color, every path color has 3 different paths
  *   "path": "1, 2, 3", // every path has 8 different questions
  *   "qr": "qr-code", // to make link, qr color is same as "color" in json
  *   "question": "Question text", // display in dangerouslySetInnerHTML, can be a single line question, can be multiline code, can be multiline text
- *   "image": "link to drive image" | null, - if not null, then quesiton is "" to redirect to image link
+ *   "image": "link to drive image" | null, - if not null, then question is "" to redirect to image link
  * }
  */
 
@@ -17,6 +17,7 @@ function Hit() {
   const [params, setParams] = useSearchParams({ q: "" });
   const navigate = useNavigate();
   const key = params.get("q");
+  const [loading, setLoading] = useState(true);
   const [queryRes, setQueryRes] = useState(null);
   const [animation, setAnimation] = useState(false);
 
@@ -25,11 +26,12 @@ function Hit() {
       const res = data.find((obj) => obj.qr === key);
       if (res) {
         setQueryRes(res);
-        setTimeout(() => {
-          navigate('/hit', { replace: true });
-        }, 5000); 
+        // setTimeout(() => {
+        //   navigate('/hit', { replace: true });
+        // }, 5000); 
       }
     }
+    setLoading(false);
   }, [key, navigate]);
 
   useEffect(() => {
@@ -38,7 +40,6 @@ function Hit() {
     }
   }, [queryRes]);
 
-  // Home page when no question is being viewed
   const renderHomePage = () => (
     <div className="max-w-md w-full mx-auto text-center">
       <div className="mb-8">
@@ -70,29 +71,44 @@ function Hit() {
     </div>
   );
 
-  // Question display with improved UI
-  const renderQuestion = () => (
-    <div 
-      className={`max-w-md w-full mx-auto text-center transition-opacity duration-500 ${animation ? 'opacity-100' : 'opacity-0'}`}
-    >
-      <div className="bg-white rounded-lg shadow-xl p-6 border-t-4 border-indigo-500">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Question
-          </h1>
-          <div className="w-16 h-1 bg-indigo-500 mx-auto rounded-full"></div>
-        </div>
-        
-        <div className="bg-gray-50 p-5 rounded-lg mb-6">
-          <p className="text-xl text-gray-700 font-medium">{queryRes.question}</p>
-        </div>
-      </div>
+  const renderQuestion = () => {
+    const pathColor = queryRes.color || "indigo";
+    if (queryRes.image) {
+      window.location.href = queryRes.image;
+      return null;
+    }
 
-      <div className="mt-6 text-gray-500 text-sm">
-        Part of <span className="font-semibold">Hit - Reloaded</span> • Keep hunting!
+    return (
+      <div
+        className={`max-w-md w-full mx-auto text-center transition-opacity duration-500 ${animation ? 'opacity-100' : 'opacity-0'}`}
+      >
+        <div className={`bg-white rounded-lg shadow-xl p-6 border-t-4 border-${pathColor}-500`}>
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              Question
+            </h1>
+            <div className={`w-16 h-1 bg-${pathColor}-500 mx-auto rounded-full`}></div>
+            <p className="text-sm text-gray-500 mt-2">Path: {queryRes.path}</p>
+          </div>
+
+          <div className="bg-gray-50 p-5 rounded-lg mb-6">
+            <pre>
+              <p
+                className="text-left overflow-auto font-mono text-gray-700"
+                dangerouslySetInnerHTML={{ __html: queryRes.question }}
+              />
+            </pre>
+          </div>
+        </div>
+
+        <div className="mt-6 text-gray-500 text-sm">
+          Part of <span className="font-semibold">Hit - Reloaded</span> • Keep hunting!
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  if (loading) return null;
 
   return (
     <section className="py-10 px-4 bg-gradient-to-br from-indigo-50 to-gray-100 min-h-screen flex justify-center items-center">
