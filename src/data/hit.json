@@ -101,8 +101,7 @@
     "color": "red",
     "path": "2",
     "qr": "sdone",
-    "question": "HAI 1.2\n  I HAS A NUM1 ITZ 80\n  I HAS A NUM2 ITZ 97\n  I HAS A NUM3 ITZ 110\n  I HAS A NUM4 ITZ 100\n  I HAS A NUM5 ITZ 97\n  I HAS A NUM6 ITZ 32\n  I HAS A NUM7 ITZ 112\n  I HAS A NUM8 ITZ 117\n  I HAS A NUM9 ITZ 110\n  I HAS A NUM10 ITZ 110\n  I HAS A NUM11 ITZ 97\n  I HAS A NUM12 ITZ 105\n  I HAS A NUM13 ITZ 104\n  I HAS A NUM14 ITZ 32\n  I HAS A NUM15 ITZ 115\n  I HAS A NUM16 ITZ 113\n  I HAS A NUM17 ITZ 117\n  I HAS A NUM18 ITZ 97\n  I HAS A NUM19 ITZ 114\n  I HAS A NUM20 ITZ 101\n\n  I HAS A PART1 ITZ NUM1\n  I HAS A PART2 ITZ NUM2\n  I HAS A PART3 ITZ NUM3\n  I HAS A PART4 ITZ NUM4\n  I HAS A PART5 ITZ NUM5\n  I HAS A PART6 ITZ NUM6\n  I HAS A PART7 ITZ NUM7\n  I HAS A PART8 ITZ NUM8\n  I HAS A PART9 ITZ NUM9\n  I HAS A PART10 ITZ NUM10\n  I HAS A PART11 ITZ NUM11\n  I HAS A PART12 ITZ NUM12\n  I HAS A PART13 ITZ NUM13\n  I HAS A PART14 ITZ NUM14\n  I HAS A PART15 ITZ NUM15\n  I HAS A PART16 ITZ NUM16\n  I HAS A PART17 ITZ NUM17\n  I HAS A PART18 ITZ NUM18\n  I HAS A PART19 ITZ NUM19\n  I HAS A PART20 ITZ NUM20\n\n  I HAS A ALPHA ITZ NUM1\n  I HAS A BETA ITZ NUM3\n  I HAS A DELTA ITZ NUM6\n  I HAS A GAMMA ITZ NUM9\n  I HAS A THETA ITZ NUM14\n  I HAS A OMEGA ITZ NUM20\n\n  VISIBLE PART1\n  VISIBLE PART2\n  VISIBLE PART3\n  VISIBLE PART4\n  VISIBLE PART5\n  VISIBLE PART6\n  VISIBLE PART7\n  VISIBLE PART8\n  VISIBLE PART9\n  VISIBLE PART10\n  VISIBLE PART11\n  VISIBLE PART12\n  VISIBLE PART13\n  VISIBLE PART14\n  VISIBLE PART15\n  VISIBLE PART16\n  VISIBLE PART17\n  VISIBLE PART18\n  VISIBLE PART19\n  VISIBLE PART20\nKTHXBYE"
-,
+    "question": "HAI 1.2\n  I HAS A NUM1 ITZ 80\n  I HAS A NUM2 ITZ 97\n  I HAS A NUM3 ITZ 110\n  I HAS A NUM4 ITZ 100\n  I HAS A NUM5 ITZ 97\n  I HAS A NUM6 ITZ 32\n  I HAS A NUM7 ITZ 112\n  I HAS A NUM8 ITZ 117\n  I HAS A NUM9 ITZ 110\n  I HAS A NUM10 ITZ 110\n  I HAS A NUM11 ITZ 97\n  I HAS A NUM12 ITZ 105\n  I HAS A NUM13 ITZ 104\n  I HAS A NUM14 ITZ 32\n  I HAS A NUM15 ITZ 115\n  I HAS A NUM16 ITZ 113\n  I HAS A NUM17 ITZ 117\n  I HAS A NUM18 ITZ 97\n  I HAS A NUM19 ITZ 114\n  I HAS A NUM20 ITZ 101\n\n  I HAS A PART1 ITZ NUM1\n  I HAS A PART2 ITZ NUM2\n  I HAS A PART3 ITZ NUM3\n  I HAS A PART4 ITZ NUM4\n  I HAS A PART5 ITZ NUM5\n  I HAS A PART6 ITZ NUM6\n  I HAS A PART7 ITZ NUM7\n  I HAS A PART8 ITZ NUM8\n  I HAS A PART9 ITZ NUM9\n  I HAS A PART10 ITZ NUM10\n  I HAS A PART11 ITZ NUM11\n  I HAS A PART12 ITZ NUM12\n  I HAS A PART13 ITZ NUM13\n  I HAS A PART14 ITZ NUM14\n  I HAS A PART15 ITZ NUM15\n  I HAS A PART16 ITZ NUM16\n  I HAS A PART17 ITZ NUM17\n  I HAS A PART18 ITZ NUM18\n  I HAS A PART19 ITZ NUM19\n  I HAS A PART20 ITZ NUM20\n\n  I HAS A ALPHA ITZ NUM1\n  I HAS A BETA ITZ NUM3\n  I HAS A DELTA ITZ NUM6\n  I HAS A GAMMA ITZ NUM9\n  I HAS A THETA ITZ NUM14\n  I HAS A OMEGA ITZ NUM20\n\n  VISIBLE PART1\n  VISIBLE PART2\n  VISIBLE PART3\n  VISIBLE PART4\n  VISIBLE PART5\n  VISIBLE PART6\n  VISIBLE PART7\n  VISIBLE PART8\n  VISIBLE PART9\n  VISIBLE PART10\n  VISIBLE PART11\n  VISIBLE PART12\n  VISIBLE PART13\n  VISIBLE PART14\n  VISIBLE PART15\n  VISIBLE PART16\n  VISIBLE PART17\n  VISIBLE PART18\n  VISIBLE PART19\n  VISIBLE PART20\nKTHXBYE",
     "image": null
   },
   {
@@ -167,6 +166,20 @@
     "qr": "wnjbf",
     "question": "",
     "image": "https://drive.google.com/file/d/1DWyMICxUy_jsjpOeLCbcQZD_cUTQhNam/view?usp=drive_link"
+  },
+  {
+    "color": "red",
+    "path": "final",
+    "qr": "ndkla",
+    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
+    "image": null
+  },
+  {
+    "color": "red",
+    "path": "fooled",
+    "qr": "ruisl",
+    "question": "Ha Ha Misguided 😂",
+    "image": null
   },
   {
     "color": "yellow",
@@ -337,6 +350,20 @@
     "image": "https://drive.google.com/file/d/1XL-2K9InbVNJugc8dBvJdo4dZAi79o0w/view?usp=drive_link"
   },
   {
+    "color": "yellow",
+    "path": "final",
+    "qr": "jidns",
+    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
+    "image": null
+  },
+  {
+    "color": "yellow",
+    "path": "fooled",
+    "qr": "mlsie",
+    "question": "Ha Ha Misguided 😂",
+    "image": null
+  },
+  {
     "color": "blue",
     "path": "1",
     "qr": "fgbkj",
@@ -501,6 +528,20 @@
     "path": "3",
     "qr": "xvgdw",
     "question": "With 6205, I tread unknown lanes, \nNot bound by time, nor by chains. \nIn digits, a clue, a secret untold, A riddle of numbers, its meaning unfolds. \nWhere do I go, and what do I seek? \nThe answer's hidden, it's not for the meek.",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "final",
+    "qr": "iksls",
+    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "fooled",
+    "qr": "bhdki",
+    "question": "Ha Ha Misguided 😂",
     "image": null
   }
 ]

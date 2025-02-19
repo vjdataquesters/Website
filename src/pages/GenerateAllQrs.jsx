@@ -5,9 +5,9 @@ import qrData from "../data/hit.json";
 function GenerateAllQrs() {
   // Map color names to hex values
   const colorMap = {
-    'red': '#e63946',
-    'blue': '#1d3557',
-    'yellow': '#f4a261'
+    'red': '#ff6600',
+    'yellow': '#ffcc00',
+    'blue': '#3399ff',
   };
   
   // Get eye color - matching main color but slightly darker for contrast
