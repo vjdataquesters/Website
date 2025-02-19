@@ -178,7 +178,7 @@
     "color": "yellow",
     "path": "1",
     "qr": "loqmc",
-    "question": "I’m a type of operating system and also there exists a lab in my name",
+    "question": "I'm a type of operating system and also there exists a lab in my name",
     "image": null
   },
   {
@@ -334,5 +334,172 @@
     "qr": "lbird",
     "question": "",
     "image": "https://drive.google.com/file/d/1XL-2K9InbVNJugc8dBvJdo4dZAi79o0w/view?usp=drive_link"
+  },
+  {
+    "color": "blue",
+    "path": "1",
+    "qr": "fgbkj",
+    "question": "Strength unmatched, yet a servant he stayed,Find the path where duty is never swayed.",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "1",
+    "qr": "bkwud",
+    "question": "Where champions step in , ready to push their limits",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "1",
+    "qr": "xwzpi",
+    "question": "News, updates, events to see, standing tall for all to read.",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "1",
+    "qr": "jpsnx",
+    "question": "Find the board that tells smokers, 'No thank you!'",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "1",
+    "qr": "tczqv",
+    "question": "A golden glow, a sacred sight, remover of obstacles, shining bright.",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "1",
+    "qr": "qzlum",
+    "question": "using System;\n\nclass Program {\n    static void Main() {\n        Console.WriteLine(new string(new char[] { (char)71, (char)114, (char)111, (char)111, (char)116 }));\n    }\n}",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "1",
+    "qr": "mvydw",
+    "question": "https://drive.google.com/file/d/11irutb1MT_odYtNZY4PZX2EmFVmFHmFO/view?usp=drive_link",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "1",
+    "qr": "ytnhb",
+    "question": "Think about the combination of two words: one representing learners and the other representing strength or movement.",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "qr": "mkddf",
+    "question": "A place where time flies, yet the queue moves slow,<br>Morning haste and break-time glow.<br>Not for hunger, but for needs in class?",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "qr": "mlasd",
+    "question": "I ascend and descend without a sound, within the halls where postgraduates are found.",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "qr": "ujdie",
+    "question": "I stand behind the sacred form, a path from dark to light I transform.<br>Seen yet unseen, a symbol so vast, what am I, linking future to past?",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "qr": "uhdid",
+    "question": "A person with a mass of 70 kg climbs a staircase of height 152.5 meters.<br>Calculate the gravitational potential energy gained and express your answer in non-SI units.<br>(Take g=9.8 m/s² and 1 calorie = 4184 joules)",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "qr": "jdird",
+    "question": "A statue that stands tall in the necklace road and in our college?",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "qr": "vhdis",
+    "question": "ruby\nputs [84, 83, 32, 49, 50, 32, 69, 80, 32, 51, 50, 51, 56].map(&:chr).join\n",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "qr": "djned",
+    "question": "Where do players head to refresh, just after the whistle blows and the game's complete?"
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "qr": "oklsp",
+    "question": "",
+    "image": "https://drive.google.com/file/d/1w9rlBVfp2UGfR7Xeksy-RhRcEMEuaeOw/view?usp=drivesdk"
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "qr": "vbnmc",
+    "question": "Near the hostel mess, in the place between blocks, find the bulletin where the exam seating chart is pasted. Decode the hidden pattern within the seating arrangement to reveal your next clue!",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "qr": "bygtf",
+    "question": "",
+    "image": "https://drive.google.com/file/d/1q4jJwT3vRba3wsEwOCMUydNGUxpHy6z6/view?usp=drive_link"
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "qr": "plkbd",
+    "question": "You get me when u divide circle's surface area by pi",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "qr": "vbwzx",
+    "question": "I stand tall with leaves so wide, my fruit is sweet, my heart I hide. I give without a single seed, in every part, I serve a need. What am I?",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "qr": "qwuhd",
+    "question": "module Main where\n\nlocation = map toEnum [65]  \nname = map toEnum [65, 108, 98, 101, 114, 116, 32, 101, 105, 110, 115, 116, 105, 101, 110, 32]\n\nmain :: IO ()\nmain = putStrLn (show location ++ \" Block has: \" ++ name)",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "qr": "nvybd",
+    "question": "I'm a club's storage room where the used papers are stored. what am I?",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "qr": "cbwqa",
+    "question": "Begin at the circle where paths meet, pass the Azadirachta Indica tree and find your next clue near the hostel bus parking.",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "qr": "xvgdw",
+    "question": "With 6205, I tread unknown lanes, Not bound by time, nor by chains. In digits, a clue, a secret untold, A riddle of numbers, its meaning unfolds. Where do I go, and what do I seek? The answer's hidden, it's not for the meek.",
+    "image": null
   }
 ]
