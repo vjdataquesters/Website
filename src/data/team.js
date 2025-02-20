@@ -84,8 +84,8 @@ export const currentteam={
         {
           name:"K Sathvik",
           role:"Technical head",
-          linkedin:"",
-          image:"",    
+          linkedin:"https://www.linkedin.com/in/sathvik-kamegaonkar-980732246",
+          image:"sathvikk.png",    
         },
         {
           name: "Karthikeya",
@@ -103,7 +103,7 @@ export const currentteam={
           name:"Varun Sai",
           role:"Event Organising head",
           linkedin:"",
-          image:"", 
+          image:"varunsai.png", 
           
           
         },
@@ -122,8 +122,8 @@ export const currentteam={
         {
           name:"Ganesh",
           role:"Design head",
-          linkedin:"",
-          image:"", 
+          linkedin:"https://www.linkedin.com/in/mudu-ganesh-01b99825a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+          image:"ganesh.png", 
         },
         {
           name: "Pranathi Chilka",
@@ -144,12 +144,6 @@ export const currentteam={
           image: "snigdha.png",
         },
         {
-          name:"K Dinesh",
-          role:"PR head",
-          linkedin:"",
-          image:""
-        },
-        {
           name: "Vimal",
           role:"Social Media and Event Coverage head",
           linkedin: "http://linkedin.com/in/vimal-sathuluri-165852272",
@@ -158,21 +152,21 @@ export const currentteam={
         {
           name:"Vishal",
           role:"Social Media and Event Coverage head",
-          linkedin:"",
-          image:"", 
+          linkedin:"https://www.linkedin.com/in/vishal-ambilpur-374723273/",
+          image:"vishal.png", 
           
         },
         {
           name:"Harshitha",
           role:"Social Media and Event Coverage head",
           linkedin:"",
-          image:"", 
+          image:"harshitha.png", 
         },
         {
           name:"K Vishweshwar Reddy",
           role:"Documentation head",
-          linkedin:"",
-          image:"", 
+          linkedin:"https://www.linkedin.com/in/vishweshwar-reddy-kanthala",
+          image:"vishweshwar.png", 
         }   
     ],
 }
@@ -491,6 +485,13 @@ export const pastteams={
           image: "avi.png",
         },
         {
+          name:"Vishal",
+          domain:"Event Coverage",
+          linkedin:"https://www.linkedin.com/in/vishal-ambilpur-374723273/",
+          image:"vishal.png", 
+          
+        },
+        {
           email: "adhichiru634@gmail.com",
           name: "Adithya Kadukuntla",
           domain: "Treasury",
@@ -504,6 +505,6 @@ export const pastteams={
           linkedin: "https://www.linkedin.com/in/b-bindu-sree-reddy-182592275",
           image: "bindu.png",
         },
-      ];
+      ]
    },
 }
