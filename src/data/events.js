@@ -36,67 +36,86 @@
 //   | 'Guest Lecture';
 
 const events = {
-  upcoming: [
-    {
-      name: "Hit Reloaded",
-      eventId: "hit-reloaded",
-      image: "/events/HitReloaded2025/img1.png",
-      date: "February 21st 2025",
-      venue: "Sinti Stage",
-      timings: "10:00 AM to 3:00 PM",
-      pics: ["/events/HitReloaded2025/img1.png"],
-      outcome: "",
-      register:
-        "https://docs.google.com/forms/d/e/1FAIpQLSeQkrnEppaak4C1xEkDCHhJZEjBXXWkGwnHsQPSC3qDhqXo0A/viewform",
-      isGFormEmbeddable: false,
-      event_tags: ["Limited Registrations", "Fun Event", "Teasure Hunt"],
-      description:
-        "HIT - Reloaded is an adrenaline-fueled treasure hunt for teams of 3-4. Solve riddles and puzzles through multiple checkpoints, starting with a briefing and first clue. The fastest team to crack the final puzzle wins. Join us on February 21, 2025, from 10 AM to 3 PM at Sinti Stage, VNRVJIET.",
-      link: "/events/hit-reloaded",
-      isLimitedRegistrations: true,
-    },
-    {
-      name: "DV CONTEST",
-      eventId: "dv-contest",
-      image: "/events/DVContest2025/img1.png",
-      date: "February 21st 2025",
-      venue: "APJ Abdul Kalam Auditorium",
-      timings: "10:00 AM to 1:00 PM",
-      pics: ["/events/DVContest2025/img1.png"],
-      outcome: "",
-      register:
-        "https://docs.google.com/forms/d/e/1FAIpQLSe-ug9pGIVPhA73gX9Z3-c8I05h-K0xlkV6ro1nrCFsanZjFw/viewform",
-      isGFormEmbeddable: false,
-      event_tags: ["Limited Registrations", "Data Science", "Competition"],
-      description:
-        "DV CONTEST 2K25: Visualize. Analyze. Compete. is a Data Visualization Contest on February 21, 2025, at VNRVJIET's APJ Abdul Kalam Auditorium. Teams of two will transform raw data into visual stories for prizes and recognition",
-      link: "/events/dv-contest",
-      isLimitedRegistrations: true,
-    },
-    {
-      name: "MAP-AN-APP",
-      eventId: "map-an-app",
-      image: "/events/MapAnApp2025/img1.png",
-      date: "February 22nd 2025",
-      venue: "APJ Abdul Kalam Auditorium",
-      timings: "9:30 AM to 1:00 PM",
-      pics: ["/events/MapAnApp2025/img1.png"],
-      outcome: "",
-      register:
-        "https://docs.google.com/forms/d/e/1FAIpQLSe-3Ptjj8AVS_vO-d-7WiWjKb8CDWs40yNvR3YaWpNceX1kFw/viewform",
-      isGFormEmbeddable: false,
-      event_tags: [
-        "Limited Registrations",
-        "App Development",
-      ],
-      description:
-        "MAP-AN-APP at Convergence 2k25 is on February 22, 2025, at VNRVJIET's APJ Abdul Kalam Auditorium (9:30 AM-1:00 PM). Teams of two will develop apps in Healthcare & Fintech themes for a ₹3500 prize pool and internship opportunities. Convergence pass required",
-      link: "/events/map-an-app",
-      isLimitedRegistrations: true,
-    },
-  ],
+  upcoming: [],
   past: {
     e2025: [
+      {
+        name: "Hit Reloaded",
+        eventId: "hit-reloaded",
+        image: "/events/HitReloaded2025/img1.png",
+        date: "February 21st 2025",
+        venue: "Sinti Stage",
+        timings: "10:00 AM to 3:00 PM",
+        pics: [
+          "/events/HitReloaded2025/img1.png",
+          "/events/HitReloaded2025/img2.jpg",
+          "/events/HitReloaded2025/img3.jpg",
+          "/events/HitReloaded2025/img4.jpg",
+        ],
+        winners:
+          "<b>1st prize:-</b>Team AKATSUKI<br>22071A1289- Kandre Navadeep <br>22071A1288- K. Sathwik Reddy <br>22071A12B5- Sangulge Prudhvi Raj<br><b>2nd prize:-</b> Team PURPLE PINK SKIES<br>Bhavana Sree Naidu Yeluri - 22071A66D9<br>Sharan Teja Charagondla - 22071A66E3<br>Sai Sathya Thota - 22071A66J9<br><b>3rd prize:-</b> Team BYSTANDERS<br>Pranathi - 24071A67C2<br>Tanmayee - 24071A67C8 <br>Vaibhav - 24071A67D1",
+        outcome:
+          "A day of thrilling puzzles and collaborative problem-solving culminates in the crowning of code-cracking champions at HIT: RELOADED.  The event leaves participants with sharpened minds and a taste for adventure, contributing to the vibrant atmosphere of Convergence 2025.",
+        // register:
+        //   "https://docs.google.com/forms/d/e/1FAIpQLSeQkrnEppaak4C1xEkDCHhJZEjBXXWkGwnHsQPSC3qDhqXo0A/viewform",
+        isGFormEmbeddable: false,
+        event_tags: ["Fun Event", "Teasure Hunt"],
+        description:
+          "HIT - Reloaded is an adrenaline-fueled treasure hunt for teams of 3-4. Solve riddles and puzzles through multiple checkpoints, starting with a briefing and first clue. The fastest team to crack the final puzzle wins. Join us on February 21, 2025, from 10 AM to 3 PM at Sinti Stage, VNRVJIET.",
+        link: "/events/hit-reloaded",
+      },
+      {
+        name: "DV CONTEST",
+        eventId: "dv-contest",
+        image: "/events/DVContest2025/img1.png",
+        date: "February 21st 2025",
+        venue: "APJ Abdul Kalam Auditorium",
+        timings: "1:00 PM to 4:00 PM",
+        pics: [
+          "/events/DVContest2025/img1.png",
+          "/events/DVContest2025/img2.jpg",
+          "/events/DVContest2025/img3.jpg",
+          "/events/DVContest2025/img4.jpg",
+        ],
+        winners: "<b>1st prize-</b>(Team- Versatile ones)\nSai Kruthik Royal Pasam<br>Tadapaneni Sriram\n\n<b>2nd prize-</b>(Team- tech hounds)<br>Pettem Akhilvarsh<br>Pichika Kushal\n\n<b>3rd prize-</b>(Team- Data Alchemist)<br>Nishant P<br>Sathvik V\n\n<b>Consolidation prize-</b>( Team- Analyze for change)<br>Bhargav Tammana<br>Ratna Jashwanth Yamar",
+        outcome:
+          "Data wizards transform raw numbers into compelling stories at the data visualization competition.  Real-world challenges are tackled, prizes awarded, and resumes boosted.  Convergence 2025 witnesses the rise of data-driven insights.",
+        // register:
+        //   "https://docs.google.com/forms/d/e/1FAIpQLSe-ug9pGIVPhA73gX9Z3-c8I05h-K0xlkV6ro1nrCFsanZjFw/viewform",
+        isGFormEmbeddable: false,
+        event_tags: ["Data Science", "Competition", "Design"],
+        description:
+          "DV CONTEST 2K25: Visualize. Analyze. Compete. is a Data Visualization Contest on February 21, 2025, at VNRVJIET's APJ Abdul Kalam Auditorium. Teams of two will transform raw data into visual stories for prizes and recognition",
+        link: "/events/dv-contest",
+      },
+      {
+        name: "MAP-AN-APP",
+        eventId: "map-an-app",
+        image: "/events/MapAnApp2025/img1.png",
+        date: "February 22nd 2025",
+        venue: "APJ Abdul Kalam Auditorium",
+        timings: "9:30 AM to 1:00 PM",
+        pics: [
+          "/events/MapAnApp2025/img1.png",
+          "/events/MapAnApp2025/img2.jpg",
+          "/events/MapAnApp2025/img3.jpg",
+        ],
+        winners:
+          "<b>1st Place:</b>\n<b>Team name:</b> Tech hounds<br><b>Members:</b><br>Akhil Varsh (CSE-DS B 2ndyear) (24075A6710)<br>P.Kushal (CSE-B 3rd year) (23075A0513)\n\n<b>2nd Place:</b>\n<b>Team name:</b> winner winner chicken dinner<br><b>Members:</b><br>Bhavishwa reddy (AIDS 2nd year) (23071A7251)<br>Gurram Karthik (AIDS 2nd year) (23071A7228) <br>",
+        outcome:
+          "At MAP-AN-APP, future developers innovate and prototype, creating solutions for healthcare and fintech.  Top performers earn internships, and Convergence 2k25 showcases the next generation of apps.",
+        // register:
+        //   "https://docs.google.com/forms/d/e/1FAIpQLSe-3Ptjj8AVS_vO-d-7WiWjKb8CDWs40yNvR3YaWpNceX1kFw/viewform",
+        isGFormEmbeddable: false,
+        event_tags: [
+          "App Development",
+          "Competition",
+          "Internship Opportunities",
+        ],
+        description:
+          "MAP-AN-APP at Convergence 2k25 is on February 22, 2025, at VNRVJIET's APJ Abdul Kalam Auditorium (9:30 AM-1:00 PM). Teams of two will develop apps in Healthcare & Fintech themes for a ₹3500 prize pool and internship opportunities. Convergence pass required",
+        link: "/events/map-an-app",
+      },
       {
         name: "LANGVISION",
         eventId: "langvision2025",
@@ -126,7 +145,6 @@ const events = {
           "Resume Analyzer":
             "https://github.com/vjdataquesters/Resume_App/archive/refs/heads/main.zip",
         },
-        // isLimitedRegistrations: true,
       },
     ],
     e2024: [

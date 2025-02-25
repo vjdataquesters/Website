@@ -1,6 +1,6 @@
 import React from "react";
 import { QRCode } from "react-qrcode-logo";
-import qrData from "../data/hit.json";
+// import qrData from "../data/hit.json";
 
 const GenerateAllQrs = () => {
   const colorMap = {
