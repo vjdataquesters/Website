@@ -1,111 +1,212 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+
 function Form() {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
+    register: registerPayment,
+    handleSubmit: handlePaymentSubmit,
+    formState: { errors: paymentErrors },
   } = useForm();
-  const [formData, setFormData] = useState(null);
-  const [transactionid, setTransactionid] = useState(null);
-  const makePayment = (data) => {
-    setFormData(data);
-    console.log("Form Data:", data);
-    sendPostRequest(data);
-  };
 
-  const makePaymentRequest = async (data) => {
+  const {
+    register: registerTransaction,
+    handleSubmit: handleTransactionSubmit,
+    formState: { errors: transactionErrors },
+  } = useForm();
+
+  const [makePaymentStatus, setMakePaymentStatus] = React.useState(false);
+  const [transactionStatus, setTransactionStatus] = React.useState(false);
+  const makePayment = async (data) => {
+    setMakePaymentStatus(false);
+    console.log("Payment Form Data:", data);
     try {
       const response = await axios.post(
-        "https://your-api-endpoint.com/submit",
+        "http://localhost:3000/register/makepayment",
         data
       );
-      console.log("Response:", response.data);
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        setMakePaymentStatus(true);
+      }
+
+      console.log("Payment Response:", response.data);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting payment:", error);
+    }
+  };
+
+  const submitTransaction = async (data) => {
+    console.log("transaction Form Data:", data);
+    setTransactionStatus(false);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/register/submittransaction",
+        data
+      );
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        setTransactionStatus(true);
+      }
+
+      console.log("Transaction Response:", response.data);
+    } catch (error) {
+      console.error("Error submitting Transaction:", error);
     }
   };
 
   return (
     <div className="p-4 py-32 max-w-md mx-auto border rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">User Form</h2>
-      <form onSubmit={handleSubmit(makePayment)} className="space-y-3">
+      <h2 className="text-xl font-bold mb-4">Payment Form</h2>
+      <form onSubmit={handlePaymentSubmit(makePayment)} className="space-y-3">
         <input
-          {...register("name", { required: true })}
+          {...registerPayment("name", { required: true })}
           placeholder="Name"
           className="border p-2 w-full"
         />
-        {errors.name && (
+        {paymentErrors.name && (
           <p className="text-red-500 text-sm">Name is required</p>
         )}
 
         <input
-          {...register("rollno", { required: true })}
+          {...registerPayment("rollno", { required: true })}
           placeholder="Roll No"
           className="border p-2 w-full"
         />
-        {errors.rollno && (
+        {paymentErrors.rollno && (
           <p className="text-red-500 text-sm">Roll No is required</p>
         )}
 
-        <input
-          {...register("branch", { required: true })}
-          placeholder="Branch"
+        <select
+          {...registerPayment("branch", { required: true })}
           className="border p-2 w-full"
-        />
-        {errors.branch && (
+          defaultValue=""
+        >
+          <option value="" disabled>
+            Select Department
+          </option>
+          <option value="CSE">CSE</option>
+          <option value="IT">IT</option>
+          <option value="CSBS">CSBS</option>
+          <option value="CSE-DS">CSE-DS</option>
+          <option value="CSE-CyS">CSE-CyS</option>
+          <option value="AI&DS">AI&DS</option>
+          <option value="AIML">AIML</option>
+          <option value="IOT">IOT</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="EIE">EIE</option>
+          <option value="MECHANICAL">MECHANICAL</option>
+          <option value="CIVIL">CIVIL</option>
+          <option value="AUTOMOBILE">AUTOMOBILE</option>
+        </select>
+        {paymentErrors.department && (
           <p className="text-red-500 text-sm">Branch is required</p>
         )}
 
-        <input
-          {...register("year", { required: true })}
-          type="number"
-          placeholder="Year"
-          className="border p-2 w-full"
-        />
-        {errors.year && (
-          <p className="text-red-500 text-sm">Year is required</p>
-        )}
+        <div>
+          <p className="font-medium">Year</p>
+          <label className="inline-flex items-center mr-4">
+            <input
+              {...registerPayment("year", { required: true })}
+              type="radio"
+              value="1"
+              className="mr-1"
+            />
+            1
+          </label>
+          <label className="inline-flex items-center mr-4">
+            <input
+              {...registerPayment("year", { required: true })}
+              type="radio"
+              value="2"
+              className="mr-1"
+            />
+            2
+          </label>
+          <label className="inline-flex items-center mr-4">
+            <input
+              {...registerPayment("year", { required: true })}
+              type="radio"
+              value="3"
+              className="mr-1"
+            />
+            3
+          </label>
+          <label className="inline-flex items-center">
+            <input
+              {...registerPayment("year", { required: true })}
+              type="radio"
+              value="4"
+              className="mr-1"
+            />
+            4
+          </label>
+          {paymentErrors.year && (
+            <p className="text-red-500 text-sm">Year is required</p>
+          )}
+        </div>
 
         <input
-          {...register("email", { required: true })}
+          {...registerPayment("email", { required: true })}
           type="email"
           placeholder="Email"
           className="border p-2 w-full"
         />
-        {errors.email && (
+        {paymentErrors.email && (
           <p className="text-red-500 text-sm">Valid Email is required</p>
         )}
 
         <input
-          {...register("phno", { required: true })}
+          {...registerPayment("phno", { required: true })}
           type="tel"
           placeholder="Phone No"
           className="border p-2 w-full"
         />
-        {errors.phno && (
+        {paymentErrors.phno && (
           <p className="text-red-500 text-sm">Phone No is required</p>
+        )}
+        {makePaymentStatus && (
+          <p className="text-green-500 text-sm">User registered Successfully</p>
         )}
 
         <button
           type="submit"
           className="bg-blue-500 text-white p-2 w-full rounded"
         >
-          Make payment
+          Make Payment
         </button>
       </form>
 
-      <form>
+      <h2 className="text-xl font-bold mt-8 mb-4">Transaction Form</h2>
+      <form
+        onSubmit={handleTransactionSubmit(submitTransaction)}
+        className="space-y-3"
+      >
         <input
+          {...registerTransaction("rollno", { required: true })}
+          placeholder="Roll No"
+          className="border p-2 w-full"
+        />
+        {paymentErrors.rollno && (
+          <p className="text-red-500 text-sm">Roll No is required</p>
+        )}
+
+        <input
+          {...registerTransaction("transactionid", { required: true })}
           placeholder="Transaction ID"
           className="border p-2 w-full"
-          value={transactionid}
-          onChange={(e) => setTransactionid(e.target.value)}
-          {...register("transactionid", { required: true })}
         />
-        {errors.transactionid && (
+        {transactionErrors.transactionid && (
           <p className="text-red-500 text-sm">Transaction ID is required</p>
+        )}
+
+        {transactionStatus && (
+          <p className="text-green-500 text-sm">
+            transactionId submitted Successfully
+          </p>
         )}
 
         <button
