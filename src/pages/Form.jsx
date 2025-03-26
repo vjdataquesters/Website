@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function Form() {
   const {
@@ -15,14 +16,14 @@ function Form() {
     formState: { errors: transactionErrors },
   } = useForm();
 
-  const [makePaymentStatus, setMakePaymentStatus] = React.useState(false);
-  const [transactionStatus, setTransactionStatus] = React.useState(false);
+  const [makePaymentStatus, setMakePaymentStatus] = useState(false);
+  const [transactionStatus, setTransactionStatus] = useState(false);
   const makePayment = async (data) => {
     setMakePaymentStatus(false);
     console.log("Payment Form Data:", data);
     try {
       const response = await axios.post(
-        "http://localhost:3000/register/makepayment",
+        `${SERVER_URL}/register/makepayment`,
         data
       );
       if (response.data.error) {
@@ -42,7 +43,7 @@ function Form() {
     setTransactionStatus(false);
     try {
       const response = await axios.post(
-        "http://localhost:3000/register/submittransaction",
+        `${SERVER_URL}/register/submittransaction`,
         data
       );
       if (response.data.error) {
@@ -69,7 +70,6 @@ function Form() {
         {paymentErrors.name && (
           <p className="text-red-500 text-sm">Name is required</p>
         )}
-
         <input
           {...registerPayment("rollno", { required: true })}
           placeholder="Roll No"
@@ -108,42 +108,16 @@ function Form() {
 
         <div>
           <p className="font-medium">Year</p>
-          <label className="inline-flex items-center mr-4">
-            <input
-              {...registerPayment("year", { required: true })}
-              type="radio"
-              value="1"
-              className="mr-1"
-            />
-            1
-          </label>
-          <label className="inline-flex items-center mr-4">
-            <input
-              {...registerPayment("year", { required: true })}
-              type="radio"
-              value="2"
-              className="mr-1"
-            />
-            2
-          </label>
-          <label className="inline-flex items-center mr-4">
-            <input
-              {...registerPayment("year", { required: true })}
-              type="radio"
-              value="3"
-              className="mr-1"
-            />
-            3
-          </label>
-          <label className="inline-flex items-center">
-            <input
-              {...registerPayment("year", { required: true })}
-              type="radio"
-              value="4"
-              className="mr-1"
-            />
-            4
-          </label>
+          <select
+            {...registerPayment("year", { required: true })}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select Year</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
           {paymentErrors.year && (
             <p className="text-red-500 text-sm">Year is required</p>
           )}

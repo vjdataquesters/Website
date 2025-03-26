@@ -1,1 +1,4 @@
-Vj Data Questers Club
+# Vj Data Questers Club
+
+## .env
+- VITE_SERVER_URL
