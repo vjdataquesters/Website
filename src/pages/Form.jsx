@@ -5,82 +5,52 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function Form() {
   const {
-    register: registerPayment,
-    handleSubmit: handlePaymentSubmit,
-    formState: { errors: paymentErrors },
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm();
 
-  const {
-    register: registerTransaction,
-    handleSubmit: handleTransactionSubmit,
-    formState: { errors: transactionErrors },
-  } = useForm();
-
-  const [makePaymentStatus, setMakePaymentStatus] = useState(false);
-  const [transactionStatus, setTransactionStatus] = useState(false);
-  const makePayment = async (data) => {
-    setMakePaymentStatus(false);
+  const [submitStatus, setSubmitStatus] = useState(false);
+  const submitForm = async (data) => {
+    setSubmitStatus(false);
     console.log("Payment Form Data:", data);
     try {
-      const response = await axios.post(
-        `${SERVER_URL}/register/makepayment`,
-        data
-      );
+      const response = await axios.post(`${SERVER_URL}/register`, data);
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        setMakePaymentStatus(true);
+        setSubmitStatus(true);
       }
-
       console.log("Payment Response:", response.data);
     } catch (error) {
       console.error("Error submitting payment:", error);
     }
   };
 
-  const submitTransaction = async (data) => {
-    console.log("transaction Form Data:", data);
-    setTransactionStatus(false);
-    try {
-      const response = await axios.post(
-        `${SERVER_URL}/register/submittransaction`,
-        data
-      );
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        setTransactionStatus(true);
-      }
-
-      console.log("Transaction Response:", response.data);
-    } catch (error) {
-      console.error("Error submitting Transaction:", error);
-    }
-  };
-
   return (
+
     <div className="p-4 py-32 max-w-md mx-auto border rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Payment Form</h2>
-      <form onSubmit={handlePaymentSubmit(makePayment)} className="space-y-3">
+      <h2 className="text-xl font-bold mb-4">Event Form</h2>
+      <form onSubmit={handleSubmit(submitForm)} className="space-y-3">
         <input
-          {...registerPayment("name", { required: true })}
+          {...register("name", { required: true })}
           placeholder="Name"
           className="border p-2 w-full"
         />
-        {paymentErrors.name && (
+        {errors.name && (
           <p className="text-red-500 text-sm">Name is required</p>
         )}
         <input
-          {...registerPayment("rollno", { required: true })}
+          {...register("rollno", { required: true })}
           placeholder="Roll No"
           className="border p-2 w-full"
         />
-        {paymentErrors.rollno && (
+        {errors.rollno && (
           <p className="text-red-500 text-sm">Roll No is required</p>
         )}
 
         <select
-          {...registerPayment("branch", { required: true })}
+          {...register("branch", { required: true })}
           className="border p-2 w-full"
           defaultValue=""
         >
@@ -102,14 +72,14 @@ function Form() {
           <option value="CIVIL">CIVIL</option>
           <option value="AUTOMOBILE">AUTOMOBILE</option>
         </select>
-        {paymentErrors.department && (
+        {errors.department && (
           <p className="text-red-500 text-sm">Branch is required</p>
         )}
 
         <div>
           <p className="font-medium">Year</p>
           <select
-            {...registerPayment("year", { required: true })}
+            {...register("year", { required: true })}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select Year</option>
@@ -118,71 +88,65 @@ function Form() {
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          {paymentErrors.year && (
+          {errors.year && (
             <p className="text-red-500 text-sm">Year is required</p>
           )}
         </div>
 
         <input
-          {...registerPayment("email", { required: true })}
+          {...register("email", { required: true })}
           type="email"
           placeholder="Email"
           className="border p-2 w-full"
         />
-        {paymentErrors.email && (
+        {errors.email && (
           <p className="text-red-500 text-sm">Valid Email is required</p>
         )}
 
         <input
-          {...registerPayment("phno", { required: true })}
+          {...register("phno", { required: true })}
           type="tel"
           placeholder="Phone No"
           className="border p-2 w-full"
         />
-        {paymentErrors.phno && (
+        {errors.phno && (
           <p className="text-red-500 text-sm">Phone No is required</p>
         )}
-        {makePaymentStatus && (
-          <p className="text-green-500 text-sm">User registered Successfully</p>
-        )}
 
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 w-full rounded"
+        <select
+          {...register("paymentplatform", { required: true })}
+          className="border p-2 w-full"
+          defaultValue=""
         >
-          Make Payment
-        </button>
-      </form>
-
-      <h2 className="text-xl font-bold mt-8 mb-4">Transaction Form</h2>
-      <form
-        onSubmit={handleTransactionSubmit(submitTransaction)}
-        className="space-y-3"
-      >
-        <input
-          {...registerTransaction("rollno", { required: true })}
-          placeholder="Roll No"
-          className="border p-2 w-full"
-        />
-        {paymentErrors.rollno && (
-          <p className="text-red-500 text-sm">Roll No is required</p>
-        )}
-
-        <input
-          {...registerTransaction("transactionid", { required: true })}
-          placeholder="Transaction ID"
-          className="border p-2 w-full"
-        />
-        {transactionErrors.transactionid && (
-          <p className="text-red-500 text-sm">Transaction ID is required</p>
-        )}
-
-        {transactionStatus && (
-          <p className="text-green-500 text-sm">
-            transactionId submitted Successfully
+          <option value="" disabled>
+            Select Payment Platform
+          </option>
+          <option value="Google Pay">Google Pay</option>
+          <option value="PhonePe">PhonePe</option>
+          <option value="Paytm">Paytm</option>
+          <option value="Amazon Pay">Amazon Pay</option>
+          <option value="BHIM UPI">BHIM UPI</option>
+          <option value="Mobikwik">Mobikwik</option>
+          <option value="FreeCharge">FreeCharge</option>
+          <option value="Other">Other</option>
+        </select>
+        {errors.paymentplatform && (
+          <p className="text-red-500 text-sm">
+            Please select a payment platform
           </p>
         )}
 
+        <input
+          {...register("transactionid", { required: true })}
+          placeholder="Transaction ID"
+          className="border p-2 w-full"
+        />
+        {errors.transactionid && (
+          <p className="text-red-500 text-sm">Transaction ID is required</p>
+        )}
+        {submitStatus && (
+          <p className="text-green-500 text-sm">User registered Successfully</p>
+        )}
         <button
           type="submit"
           className="bg-blue-500 text-white p-2 w-full rounded"
@@ -191,6 +155,7 @@ function Form() {
         </button>
       </form>
     </div>
+
   );
 }
 
