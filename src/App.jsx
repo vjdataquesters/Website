@@ -29,7 +29,8 @@ function App() {
   function PromoSection() {
     const { pathname } = useLocation();
     return (
-      pathname !== '/hit' && pathname !== '/hitreloadedultrasecretendpoint' && (
+      pathname !== "/hit" &&
+      pathname !== "/hitreloadedultrasecretendpoint" && (
         <div className="fixed bottom-2 md:bottom-14 right-2 flex flex-col gap-2 z-10">
           {events.upcoming.map((e, i) => (
             <PromoDiv

@@ -6,7 +6,7 @@ import Testimonials from "./Testimonials";
 import Event from "../components/Event";
 import Technovista from "../components/Technovista";
 import NewsLetter from "./NewsLetter";
-
+import RegistrationForm from "./RegistrationForm";
 
 const router = [
   { path: "/", component: Home },
@@ -17,6 +17,7 @@ const router = [
   { path: "/events/:eventname", component: Event },
   { path: "/team", component: Team },
   { path: "/newsletter", component: NewsLetter },
+  { path: "/register", component: RegistrationForm },
   { path: "*", component: Home },
 ];
 
