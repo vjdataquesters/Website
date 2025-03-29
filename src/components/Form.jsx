@@ -3,28 +3,61 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Send } from "lucide-react";
 import { motion } from "framer-motion";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
+const SERVER_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "https://api.vjdataquesters.com";
+
+const api = axios.create({
+  baseURL: SERVER_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 
 const Form = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+
   const [submitStatus, setSubmitStatus] = useState(false);
+
+  useEffect(() => {
+    // send stats req
+  }, []) 
+
+  // put a use effect and hit /status endpoint to get isForm
+  /**
+   * @param { * {
+  *  isFormOpen: boolean;
+  *  currentRegistrations: number; 
+  *  maxRegistrations: number
+  *  lastUpdated: string;
+  * }}
+  * 
+  * if isFormOpen is false - dont show the form
+  * also show the participant currentRegistrations and maxRegistrations
+  *  
+  */
+
 
   const submitForm = async (data) => {
     setSubmitStatus(false);
     console.log("Register Form Data:", data);
     try {
-      const response = await axios.post(`${SERVER_URL}/register`, data);
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
+      const response = await api.post("/register", data);
+      if (response.data.status) {
         setSubmitStatus(true);
+        reset();
       }
-      console.log("Payment Response:", response.data);
+      else {
+        setSubmitStatus(false);
+      }
+      alert(response.data.message);
     } catch (error) {
+      alert("Error submitting form. Please try again later.");
+      setSubmitStatus(false);
       console.error("Error submitting payment:", error);
     }
   };

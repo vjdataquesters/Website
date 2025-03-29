@@ -66,6 +66,7 @@ const Leftside = () => {
         transition={{ delay: 1 }}
       >
         For any queries, contact <span className="font-bold">K. Aditya</span>
+        {/* who is aditya?? */}
       </motion.p>
     </motion.div>
   );
