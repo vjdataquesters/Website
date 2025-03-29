@@ -4,7 +4,7 @@ import Form from "../components/Form";
 
 const RegistrationForm = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-20">
+    <div className="flex justify-center items-center  mdbg-gray-100 py-20 min-h-">
       {/* Main Container */}
       <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white shadow-xl rounded-lg overflow-hidden">
         {/* Left Section (Hidden on small screens) */}

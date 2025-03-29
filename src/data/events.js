@@ -36,7 +36,26 @@
 //   | 'Guest Lecture';
 
 const events = {
-  upcoming: [],
+  upcoming: [
+    {
+      name: "Cloud Craft",
+      eventId: "cloud-craft",
+      image: "/events/CloudCraft2025/img1.png",
+      date: "April 7th & 8th 2025",
+      venue: "APJ Abdul Kalam Auditorium",
+      timings: "10:00 AM to 4:00 PM",
+      pics: ["/events/CloudCraft2025/img1.png"],
+      // winners:"",
+      // outcome:
+      //   "",
+      register: "",
+      // isGFormEmbeddable: false,
+      event_tags: ["Workshop", "Cloud", "AWS"],
+      description:
+        "A 2 day workshop on Cloud computing concepts,with hands-on practice of AWS",
+      link: "/events/cloud-craft",
+    },
+  ],
   past: {
     e2025: [
       {
@@ -77,7 +96,8 @@ const events = {
           "/events/DVContest2025/img3.jpg",
           "/events/DVContest2025/img4.jpg",
         ],
-        winners: "<b>1st prize-</b>(Team- Versatile ones)\nSai Kruthik Royal Pasam<br>Tadapaneni Sriram\n\n<b>2nd prize-</b>(Team- tech hounds)<br>Pettem Akhilvarsh<br>Pichika Kushal\n\n<b>3rd prize-</b>(Team- Data Alchemist)<br>Nishant P<br>Sathvik V\n\n<b>Consolidation prize-</b>( Team- Analyze for change)<br>Bhargav Tammana<br>Ratna Jashwanth Yamar",
+        winners:
+          "<b>1st prize-</b>(Team- Versatile ones)\nSai Kruthik Royal Pasam<br>Tadapaneni Sriram\n\n<b>2nd prize-</b>(Team- tech hounds)<br>Pettem Akhilvarsh<br>Pichika Kushal\n\n<b>3rd prize-</b>(Team- Data Alchemist)<br>Nishant P<br>Sathvik V\n\n<b>Consolidation prize-</b>( Team- Analyze for change)<br>Bhargav Tammana<br>Ratna Jashwanth Yamar",
         outcome:
           "Data wizards transform raw numbers into compelling stories at the data visualization competition.  Real-world challenges are tackled, prizes awarded, and resumes boosted.  Convergence 2025 witnesses the rise of data-driven insights.",
         // register:
