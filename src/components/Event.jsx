@@ -11,8 +11,10 @@ import events from "../data/events.js";
 
 export default function Event() {
   function handleRegister() {
-    const element = document.getElementById("embedded-form");
-    element.scrollIntoView({ behavior: "smooth", block: "start" });
+    // const element = document.getElementById("embedded-form");
+    // element.scrollIntoView({ behavior: "smooth", block: "start" });
+    // window.location.href = event.register;
+
   }
 
   const { eventname } = useParams();
