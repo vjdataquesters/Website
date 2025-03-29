@@ -23,9 +23,9 @@ const Form = () => {
 
   const [submitStatus, setSubmitStatus] = useState(false);
 
-  useEffect(() => {
-    // send stats req
-  }, []) 
+  // useEffect(() => {
+  //   // send stats req
+  // }, []) 
 
   // put a use effect and hit /status endpoint to get isForm
   /**
