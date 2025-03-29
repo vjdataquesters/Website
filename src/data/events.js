@@ -48,8 +48,8 @@ const events = {
       // winners:"",
       // outcome:
       //   "",
-      register: "",
-      // isGFormEmbeddable: false,
+      register: "http://localhost:5173/register",
+      isGFormEmbeddable: false,
       event_tags: ["Workshop", "Cloud", "AWS"],
       description:
         "A 2 day workshop on Cloud computing concepts,with hands-on practice of AWS",

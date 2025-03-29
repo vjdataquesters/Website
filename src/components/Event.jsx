@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -13,7 +13,8 @@ export default function Event() {
   function handleRegister() {
     // const element = document.getElementById("embedded-form");
     // element.scrollIntoView({ behavior: "smooth", block: "start" });
-    
+    window.location.href = event.register;
+
   }
 
   const { eventname } = useParams();

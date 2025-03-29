@@ -15,7 +15,7 @@ const Form = () => {
 
   const submitForm = async (data) => {
     setSubmitStatus(false);
-    console.log("Payment Form Data:", data);
+    console.log("Register Form Data:", data);
     try {
       const response = await axios.post(`${SERVER_URL}/register`, data);
       if (response.data.error) {
@@ -159,6 +159,17 @@ const Form = () => {
               />
               {errors.phno && (
                 <p className="text-red-500 text-sm">Phone No is required</p>
+              )}
+            </div>
+            <div>
+              <label className="text-sm text-gray-950">Email</label>
+              <input
+                {...register("email", { required: true })}
+                placeholder="Email"
+                className="border p-2 w-full rounded-md"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">Email is required</p>
               )}
             </div>
 
