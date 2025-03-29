@@ -48,7 +48,7 @@ const events = {
       // winners:"",
       // outcome:
       //   "",
-      register: "http://localhost:5173/register",
+      register: "https://www.vjdataquesters.com/register",
       isGFormEmbeddable: false,
       event_tags: ["Workshop", "Cloud", "AWS"],
       description:
