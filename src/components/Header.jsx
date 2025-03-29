@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <nav className="w-full h-16 fixed bg-[#0f323f] z-[102]">
       <div className="flex justify-end items-center h-full mx-8">
-        
+
         <ul className={`
           flex items-center text-lg px-4 md:px-0
           md:static
@@ -36,7 +36,7 @@ const Header = () => {
               </p>
             </Link>
           </li>
-          
+
           <li className="mx-6 group relative py-5 px-2 border-b border-white/50 w-full
             md:py-0 md:px-0 md:border-0 md:w-auto">
             <p className="text-white hover:text-[#9d9d9d] cursor-pointer ">
@@ -83,7 +83,7 @@ const Header = () => {
               </li>
             </ul>
           </li>
-          
+
           <li className="mx-6 py-5 px-2 border-b border-white/50 w-full
             md:py-0 md:px-0 md:border-0 md:w-auto">
             <Link to="events" onClick={handleBarsClick} className="no-underline">
@@ -92,7 +92,16 @@ const Header = () => {
               </p>
             </Link>
           </li>
-          
+
+          <li className="mx-6 py-5 px-2 border-b border-white/50 w-full
+            md:py-0 md:px-0 md:border-0 md:w-auto">
+            <Link to="gallery" onClick={handleBarsClick} className="no-underline">
+              <p className="text-white hover:text-[#9d9d9d] cursor-pointer ">
+                Gallery
+              </p>
+            </Link>
+          </li>
+
           <li className="mx-6 py-5 px-2 border-b border-white/50 w-full
             md:py-0 md:px-0 md:border-0 md:w-auto">
             <Link to="team" onClick={handleBarsClick} className="no-underline">
