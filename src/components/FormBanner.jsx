@@ -41,7 +41,7 @@ const Leftside = () => {
 
       {/* Features Section */}
       <div className="flex gap-6 justify-center mb-3">
-        <motion.div className="p-4 rounded-lg bg-white text-blue-900 shadow-lg flex flex-col items-center w-44 hover:scale-110 transition-transform">
+        <motion.div className="p-4 rounded-lg bg-white text-blue-900 shadow-lg flex flex-col items-center w-44 hover:scale-110 transition-transform duration-300 ease-in-out">
           <Server size={30} className="mb-2" />
           <h5 className="font-bold">Cloud Fundamentals</h5>
           <p className="text-sm text-center">
@@ -49,7 +49,7 @@ const Leftside = () => {
           </p>
         </motion.div>
 
-        <motion.div className="p-4 rounded-lg bg-white text-blue-900 shadow-lg flex flex-col items-center w-44 hover:scale-110 transition-transform">
+        <motion.div className="p-4 rounded-lg bg-white text-blue-900 shadow-lg flex flex-col items-center w-44 hover:scale-110 transition-transform duration-300 ease-in-out">
           <Database size={30} className="mb-2" />
           <h5 className="font-bold">AWS Mastery</h5>
           <p className="text-sm text-center">
@@ -60,13 +60,19 @@ const Leftside = () => {
 
       {/* Contact Section */}
       <motion.p
-        className="text-lg text-gray-200 mt-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
+        className="text-lg text-gray-300 mt-2 leading-relaxed"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
       >
-        For any queries, contact <span className="font-bold">K. Aditya</span>
-        {/* who is aditya?? */}
+        <span className="font-semibold text-gray-100">
+          For any queries, contact
+        </span>
+        <br />
+        <span className="font-semibold text-gray-100">
+          Student Coordinator: Richard Luke
+        </span>
+        <span className="font-medium text-gray-200">(7207258403)</span>
       </motion.p>
     </motion.div>
   );
