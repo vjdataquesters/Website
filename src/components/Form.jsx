@@ -37,7 +37,7 @@ const pulseVariants = {
   },
 };
 
-const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
+const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
   const {
     register,
     handleSubmit,
@@ -87,9 +87,24 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
       variants={transitionVariants}
       className="h-[80vh]"
     >
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">
-        <span className="text-blue-500">&lt;/&gt;</span> Cloud Craft
-      </h1>
+      <div className="flex flex-col justify-center">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-gray-900">
+            <span className="text-blue-500">&lt;/&gt;</span> Cloud Craft
+          </h1>
+
+          {/* Elegant Registration Counter */}
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 bg-gray-100 px-2 py-1 rounded-lg shadow-sm border w-fit">
+  <span className="text-xs sm:text-sm font-medium text-gray-800 px-2">
+    Registrations:
+  </span>
+  <span className="px-2 py-1 text-xs sm:text-sm font-semibold text-white bg-[#135168cb] rounded-md">
+    {formStatus.currentRegistrations} / {formStatus.maxRegistrations}
+  </span>
+</div>
+
+        </div>
+      </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit(submitForm)} className="grid gap-2 p-4">
@@ -442,6 +457,7 @@ const Form = () => {
         <FormComp
           setLoadingStatus={setLoadingStatus}
           setSubmitStatus={setSubmitStatus}
+          formStatus={formStatus}
         />
       )}
     </motion.div>

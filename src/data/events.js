@@ -48,7 +48,7 @@ const events = {
       // winners:"",
       // outcome:
       //   "",
-      register: "",
+      register: "/register",
       isGFormEmbeddable: false,
       event_tags: ["Workshop", "Cloud", "AWS"],
       description:

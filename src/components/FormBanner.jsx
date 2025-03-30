@@ -5,7 +5,7 @@ import { Cloud, Server, Database } from "lucide-react";
 const Leftside = () => {
   return (
     <motion.div
-      className="text-white text-center w-full flex flex-col justify-center items-center h-full rounded-lg bg-gradient-to-r from-blue-900 to-teal-400"
+      className="text-white text-center w-full flex flex-col justify-center items-center h-full rounded-lg bg-gradient-to-r from-[#7173ae] to-[#63a59b]"
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 1 }}

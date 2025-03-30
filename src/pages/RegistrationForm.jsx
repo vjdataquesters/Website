@@ -8,7 +8,7 @@ const RegistrationForm = () => {
       {/* Main Container */}
       <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white shadow-xl rounded-lg overflow-hidden">
         {/* Left Section (Hidden on small screens) */}
-        <div className="hidden md:flex md:w-1/2 bg-gradient-to-r from-blue-900 to-teal-400 text-white justify-center items-center rounded-l-lg">
+        <div className="hidden md:flex md:w-1/2 bg-gradient-to-r from-[#7173ae] to-[#63a59b] text-white justify-center items-center rounded-l-lg">
           <Leftside />
         </div>
         {/* Right Section (Form) */}

@@ -3,6 +3,7 @@ import { ArrowLeft, Download } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { SquareArrowUpRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -14,7 +15,7 @@ export default function Event() {
     // const element = document.getElementById("embedded-form");
     // element.scrollIntoView({ behavior: "smooth", block: "start" });
     // window.location.href = event.register;
-
+  
   }
 
   const { eventname } = useParams();
@@ -45,7 +46,7 @@ export default function Event() {
       </div>
     );
   }
-
+  const navigate = useNavigate();
   return (
     <div className="pt-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -96,7 +97,7 @@ export default function Event() {
               ) : (
                 <div className="self-end">
                   <button
-                    onClick={handleRegister}
+                    onClick={() => navigate(event.register)}
                     className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
                   >
                     Register Now
