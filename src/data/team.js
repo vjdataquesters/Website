@@ -29,7 +29,7 @@ export const currentteam = [
   },
   {
     name: "VARDHAN GOUD",
-    role: "PR",
+    role: "President",
     linkedin:
       "https://www.linkedin.com/in/mula-vardhan-goud-81753b290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     image: "vardhan.png",

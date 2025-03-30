@@ -85,7 +85,7 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
       animate="animate"
       exit="exit"
       variants={transitionVariants}
-      className="h-[80vh]"
+      className="md:h-[80vh]"
     >
       <div className="flex flex-col justify-center">
         <div className="flex items-center justify-between">
@@ -93,16 +93,14 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
             <span className="text-blue-500">&lt;/&gt;</span> Cloud Craft
           </h1>
 
-          {/* Elegant Registration Counter */}
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 bg-gray-100 px-2 py-1 rounded-lg shadow-sm border w-fit">
-  <span className="text-xs sm:text-sm font-medium text-gray-800 px-2">
-    Registrations:
-  </span>
-  <span className="px-2 py-1 text-xs sm:text-sm font-semibold text-white bg-[#135168cb] rounded-md">
-    {formStatus.currentRegistrations} / {formStatus.maxRegistrations}
-  </span>
-</div>
-
+          <div className="flex flex-wrap items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-lg shadow-sm border w-fit">
+            <span className="text-xs sm:text-sm font-medium text-gray-800">
+              Slots Left:
+            </span>
+            <span className="px-3 py-1 text-xs sm:text-sm font-semibold text-white bg-[#236e9c] rounded-md shadow">
+              {formStatus.maxRegistrations - formStatus.currentRegistrations}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -120,7 +118,6 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
             <p className="text-red-500 text-sm">Name is required</p>
           )}
         </div>
-
         {/* Branch & Section */}
         <div className="grid grid-cols-2 gap-2">
           <div>
@@ -191,18 +188,16 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select Year</option>
-              {[1, 2, 3, 4].map((year) => (
-                <option key={year} value={year}>
-                  {year}ᵗʰ Year
-                </option>
-              ))}
+              <option value="1">1st Year</option>
+              <option value="2">2nd Year</option>
+              <option value="3">3rd Year</option>
+              <option value="4">4th Year</option>
             </select>
             {errors.year && (
               <p className="text-red-500 text-sm">Year is required</p>
             )}
           </div>
         </div>
-
         {/* Contact Number */}
         <div>
           <label className="text-sm text-gray-950">Contact Number</label>
@@ -239,10 +234,12 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
             <p className="text-red-500 text-sm">{errors.email.message}</p>
           )}
         </div>
-
         {/* Payment QR Code */}
         <div className="text-center">
-          <label className="text-sm text-gray-950 block">Payment QR Code</label>
+          <label className="text-md text-gray-950 block">Payment QR Code</label>
+          <p>
+            Account Holder: <span id="accountHolder">K. Adithya</span>
+          </p>
           <img
             src="/paymentsQR.png"
             alt="Payment QR Code"
@@ -289,7 +286,6 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
             <p className="text-red-500 text-sm">Transaction ID is required</p>
           )}
         </div>
-
         {/* Submit Button */}
         <div className="mt-3 flex justify-center">
           <button
@@ -442,7 +438,7 @@ const Form = () => {
 
   return (
     <motion.div
-      className="w-full max-w-full shadow-lg p-4 border overflow-y-auto max-h-[90vh] small-scrollbar"
+      className="w-full max-w-full md:shadow-lg p-4 border overflow-y-auto md:max-h-[90vh] small-scrollbar"
       initial={{ opacity: 0, filter: "blur(10px)" }}
       animate={{ opacity: 1, filter: "blur(0px)" }}
       transition={{ duration: 1, ease: "easeOut" }}

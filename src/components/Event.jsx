@@ -11,11 +11,11 @@ import "swiper/css/autoplay";
 import events from "../data/events.js";
 
 export default function Event() {
-  function handleRegister() {
+  function handleRegister(url) {
     // const element = document.getElementById("embedded-form");
     // element.scrollIntoView({ behavior: "smooth", block: "start" });
     // window.location.href = event.register;
-  
+    navigate(`../../${url}`);
   }
 
   const { eventname } = useParams();
@@ -82,29 +82,14 @@ export default function Event() {
           </div>
 
           {event.register && (
-            <>
-              {event?.isGFormEmbeddable === false ? (
-                <div className="self-end">
-                  <a
-                    className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
-                    href={event.register}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Register Now
-                  </a>
-                </div>
-              ) : (
-                <div className="self-end">
-                  <button
-                    onClick={() => navigate(event.register)}
-                    className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
-                  >
-                    Register Now
-                  </button>
-                </div>
-              )}
-            </>
+            <div className="self-end">
+              <button
+                onClick={() => handleRegister(event.register)}
+                className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
+              >
+                Register Now
+              </button>
+            </div>
           )}
         </div>
 
@@ -124,14 +109,14 @@ export default function Event() {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
               }}
-              className="w-full md:h-[42rem] mx-auto rounded-lg overflow-hidden py-8"
+              className="w-full md:h-[42rem] mx-auto rounded-lg overflow-hidden py-8 flex justify-center"
             >
               {event.pics.map((pic, index) => (
                 <SwiperSlide key={index}>
                   <img
                     src={pic}
                     alt={`${event.name} - Image ${index + 1}`}
-                    className="w-full h-full"
+                    className="h-full mx-auto"
                     draggable={false}
                   />
                 </SwiperSlide>

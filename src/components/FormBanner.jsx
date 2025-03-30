@@ -5,7 +5,7 @@ import { Cloud, Server, Database } from "lucide-react";
 const Leftside = () => {
   return (
     <motion.div
-      className="text-white text-center w-full flex flex-col justify-center items-center h-full rounded-lg bg-gradient-to-r from-[#7173ae] to-[#63a59b]"
+      className="text-white text-center w-full flex flex-col justify-center items-center h-full rounded-lg  bg-gradient-to-r from-blue-900 to-teal-400"
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 1 }}
@@ -20,13 +20,7 @@ const Leftside = () => {
         >
           CloudCraft
         </motion.h1>
-        <motion.div
-          initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-        >
-          <Cloud size={40} className="text-white" />
-        </motion.div>
+        <Cloud size={40} className="text-white" />
       </div>
 
       {/* Subtitle */}
@@ -59,21 +53,19 @@ const Leftside = () => {
       </div>
 
       {/* Contact Section */}
-      <motion.p
-        className="text-lg text-gray-300 mt-2 leading-relaxed"
+      <motion.div
+        className="text-center text-gray-300 mt-2 leading-relaxed"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
       >
-        <span className="font-semibold text-gray-100">
-          For any queries, contact
-        </span>
-        <br />
-        <span className="font-semibold text-gray-100">
-          Student Coordinator: Richard Luke
-        </span>
-        <span className="font-medium text-gray-200">(7207258403)</span>
-      </motion.p>
+        <p className="font-semibold text-gray-100">For any queries, contact</p>
+
+        <p className="font-light text-gray-100">Student Coordinator:</p>
+        <p className="font-light text-gray-100">Richard Luke(7207258403)</p>
+
+        <span className="font-light text-gray-100">Ch Renuka(9063108170)</span>
+      </motion.div>
     </motion.div>
   );
 };
