@@ -267,9 +267,11 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
             <option value="Paytm">Paytm</option>
             <option value="Amazon Pay">Amazon Pay</option>
             <option value="BHIM UPI">BHIM UPI</option>
+            <option value="FamPay">Fampay</option>
             <option value="Mobikwik">Mobikwik</option>
             <option value="WhatsApp Pay">WhatsApp Pay</option>
             <option value="FreeCharge">FreeCharge</option>
+            <option value="other">other</option>
           </select>
           {errors.paymentplatform && (
             <p className="text-red-500 text-sm">
