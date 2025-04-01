@@ -96,14 +96,14 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus, formStatus }) => {
             <span className="text-blue-500">&lt;/&gt;</span> Cloud Craft
           </h1>
 
-          <div className="flex flex-wrap items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-lg shadow-sm border w-fit">
+          {/* <div className="flex flex-wrap items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-lg shadow-sm border w-fit">
             <span className="text-xs sm:text-sm font-medium text-gray-800">
               Slots Left:
             </span>
             <span className="px-3 py-1 text-xs sm:text-sm font-semibold text-white bg-[#236e9c] rounded-md shadow">
               {formStatus.maxRegistrations - formStatus.currentRegistrations}
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -388,43 +388,43 @@ const Form = () => {
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(false);
   const [formStatus, setFormStatus] = useState({
-    isFormOpen: false,
-    currentRegistrations: 0,
-    maxRegistrations: 150,
-    lastUpdated: "",
+    isFormOpen: true,
+    // currentRegistrations: 0,
+    // maxRegistrations: 150,
+    // lastUpdated: "",
   });
 
-  useEffect(() => {
+  // useEffect(() => {
     // setTimeout(() => setFormStatus({ ...formStatus, isFormOpen: true }), 0);
     // setTimeout(() => setLoadingStatus(true), 2000);
     // setTimeout(() => setLoadingStatus(false), 4000);
     // setTimeout(() => setSubmitStatus(true), 4000);
     // setTimeout(() => setFormStatus({ ...formStatus, isFormOpen: false }), 5000);
 
-    const fetchStatus = async () => {
-      try {
-        setLoadingStatus(true);
-        const response = await api.get("/stats");
-        // console.log(response);
-        if (response.data.success === true && response.data.data) {
-          setFormStatus({
-            isFormOpen: response.data.data.isFormOpen,
-            currentRegistrations: response.data.data.currentRegistrations || 0,
-            maxRegistrations: response.data.data.maxRegistrations || 150,
-            lastUpdated:
-              response.data.data.lastUpdated || new Date().toISOString(),
-          });
-        } else {
-          throw new Error(response.data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoadingStatus(false);
-      }
-    };
-    fetchStatus();
-  }, []);
+    // const fetchStatus = async () => {
+    //   try {
+    //     setLoadingStatus(true);
+    //     const response = await api.get("/stats");
+    //     // console.log(response);
+    //     if (response.data.success === true && response.data.data) {
+    //       setFormStatus({
+    //         isFormOpen: response.data.data.isFormOpen,
+    //         currentRegistrations: response.data.data.currentRegistrations || 0,
+    //         maxRegistrations: response.data.data.maxRegistrations || 150,
+    //         lastUpdated:
+    //           response.data.data.lastUpdated || new Date().toISOString(),
+    //       });
+    //     } else {
+    //       throw new Error(response.data.error);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   } finally {
+    //     setLoadingStatus(false);
+    //   }
+    // };
+    // fetchStatus();
+  // }, []);
   // put a use effect and hit /status endpoint to get isForm
   /**
    * @param { * {
