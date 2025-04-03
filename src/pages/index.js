@@ -8,9 +8,11 @@ import Technovista from "../components/Technovista";
 import NewsLetter from "./NewsLetter";
 import Gallery from "./Gallery";
 import RegistrationForm from "./RegistrationForm";
+import TechnoVista from "./TechnoVista";
 
 const router = [
   { path: "/", component: Home },
+  { path: "/technovista",component:TechnoVista},
   { path: "/about", component: About },
   { path: "/testimonials", component: Testimonials },
   { path: "/events", component: Events },

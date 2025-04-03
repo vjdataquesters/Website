@@ -18,6 +18,7 @@ import events from "./data/events";
 
 function App() {
   const [load, setLoad] = useState(true);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoad(false);
@@ -26,9 +27,21 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  function ShowHeader(){
+    const { pathname } = useLocation();
+    return (
+      <div>
+        {
+          pathname!=="/technovista"&& <Header />
+        }
+      </div>
+    )
+  }
+
   function PromoSection() {
     const { pathname } = useLocation();
     return (
+      pathname !=="/technovista" &&
       pathname !== "/hit" &&
       pathname !== "/hitreloadedultrasecretendpoint" &&
       pathname !== "/register" && (
@@ -49,7 +62,7 @@ function App() {
     <Router>
       <Analytics />
       <Loading load={load} />
-      <Header />
+      <ShowHeader />
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-blue-50/70">
         <Routes>
