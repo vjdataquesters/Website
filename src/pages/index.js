@@ -8,10 +8,12 @@ import NewsLetter from "./NewsLetter";
 import Gallery from "./Gallery";
 import Technovista from "./Technovista";
 import TechnovistaForm from "./TechnovistaForm";
+import LandingTV from "../components/TVComponents/LandingTV";
 
 const router = [
-  { path: "/", component: Technovista },
+  { path: "/", component: LandingTV },
   { path: "/tv25/register", component: TechnovistaForm },
+  { path: "/technovista", component: Technovista },
   { path: "/home", component: Home },
   { path: "/about", component: About },
   { path: "/testimonials", component: Testimonials },

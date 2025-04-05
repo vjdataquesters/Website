@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Calendar } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-function Countdown() {
+function Countdown({ isVisible }) {
     const calculateTimeLeft = () => {
     const targetDate = new Date("April 25, 2025 00:00:00").getTime();
     const now = new Date().getTime();
@@ -30,46 +30,60 @@ function Countdown() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center bg-black text-white p-10">
-      
-      {/* Countdown Section */}
-      <div className="w-full flex flex-col items-center">
-        
-        {/* Title */}
-        <h1 className="text-4xl md:text-6xl font-bold text-center uppercase mb-6 bg-gradient-to-r from-yellow-400 to-yellow-700 text-transparent bg-clip-text">
-         COUNTDOWN
-        </h1>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.5, y: 50 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.5, y: 50 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center justify-center"
+        >
+          {/* Title */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-6xl md:text-7xl font-bold text-center mb-8 text-yellow-400"
+            style={{
+              textShadow: '0 2px 8px rgba(234, 179, 8, 0.3)'
+            }}
+          >
+            COUNTDOWN
+          </motion.h1>
 
-        {/* Countdown Timer */}
-        <div className="grid grid-cols-4 gap-3">
-          {Object.entries(timeLeft).map(([unit, value]) => (
-            <div
-              key={unit}
-              className="w-16 h-16 md:w-20 md:h-20 bg-black bg-opacity-50 border border-yellow-500 rounded-lg flex flex-col items-center justify-center shadow-lg backdrop-blur-md"
-            >
-              <span className="text-2xl md:text-3xl font-bold text-yellow-400">{value}</span>
-              <span className="text-xs md:text-sm uppercase tracking-wide text-white">{unit}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Date Card */}
-        <div className="mt-6 flex items-center justify-between w-full max-w-lg bg-yellow-500 text-black py-4 px-6 rounded-lg shadow-lg">
-          <div className="flex items-center gap-3">
-            <Calendar className="w-6 h-6" />
-            <p className="text-sm md:text-lg font-bold">
-              <span className="text-gray-800">From:</span> <span className="text-black">Today</span>
-            </p>
+          {/* Countdown Timer */}
+          <div className="grid grid-cols-4 gap-6 md:gap-8">
+            {Object.entries(timeLeft).map(([unit, value], index) => (
+              <motion.div
+                key={unit}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  delay: 0.3 + (index * 0.1),
+                  duration: 0.5
+                }}
+                className="flex flex-col items-center justify-center"
+              >
+                <div className="bg-black/90 rounded-lg p-3 md:p-4 w-full aspect-square flex flex-col items-center justify-center"
+                     style={{
+                       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.1)',
+                       border: '1px solid rgba(255, 255, 255, 0.05)'
+                     }}>
+                  <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-yellow-400 mb-1"
+                        style={{ textShadow: '0 2px 8px rgba(234, 179, 8, 0.3)' }}>
+                    {value.toString().padStart(2, '0')}
+                  </span>
+                  <span className="text-xs md:text-sm uppercase tracking-wider text-gray-400">
+                    {unit}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
           </div>
-          <div className="flex items-center gap-3">
-            <Calendar className="w-6 h-6" />
-            <p className="text-sm md:text-lg font-bold">
-              <span className="text-gray-800">To:</span> <span className="text-black">13 Apr 2025</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 

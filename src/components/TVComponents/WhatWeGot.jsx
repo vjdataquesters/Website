@@ -1,15 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Countdown from "./CountDown";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function WhatWeGot() {
   const translations = [
     { lang: "English", text: " Technovista" },
     { lang: "Hindi", text: " टेक्नोविस्टा" },
     { lang: "Telugu", text: " టెక్నోవిస్తా" },
-    { lang: "English", text: " Technovista" },
     { lang: "Odia", text: " ଟେକ୍ନୋଭିଷ୍ଟା" },
     { lang: "Kannada", text: " ಟೆಕ್ನೋವಿಸ್ಟಾ" },
+    { lang: "Tamil", text: " டெக்னோவிஸ்டா" },
+    { lang: "Malayalam", text: " ടെക്നോവിസ്റ്റ" },
+  ];
+
+  const stats = [
+    {
+      icon: "fas fa-user-graduate",
+      title: "600+ Participants",
+      desc: "Over 600+ participants",
+    },
+    {
+      icon: "fas fa-calendar-alt",
+      title: "2+ Years",
+      desc: "2 years of successful execution",
+    },
+    {
+      icon: "fas fa-award",
+      title: "1.45 Lakh Prize Pool",
+      desc: "Prizes worth up to 1.45 Lakh",
+    },
   ];
 
   const [index, setIndex] = useState(0);
@@ -18,7 +37,7 @@ function WhatWeGot() {
   useEffect(() => {
     let charIndex = 0;
     const newText = translations[index].text;
-    let currentText = ""; // Store the built-up text
+    let currentText = "";
 
     const typingEffect = setInterval(() => {
       if (charIndex < newText.length) {
@@ -29,123 +48,55 @@ function WhatWeGot() {
         clearInterval(typingEffect);
         setTimeout(() => {
           setIndex((prevIndex) => (prevIndex + 1) % translations.length);
-        }, 1000); // Delay before switching languages
+        }, 500);
       }
-    }, 150); // Typing speed
+    }, 150);
 
     return () => clearInterval(typingEffect);
   }, [index]);
 
-  const calculateTimeLeft = () => {
-    const targetDate = new Date("April 13, 2025 00:00:00").getTime();
-    const now = new Date().getTime();
-    const difference = targetDate - now;
-
-    if (difference <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    }
-
-    return {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor(
-        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      ),
-      minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-      seconds: Math.floor((difference % (1000 * 60)) / 1000),
-    };
-  };
-
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <>
-      <div className="bg-black flex justify-center min-h-screen px-4 items-center">
-        <div className="flex flex-col items-center text-white font-bold text-6xl leading-tight">
-          <span>
-            WHAT{" "}
-            <motion.span
-              className="bg-gray-200 text-black px-2"
-              initial={{ opacity: 0, scale: 0.5, y: -20 }}
-              animate={{
-                opacity: [1, 0.4, 1],
-                scale: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 1,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              whileHover={{ scale: 1.1 }}
-            >
-              WE'VE GOT
-            </motion.span>
-          </span>
-
-          <span className="flex items-center gap-2">
-            FOR{" "}
-            <span className="text-white font-bold">
-              {["Y", "O", "U"].map((letter, i) => (
-                <motion.span
-                  key={i}
-                  className="inline-block"
-                  initial={{ color: "#fff", scale: 1 }}
-                  animate={{
-                    color: ["#fff", "#facc15", "#fff"], // White -> Yellow -> White
-                    scale: [1, 1.5, 1], // Normal -> Bigger -> Normal
-                  }}
-                  transition={{
-                    duration: 0.6, // Animation duration
-                    repeat: Infinity, // Infinite loop
-                    repeatDelay: 1, // Pause between cycles
-                    delay: i * 0.5, // Delay for each letter (staggered effect)
-                  }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </span>
-          </span>
-
-          {/* Animated Technovista */}
-          <div className="pt-3 text-white text-5xl font-bold language-text">
-            <motion.span
-              key={displayedText}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="text-6xl sm:text-7xl md:text-8xl" // Increase font size dynamically
-            >
-              {displayedText} <span className="text-yellow-400">2K25</span>
-            </motion.span>
-          </div>
-
-          {/* Animated Paragraph */}
-          <motion.p
-            className="text-white text-base mt-4 max-w-2xl overflow-hidden font-inter"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+    <div 
+      className="min-h-screen flex flex-col items-center justify-center text-white text-center"
+      style={{ padding: '0 16px', overflow: 'hidden', background: 'none' }}
+    >
+      <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold mb-6 leading-tight">
+        WHAT WE'VE GOT FOR YOU
+      </h1>
+      <motion.span 
+        className="text-4xl sm:text-6xl md:text-7xl font-bold text-yellow-400"
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        {displayedText} 2K25
+      </motion.span>
+      <p className="text-base sm:text-lg md:text-xl max-w-3xl mt-6 leading-relaxed text-gray-300">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+        voluptates architecto veritatis doloribus, sunt at laboriosam eos rem
+        cum debitis aspernatur ducimus adipisci ea, numquam est deserunt vitae
+        libero ut tempore nostrum.
+      </p>
+      <div 
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-12 w-full max-w-6xl"
+        style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}
+      >
+        {stats.map((stat, index) => (
+          <div 
+            key={index} 
+            className="text-center p-8 bg-gray-800 rounded-lg shadow-lg"
+            style={{ flex: '1 1 30%', margin: '5px' }}
           >
-            TechnoVista is a premier event featuring coding contests, case
-            studies, hackathons, project expos, ML Contest, and guest lectures.
-            It fosters innovation, skill-building, and networking, offering a
-            dynamic platform for students and tech enthusiasts to learn, grow,
-            and collaborate.
-          </motion.p>
-        </div>
+            <i className={`${stat.icon} text-6xl sm:text-7xl mb-6 text-yellow-400 animate-pulse`}></i>
+            <div className="font-bold text-xl sm:text-2xl text-white">
+              {stat.title}
+            </div>
+            <div className="text-sm sm:text-lg text-gray-400 mt-2">
+              {stat.desc}
+            </div>
+          </div>
+        ))}
       </div>
-      <Countdown />
-    </>
+    </div>
   );
 }
 

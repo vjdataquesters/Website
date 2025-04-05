@@ -21,7 +21,7 @@ function LayoutWrapper() {
   const [load, setLoad] = useState(true);
 
   // Add paths where layout should be hidden
-  const noLayoutRoutes = ["/", "/tv25/register"];
+  const noLayoutRoutes = ["/", "/technovista"];
 
   useEffect(() => {
     const timer = setTimeout(() => {
