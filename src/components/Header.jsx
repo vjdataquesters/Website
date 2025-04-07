@@ -36,16 +36,6 @@ const Header = () => {
               </p>
             </Link>
           </li>
-
-          <li className="mx-6 py-5 px-2 border-b border-white/50 w-full
-            md:py-0 md:px-0 md:border-0 md:w-auto">
-            <Link to="/technovista" onClick={handleBarsClick} className="no-underline">
-              <p className="text-white hover:text-[#9d9d9d] cursor-pointer">
-                Techno Vista
-              </p>
-            </Link>
-          </li>
-
           <li className="mx-6 group relative py-5 px-2 border-b border-white/50 w-full
             md:py-0 md:px-0 md:border-0 md:w-auto">
             <p className="text-white hover:text-[#9d9d9d] cursor-pointer ">

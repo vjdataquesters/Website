@@ -8,11 +8,11 @@ import Technovista from "../components/Technovista";
 import NewsLetter from "./NewsLetter";
 import Gallery from "./Gallery";
 import RegistrationForm from "./RegistrationForm";
-import TechnoVista from "./TechnoVista";
+import Carousel3D from "../components/TechnoVistaComponents/Carousel";
+import Credentials from "./Credentials";
 
 const router = [
-  { path: "/", component: Home },
-  { path: "/technovista",component:TechnoVista},
+  { path: "/", component:Home },
   { path: "/about", component: About },
   { path: "/testimonials", component: Testimonials },
   { path: "/events", component: Events },
@@ -21,6 +21,7 @@ const router = [
   { path: "/team", component: Team },
   { path: "/newsletter", component: NewsLetter },
   { path: "/gallery", component: Gallery },
+  {path: "/cred",component:Credentials},
   { path: "/register", component: RegistrationForm },
   { path: "*", component: Home },
 ];

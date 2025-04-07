@@ -27,21 +27,9 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  function ShowHeader(){
-    const { pathname } = useLocation();
-    return (
-      <div>
-        {
-          pathname!=="/technovista"&& <Header />
-        }
-      </div>
-    )
-  }
-
   function PromoSection() {
     const { pathname } = useLocation();
     return (
-      pathname !=="/technovista" &&
       pathname !== "/hit" &&
       pathname !== "/hitreloadedultrasecretendpoint" &&
       pathname !== "/register" && (
@@ -62,7 +50,7 @@ function App() {
     <Router>
       <Analytics />
       <Loading load={load} />
-      <ShowHeader />
+      <Header />
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-blue-50/70">
         <Routes>
