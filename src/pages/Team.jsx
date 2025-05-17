@@ -1,42 +1,137 @@
-import { faculty, currentteam, pastteams } from '../data/team';
-import { useState } from 'react';
-import Reveal from '../components/Reveal';
+import { faculty, currentteam, pastteams } from "../data/team";
+import { useState } from "react";
+import Reveal from "../components/Reveal";
 
-const Image = ({ name, role, image, linkedin }) => {
+const Image = ({
+  name,
+  role,
+  creativeRole,
+  image,
+  linkedin,
+  bio,
+  onImageClick,
+}) => {
   return (
     <div className="flex flex-col justify-around px-6 py-8 rounded-2xl bg-[#fafafa] hover:bg-[#eaeaea] transition-all duration-300">
-      <p className="text-left w-full mb-1 text-xl font-medium">{role}</p>
+      <div className="text-left w-full mb-1">
+        <p className="text-xl font-medium">{role}</p>
+        <p className="text-sm text-gray-500 italic">{creativeRole}</p>
+      </div>
       <img
-        className="w-52 h-52 md:w-64 md:h-64 rounded-3xl mx-auto transition-all duration-300"
+        className="w-52 h-52 md:w-64 md:h-64 rounded-3xl mx-auto transition-all duration-300 cursor-pointer object-cover"
         src={image ? image : "https://picsum.photos/200"}
         alt={name + " image"}
         draggable={false}
         loading="lazy"
+        onClick={onImageClick}
       />
-      <a href={linkedin} target="_blank" className="text-lg text-right w-full mt-1 text-black no-underline hover:underline">
+      <a
+        href={linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-lg text-right w-full mt-1 text-black no-underline hover:underline"
+      >
         <p>{name}</p>
       </a>
     </div>
   );
 };
 
-export default function Team() {
+const BioModal = ({ member, onClose }) => {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6">
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="flex-shrink-0">
+            <img
+              className="w-52 h-52 md:w-64 md:h-64 rounded-3xl object-cover"
+              src={
+                member.image
+                  ? `teamImages/${member.image}`
+                  : "https://picsum.photos/200"
+              }
+              alt={member.name + " image"}
+            />
+          </div>
+          <div className="flex flex-col flex-grow">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h2 className="text-2xl font-bold">{member.name}</h2>
+                <p className="text-lg text-gray-600">{member.role}</p>
+                {member.creativeRole && (
+                  <p className="text-sm text-gray-500 italic">
+                    {member.creativeRole}
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={onClose}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                &times;
+              </button>
+            </div>
+            <p className="text-gray-700 whitespace-pre-line mb-4">
+              {member.bio}
+            </p>
+            {member.linkedin && (
+              <div className="flex justify-end">
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 hover:bg-blue-100 transition-colors"
+                  title="View LinkedIn Profile"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="#0A66C2"
+                    className="w-6 h-6"
+                  >
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
+export default function Team() {
   const [pastMembers, setPastMembers] = useState([]);
-  const [selectedYear, setSelectedYear] = useState(null)
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedMember, setSelectedMember] = useState(null);
 
   const handleYearChange = (year) => {
-    if(selectedYear === year){
-      setPastMembers([])
-      setSelectedYear(null)
-      return
+    if (selectedYear === year) {
+      setPastMembers([]);
+      setSelectedYear(null);
+      return;
     }
-    setPastMembers(pastteams[year])
-    setSelectedYear(year)
-  }
+    setPastMembers(pastteams[year]);
+    setSelectedYear(year);
+  };
+
+  const handleImageClick = (member) => {
+    setSelectedMember(member);
+  };
+
+  const closeModal = () => {
+    setSelectedMember(null);
+  };
 
   return (
     <div className="w-full py-20 px-4 text-center">
+      {selectedMember && (
+        <BioModal member={selectedMember} onClose={closeModal} />
+      )}
+
       <section className="mb-16">
         <h1 className="font-semibold text-3xl mb-2">Who are we?</h1>
         <p className="text-lg text-gray-600 mb-8">The people behind VJDQ</p>
@@ -48,6 +143,8 @@ export default function Team() {
               role={member.role}
               image={member.image ? `teamImages/${member.image}` : undefined}
               linkedin={member.linkedin}
+              bio={member.bio}
+              onImageClick={() => handleImageClick(member)}
             />
           ))}
         </div>
@@ -65,31 +162,32 @@ export default function Team() {
                 role={member.role || "Team Member"}
                 image={member.image ? `teamImages/${member.image}` : undefined}
                 linkedin={member.linkedin}
+                bio={member.bio}
+                onImageClick={() => handleImageClick(member)}
               />
             </Reveal>
           ))}
         </div>
       </section>
 
-      <section className='mb-16'>
-        <h1 className='mt-5 mb-4'>View Past Teams</h1>
-        <div className='mb-4'>
+      <section className="mb-16">
+        <h1 className="mt-5 mb-4">View Past Teams</h1>
+        <div className="mb-4">
           {Object.keys(pastteams).map((year) => (
             <button
               key={year}
-              className={`text-center mx-4 w-24 h-11 font-bold text-lg border-2 border-black text-black shadow-[5px_5px_5px_0px] hover:shadow-none  transition-all rounded-md  ${selectedYear === year
-                  ? "bg-[#0f323f] text-white"
-                  : "bg-white"
-                } `}
+              className={`text-center mx-4 w-24 h-11 font-bold text-lg border-2 border-black text-black shadow-[5px_5px_5px_0px] hover:shadow-none  transition-all rounded-md  ${
+                selectedYear === year ? "bg-[#0f323f] text-white" : "bg-white"
+              } `}
               onClick={() => {
-                handleYearChange(year)
+                handleYearChange(year);
               }}
             >
               {year}
             </button>
           ))}
         </div>
-        {selectedYear &&
+        {selectedYear && (
           <div>
             <h1 className="font-semibold text-3xl mb-8" id="coreteam">
               Core Team
@@ -100,15 +198,18 @@ export default function Team() {
                   <Image
                     name={member.name}
                     role={member.role || "Team Member"}
-                    image={member.image ? `teamImages/${member.image}` : undefined}
+                    image={
+                      member.image ? `teamImages/${member.image}` : undefined
+                    }
                     linkedin={member.linkedin}
+                    bio={member.bio}
+                    onImageClick={() => handleImageClick(member)}
                   />
                 </Reveal>
               ))}
             </div>
           </div>
-        }
-
+        )}
       </section>
     </div>
   );
