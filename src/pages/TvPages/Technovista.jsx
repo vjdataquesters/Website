@@ -82,7 +82,7 @@ const Technovista = () => {
   }, [isMobile]);
 
   return (
-    <div className="bg-black min-h-[250vh] relative bg">
+    <div className="bg-black min-h-[250vh] relative bg pt-20">
       <Intro />
       {introDone && (
         <div className="relative z-10 flex flex-col pt-10">
@@ -91,6 +91,34 @@ const Technovista = () => {
             ref={sectionRef}
             className=" overflow-hidden select-none flex flex-col items-center justify-center gap-12 py-8"
           >
+          <nav className="fixed top-0 left-0 w-full z-50 pt-2  border-b border-yellow-500/10 backdrop-blur-lg">
+  <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center h-14">
+      
+      {/* Left: Logos with "x" */}
+      <div className="flex items-center space-x-3">
+        <a href="https://www.vjdataquesters.com/" target="_blank" >
+          <img src="/events/Technovista2025/tv25-icons/dq-vector.png" alt="Logo 1" className="h-10 w-auto object-contain" />
+        </a>
+        <span className="text-yellow-500 font-bold text-xl">×</span>
+        <a href="https://vnrvjiet.ac.in/" target="_blank" rel="noopener noreferrer">
+          <img src="/events/Technovista2025/tv25-icons/VNRVJIET-logo-files-03.png" alt="Logo 2" className="h-10 w-auto object-contain" />
+        </a>
+      </div>
+
+      {/* Right: Links */}
+      <div className="flex space-x-4">
+        <a
+          href="/TechnovistaForm.jsx"
+          className="bg-yellow-500 text-black px-5 py-1.5 rounded-lg font-semibold hover:bg-yellow-600 transition-colors"
+        >
+          Register
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
             {/* Countdown */}
             <motion.div
               variants={letterVariants}
