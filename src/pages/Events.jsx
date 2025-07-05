@@ -23,12 +23,18 @@ const EventCard = ({ event }) => {
     "bg-amber-600",
     "bg-pink-600",
     "bg-orange-600",
-    "bg-lime-600"
+    "bg-lime-600",
   ];
   return (
-    <div 
+    <div
       className="max-w-[400px] rounded-lg h-full shadow-2xl bg-gray-100 hover:shadow-[0px_25px_50px_-12px] transition-all duration-500 hover:backdrop-blur-sm hover:bg-gray-200 cursor-pointer"
-      onClick={() => navigate(event.link)}
+      onClick={() => {
+        if (event.link.startsWith("http")) {
+          window.open(event.link, "_blank"); // or use window.location.href
+        } else {
+          navigate(event.link); // for internal routes
+        }
+      }}
     >
       <img
         src={event.image}
@@ -37,20 +43,17 @@ const EventCard = ({ event }) => {
         draggable={false}
         className="w-full rounded-t-lg h-64"
       />
-      
+
       <div className="p-1 md:p-2 pt-0">
         <div className="w-full flex flex-row gap-2 my-2 overflow-x-auto small-scrollbar-y">
           {event.event_tags.map((obj, index) => (
             <div
               key={index}
-              className={`inline-block  ${obj === "Limited Registrations"
+              className={`inline-block  ${
+                obj === "Limited Registrations"
                   ? "bg-red-800"
-                  : colors[
-                  Math.floor(
-                    Math.random() * colors.length
-                  )
-                  ]
-                }  text-white text-sm rounded-xl text-nowrap text-center content-center py-[2px] px-2 mb-2`}
+                  : colors[Math.floor(Math.random() * colors.length)]
+              }  text-white text-sm rounded-xl text-nowrap text-center content-center py-[2px] px-2 mb-2`}
             >
               <p className="text-sm">{obj}</p>
             </div>
@@ -62,7 +65,7 @@ const EventCard = ({ event }) => {
       </div>
     </div>
   );
-}
+};
 
 export default function Events() {
   const recentYear = Object.keys(events.past)[0];
@@ -73,7 +76,6 @@ export default function Events() {
     setPastevents(events.past[e]);
     setyear(e.slice(1));
   };
-
 
   return (
     <>
@@ -102,7 +104,6 @@ export default function Events() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
                   {events.upcoming.map((event, index) => (
                     <Reveal key={index}>
-
                       <EventCard event={event} />
                     </Reveal>
                   ))}
@@ -117,10 +118,11 @@ export default function Events() {
               {Object.keys(events.past).map((eventyear) => (
                 <button
                   key={eventyear}
-                  className={`text-center w-24 h-9 font-bold text-lg border-2 border-black text-black shadow-[5px_5px_5px_0px] hover:shadow-none  transition-all rounded-md  ${year.toString() === eventyear.slice(1)
+                  className={`text-center w-24 h-9 font-bold text-lg border-2 border-black text-black shadow-[5px_5px_5px_0px] hover:shadow-none  transition-all rounded-md  ${
+                    year.toString() === eventyear.slice(1)
                       ? "bg-[#0f323f] text-white"
                       : "bg-white"
-                    } `}
+                  } `}
                   onClick={() => handleYearChange(eventyear)}
                 >
                   {eventyear.slice(1)}
