@@ -36,29 +36,28 @@
 //   | 'Guest Lecture';
 
 const events = {
-  upcoming: [
-    {
-      name: "Technovista 2k25",
-      eventId: "tv25",
-      image: "/events/Technovista2025/img1.jpg",
-      date: "July 31st, August 1st & 2nd 2025",
-      venue: "VNR VJIET",
-      timings: "9:30 AM to 4:00 PM",
-      // pics: [
-      //   "/events/Technovista2025/img.jpg",
-      // ],
-      // winners:"",
-      // outcome:"",
-      // register: "/register",
-      isGFormEmbeddable: false,
-      event_tags: ["Technical Fest", "Hackathon", "Workshops"],
-      description:
-        "Join the electrifying second edition of Technovista 2K25 by VJ DataQuesters! A 3-day tech carnival packed with Hackathons, Debug Battles, Workshops, and Tech Talks — where innovation meets creativity.",
-      link: "https://tv25.vjdataquesters.com/",
-    },
-  ],
+  upcoming: [],
   past: {
     e2025: [
+      {
+        name: "Technovista 2k25",
+        eventId: "tv25",
+        image: "/events/Technovista2025/img1.jpg",
+        date: "July 31st, August 1st & 2nd 2025",
+        venue: "VNR VJIET",
+        timings: "9:30 AM to 4:00 PM",
+        // pics: [
+        //   "/events/Technovista2025/img.jpg",
+        // ],
+        // winners:"",
+        // outcome:"",
+        // register: "/register",
+        isGFormEmbeddable: false,
+        event_tags: ["Technical Fest", "Hackathon", "Workshops"],
+        description:
+          "Join the electrifying second edition of Technovista 2K25 by VJ DataQuesters! A 3-day tech carnival packed with Hackathons, Debug Battles, Workshops, and Tech Talks — where innovation meets creativity.",
+        link: "https://tv25.vjdataquesters.com/",
+      },
       {
         name: "Cloud Craft",
         eventId: "cloud-craft",
