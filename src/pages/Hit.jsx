@@ -1,44 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-// import data from "../data/hit.json";
+import data from "../data/hit.json";
 import bg_img from "../assets/bg_img.jpg";
+
 /**
- * format for each question in json
- * {  
- *   "color": "red | blue | yellow", // path color, every path color has 3 different paths
- *   "path": "1 | 2 | 3", // every path has 8 different questions
- *   "qr": "qr-code", // to make link, qr color is same as "color" in json
- *   "question": "Question text", // display in dangerouslySetInnerHTML, can be a single line question, can be multiline code, can be multiline text
- *   "image": "link to drive image" | null, - if not null, then question is "" to redirect to image link
+ * Example JSON format:
+ * {
+ *   "color": "red | blue | yellow",
+ *   "path": "1 | 2 | 3",
+ *   "qr": "qr-code",
+ *   "question": "Question text",
+ *   "image": "/images/clue1.jpg" | null,
+ *   "audio": "/audio/clue1.mp3" | null,
+ *   "video": "/videos/hint1.mp4" | null
  * }
  */
 function Hit() {
-  const [params, setParams] = useSearchParams({ q: "" });
+  const [params] = useSearchParams({ q: "" });
   const navigate = useNavigate();
   const key = params.get("q");
   const [loading, setLoading] = useState(true);
   const [queryRes, setQueryRes] = useState(null);
   const [animation, setAnimation] = useState(false);
 
+  // when qr key changes
   useEffect(() => {
     if (key) {
       const res = data.find((obj) => obj.qr === key);
       if (res) {
         setQueryRes(res);
+        // reset to home after 5 seconds
         setTimeout(() => {
-          navigate('/hit', { replace: true });
-        }, 5000); 
+          navigate("/hit", { replace: true });
+        }, 5000);
       }
     }
     setLoading(false);
   }, [key, navigate]);
 
   useEffect(() => {
-    if (queryRes) {
-      setAnimation(true);
-    }
+    if (queryRes) setAnimation(true);
   }, [queryRes]);
 
+  // Home Page
   const renderHomePage = () => (
     <div className="max-w-md w-full mx-auto text-center">
       <div className="mb-8">
@@ -69,19 +73,16 @@ function Hit() {
             <span className="flex-shrink-0 bg-indigo-500 text-white rounded-full h-6 w-6 flex items-center justify-center mr-2 mt-0.5">
               3
             </span>
-            <span>Answer the questions to go to next step</span>
+            <span>Answer the questions to go to the next step</span>
           </li>
         </ol>
       </div>
     </div>
   );
 
+  // Question Display
   const renderQuestion = () => {
     const pathColor = queryRes.color || "indigo";
-    if (queryRes.image) {
-      window.location.href = queryRes.image;
-      return null;
-    }
 
     return (
       <div
@@ -89,25 +90,64 @@ function Hit() {
           animation ? "opacity-100" : "opacity-0"
         }`}
       >
-        <div
-          className={`bg-white rounded-lg shadow-xl p-6 border-t-4`}
-        >
+        <div className="bg-white rounded-lg shadow-xl p-6 border-t-4">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Question</h1>
-            <div className={`w-16 h-1 mx-auto rounded-full`}></div>
+            <div
+              className={`w-16 h-1 mx-auto rounded-full bg-${pathColor}-500`}
+            ></div>
           </div>
 
-          <div className="bg-gray-50 p-5 rounded-lg mb-6">
-            <pre>
+          {/* Image */}
+          {queryRes.image && (
+            <div className="mb-6 flex justify-center">
+              <img
+                src={queryRes.image}
+                alt="Clue"
+                className="rounded-lg shadow-md max-h-80 object-contain"
+              />
+            </div>
+          )}
+
+          {/* Audio */}
+          {queryRes.audio && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                Listen carefully 👂
+              </h3>
+              <audio controls className="w-full">
+                <source src={queryRes.audio} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          )}
+
+          {/* Video */}
+          {queryRes.video && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                Watch this clip 🎬
+              </h3>
+              <video
+                src={queryRes.video}x
+                controls
+                className="w-full rounded-lg shadow-md"
+              />
+            </div>
+          )}
+
+          {/* Question text */}
+          {queryRes.question && (
+            <div className="bg-gray-50 p-5 rounded-lg">
               <p
-                className="text-left overflow-auto font-mono text-gray-700"
+                className="text-left font-mono text-gray-700 whitespace-pre-line"
                 dangerouslySetInnerHTML={{ __html: queryRes.question }}
               />
-            </pre>
-          </div>
+            </div>
+          )}
         </div>
 
-        <div className="mt-6 text-black text-sm">
+        <div className="mt-1 text-black text-sm">
           Part of <span className="font-semibold">Hit - Reloaded</span> • Keep
           hunting!
         </div>
@@ -118,17 +158,16 @@ function Hit() {
   if (loading) return null;
 
   return (
-<section 
-  className="fixed inset-0 py-10 px-4 flex justify-center items-center bg-cover bg-center bg-no-repeat overflow-y-auto"
-  style={{
-    backgroundImage: `url(${bg_img})`,
-    // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    backgroundBlendMode: 'overlay',
-    backgroundSize: "cover"
-  }}
->
-  {queryRes ? renderQuestion() : renderHomePage()}
-</section>
+    <section
+      className="fixed inset-0 py-10 px-4 flex justify-center items-center bg-cover bg-center bg-no-repeat overflow-y-auto"
+      style={{
+        backgroundImage: `url(${bg_img})`,
+        backgroundBlendMode: "overlay",
+        backgroundSize: "cover",
+      }}
+    >
+      {queryRes ? renderQuestion() : renderHomePage()}
+    </section>
   );
 }
 

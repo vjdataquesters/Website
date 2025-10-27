@@ -10,9 +10,10 @@ import Gallery from "./Gallery";
 import RegistrationForm from "./RegistrationForm";
 import Carousel3D from "../components/TechnoVistaComponents/Carousel";
 import Credentials from "./Credentials";
+import Hit from "./Hit";
 
 const router = [
-  { path: "/", component:Home },
+  { path: "/", component: Home },
   { path: "/about", component: About },
   { path: "/testimonials", component: Testimonials },
   { path: "/events", component: Events },
@@ -21,9 +22,10 @@ const router = [
   { path: "/team", component: Team },
   { path: "/newsletter", component: NewsLetter },
   { path: "/gallery", component: Gallery },
-  {path: "/cred",component:Credentials},
+  { path: "/cred", component: Credentials },
   { path: "/register", component: RegistrationForm },
   { path: "*", component: Home },
+  { path: "/hit", component: Hit },
 ];
 
 export default router;
