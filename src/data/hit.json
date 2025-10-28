@@ -27,7 +27,7 @@
     "path": "1",
     "qr": "rfjpm",
     "question": "Seek the place where the nine faces from this picture could step out of the frame.",
-    "image": "/public/images-hit/Navarasalu.jpg"
+    "image": "/images-hit/Navarasalu.jpg"
   },
   {
     "color": "red",
@@ -74,7 +74,7 @@
     "path": "2",
     "qr": "rnche",
     "question": "Guess the Next Place??",
-    "image": "/public/images-hit/rights.jpg"
+    "image": "/images-hit/rights.jpg"
   },
   {
     "color": "red",
