@@ -137,14 +137,14 @@
     "path": "3",
     "qr": "nehug",
     "question": "Guess the place?",
-    "image": "/public/images-hit/Wings.jpg"
+    "image": "/images-hit/Wings.jpg"
   },
   {
     "color": "red",
     "path": "3",
     "qr": "nhyrb",
     "question": "\nGuess The Place?\n\n( Hint: Who invented Ra & Po?)",
-    "image": "/public/images-hit/B Block Second floor poster.jpg"
+    "image": "/images-hit/B Block Second floor poster.jpg"
   },
   {
     "color": "red",
@@ -158,7 +158,7 @@
     "path": "3",
     "qr": "webgn",
     "question": "Scan Your Temperature – Be Safe",
-    "image": "/public/images-hit/Thermal.png"
+    "image": "/images-hit/Thermal.png"
   },
   {
     "color": "red",
