@@ -1,12 +1,13 @@
 import React from "react";
 import { QRCode } from "react-qrcode-logo";
-// import qrData from "../data/hit.json";
+import qrData from "../data/hitData";
 
 const GenerateAllQrs = () => {
   const colorMap = {
     'red': '#ff6600',
     'yellow': '#ffcc00',
     'blue': '#3399ff',
+    'green': '#22c55e',
   };
   
   const getEyeColor = (color) => {

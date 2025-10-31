@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import data from "../data/hitData/hit.json";
+import data from "../data/hitData";
 import bg_img from "../assets/bg_img.jpg";
 
 /**

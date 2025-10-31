@@ -1,0 +1,184 @@
+[
+  {
+    "color": "green",
+    "path": "1",
+    "qr": "zxmpq",
+    "question": "Find the IDOL\n    PEACE\n    CALM\n           LOTUS\n    ENLIGHTEN\n    ASCEND",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "qr": "kftyu",
+    "question": "I'm a common symbol of love and devotion\nMultiply me by many I become a green patch of living things.\nI bow where bells and holy waters fall,\nNear the sacred stone that devotees call.",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "qr": "qwvnx",
+    "question": "When alarms sound, where do we gather fast — which spot ensures everyone lasts?",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "qr": "prlmz",
+    "question": "Brownian movement,The quantum theory of light, photoelectric effect, The special theory of relativity, The link between mass and energy, general theory of relativity\n\nfind the common?",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "qr": "hjtwd",
+    "question": "Climb where effort meets count.\nEvery step burns one more than before.\nWhen your energy hits three times three,\nwhich numbered step are you on?",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "qr": "vmxsk",
+    "question": "Two-wheelers park, soft drinks fizz, leisure hour = full benches.\nwater bottle waits quietly. Only the RED logo rules the fridge.",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "qr": "zcbpw",
+    "question": "",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "qr": "fnqry",
+    "question": "CREATE TABLE Visionary (\n    id INT PRIMARY KEY,\n    first_name VARCHAR(10),\n    last_name VARCHAR(10),\n    domain VARCHAR(20),\n    title VARCHAR(30),\n    dream VARCHAR(100)\n);\n\nINSERT INTO Visionary VALUES\n(1, '*****', '*****', 'Aerospace', 'People\\'s President', 'Dream, Dream, Dream...');\n\n\nSELECT first_name, last_name\nFROM Visionary\nWHERE domain = 'Aerospace'\n  AND title LIKE '%President%'\n  AND dream LIKE '%Dream%';",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "qr": "wkdjh",
+    "question": "Majestic and proud, above the ground,\nWhere cheers and applause often resound.\nIn whose hall does wisdom arrive,\nOn the second rise, where ideas thrive?\nYet to shine like the radiant sun,\nOne must first burn — as all greats have done.",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "qr": "txmvb",
+    "question": "Not in Rome, but still colossal.\nNot ancient, but still awesome.\nFind the open stage that hears without walls.",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "qr": "ylqps",
+    "question": "Not every parking has cars to show,\nSome mark respect where few wheels go.\nReserved it stands, calm and true,\nA space for those who move anew.",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "qr": "vhzrk",
+    "question": "There are more number of  _____ atoms in a molecule of water than the total no of stars in our solar system.",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "qr": "nfxcm",
+    "question": "A haven for calm when days get long,\nWhere silence and peace are melodious song.\nBe it a nap, a breath, or a mindful retreat—\nWhich helps your stress defeat?",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "qr": "bqwjt",
+    "question": "",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "qr": "pdglv",
+    "question": "When we think we know we cease to learn",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "qr": "xrkzf",
+    "question": "variable = '9238';\nwhile(engine == off):\n search(rows)",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "qr": "cjnpx",
+    "question": "; 🔐 Riddle in Assembly — \"---\" \n\nsection .data\n    msg db \"I guard your money, speak in digits,\", 10\n        db \"Serve you day and night without a tongue.\", 10\n        db \"What am I?\", 10, 10\n        db \"Answer: ATM\", 10\n    len equ $-msg\n\nsection .text\n    global _start\n\n_start:\n    mov rax, 1      ; sys_write\n    mov rdi, 1      ; stdout\n    mov rsi, msg\n    mov rdx, len\n    syscall\n    mov rax, 60     ; sys_exit\n    xor rdi, rdi\n    syscall",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "qr": "mtvwz",
+    "question": "Hint key = PE + Indoor + 1891 + 94x50 feet\nTarget = Zone ∩ (Inventor: J.N.) ∩ {5 fouls rule} ∩ {2 rim loops}",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "qr": "gksbr",
+    "question": "I speak without words, yet every driver listens.",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "qr": "qhfyu",
+    "question": "Π ᯤ fi",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "qr": "wjplx",
+    "question": "विद्या की देवी जहाँ विराजमान — वही तुम्हारा अगला स्थान।",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "qr": "vznkt",
+    "question": "Stand by the PG wall.\nFind where green meets grey.\nYour clue lies in the pipes —\nCount them and whisper:\n'No soil, no spoil.'",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "qr": "rmxdj",
+    "question": "He once walked a crooked path of sin, begun too soon.\nAwakened by Narada, he purified his heart.\nFrom grief sprang rhythm, from silence rose verse;\nA timeless tale flowed from his pen - name this sage.",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "qr": "bytpw",
+    "question": "Guess the lab??",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "final",
+    "qr": "fqxmv",
+    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "kwhzn",
+    "question": "Ha Ha Misguided 😂",
+    "image": null
+  }
+]

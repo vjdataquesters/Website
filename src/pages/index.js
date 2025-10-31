@@ -11,6 +11,7 @@ import RegistrationForm from "./RegistrationForm";
 import Carousel3D from "../components/TechnoVistaComponents/Carousel";
 import Credentials from "./Credentials";
 import Hit from "./Hit";
+import GenerateAllQrs from "./GenerateAllQrs";
 
 const router = [
   { path: "/", component: Home },
@@ -24,8 +25,9 @@ const router = [
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
   { path: "/register", component: RegistrationForm },
-  { path: "*", component: Home },
   { path: "/hit", component: Hit },
+  { path: "/genqr", component: GenerateAllQrs },
+  { path: "*", component: Home },
 ];
 
 export default router;
