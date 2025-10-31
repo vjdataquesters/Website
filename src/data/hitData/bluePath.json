@@ -167,5 +167,19 @@
     "qr": "xvgdw",
     "question": "I stand where players gather round,\nbeside a patch of open ground.\nI rise when pressure drops,\nI fall when weight takes one side's spot.\nNo circuit thinks for me\nonly simple physics and gravity.\nOne side gains weight, the other must obey.\nWhere am I standing?",
     "image": null
+  },
+  {
+    "color": "blue",
+    "path": "final",
+    "qr": "iksls",
+    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
+    "image": null
+  },
+  {
+    "color": "blue",
+    "path": "fooled",
+    "qr": "bhdki",
+    "question": "Ha Ha Misguided 😂",
+    "image": null
   }
 ]

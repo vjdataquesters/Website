@@ -166,5 +166,19 @@
     "qr": "bytpw",
     "question": "Guess the lab??",
     "image": "/hitAssests/images/green-path-img5.png"
+  },
+  {
+    "color": "green",
+    "path": "final",
+    "qr": "fqxmv",
+    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
+    "image": null
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "kwhzn",
+    "question": "Ha Ha Misguided 😂",
+    "image": null
   }
 ]

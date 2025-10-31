@@ -168,5 +168,19 @@
     "qr": "nhyrb",
     "question": "Her words are scrambled on the wall…\n    \"'IDEAS ABOUT CURIOUS MORE AND PEOPLE ABOUT CURIOUS LESS BE.'\"",
     "image": "/images-hit/B Block Second floor poster.jpg"
+  },
+  {
+    "color": "red",
+    "path": "final",
+    "qr": "ndkla",
+    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
+    "image": null
+  },
+  {
+    "color": "red",
+    "path": "fooled",
+    "qr": "ruisl",
+    "question": "Ha Ha Misguided 😂",
+    "image": null
   }
 ]

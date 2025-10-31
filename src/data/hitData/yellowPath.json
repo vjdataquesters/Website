@@ -39,7 +39,7 @@
     "path": "1",
     "qr": "powls",
     "question": "From a Prime Minister's dream to a student's creation,\nThat's where your next clue lies.",
-    "image": null
+    "image": "/hitAssests/images/yellowimg1.png"
   },
   {
     "color": "yellow",
@@ -138,7 +138,7 @@
     "qr": "bvnsm",
     "question": "guess the dialogue",
     "image": null,
-    "video": "https://drive.google.com/file/d/1-R_kEFhV3jT0yvD26xfN1PvYtvc_VEkC/view?usp=drive_link"
+    "video": "/hitAssests/videos/yellowHINT8.mp4"
   },
   {
     "color": "yellow",
@@ -159,14 +159,14 @@
     "path": "3",
     "qr": "elonm",
     "question": "",
-    "image": null
+    "image": "/hitAssests/images/yellowimg2.png"
   },
   {
     "color": "yellow",
     "path": "3",
     "qr": "lbird",
-    "question": "🎓 + 🏛️ + 🎙️",
-    "image": null
+    "question":"",
+    "image": "/hitAssests/images/yellowimg3.png"
   },
   {
     "color": "yellow",
