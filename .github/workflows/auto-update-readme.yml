@@ -18,17 +18,18 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update README.md (append timestamp)
+      - name: Update README.md (replace all content)
         run: |
-          echo "" >> README.md
-          echo "Auto update: $(date)" >> README.md
+          ist_time=$(TZ="Asia/Kolkata" date "+%Y-%m-%d %H:%M:%S %Z")
+          echo "# Vj Data Questers Club" > README.md
+          echo "Last Updated: $ist_time" >> README.md
 
       - name: Commit change
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md
-          git commit -m "Auto: README update by bot [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto: README refreshed [skip ci]" || echo "No changes to commit"
 
       - name: Push change
         uses: ad-m/github-push-action@v0.8.0
