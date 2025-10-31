@@ -1,0 +1,36 @@
+name: Auto README Update on Others' Push
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    if: github.actor != 'vjdataquesters'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update README.md (append timestamp)
+        run: |
+          echo "" >> README.md
+          echo "Auto update: $(date)" >> README.md
+
+      - name: Commit change
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Auto: README update by bot [skip ci]" || echo "No changes to commit"
+
+      - name: Push change
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
