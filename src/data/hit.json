@@ -157,7 +157,7 @@
     "color": "red",
     "path": "3",
     "qr": "webgn",
-    "question": "Scan Your Temperature – Be Safe",
+    "question": "Scan Your Temperature - Be Safe",
     "image": "/images-hit/Thermal.png"
   },
   {
@@ -185,7 +185,7 @@
     "color": "yellow",
     "path": "1",
     "qr": "loasd",
-    "question": "I shine with 7 colors but I’m not in the sky. \nI am a path to the arena?",
+    "question": "I shine with 7 colors but I'm not in the sky. \nI am a path to the arena?",
     "image": null
   },
   {

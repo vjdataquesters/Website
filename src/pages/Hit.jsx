@@ -129,7 +129,7 @@ function Hit() {
                 Watch this clip 🎬
               </h3>
               <video
-                src={queryRes.video}x
+                src={queryRes.video}
                 controls
                 className="w-full rounded-lg shadow-md"
               />
