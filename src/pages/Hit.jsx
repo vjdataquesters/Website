@@ -122,6 +122,8 @@ function Hit() {
             </div>
           )}
 
+        
+
           {/* Video */}
           {queryRes.video && (
             <div className="mb-6">
@@ -130,7 +132,10 @@ function Hit() {
               </h3>
               <video
                 src={queryRes.video}
-                controls
+                controls={queryRes.path !== "final"}
+                autoPlay={queryRes.path === "final"}
+                loop={queryRes.path === "final"}
+                muted={queryRes.path === "final"}
                 className="w-full rounded-lg shadow-md"
               />
             </div>
