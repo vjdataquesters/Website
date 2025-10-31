@@ -46,7 +46,7 @@
     "path": "1",
     "qr": "zcbpw",
     "question": "",
-    "image": null
+    "image":"hitAssests/images/green-path-img1.png"
   },
   {
     "color": "green",
@@ -67,7 +67,7 @@
     "path": "2",
     "qr": "txmvb",
     "question": "Not in Rome, but still colossal.\nNot ancient, but still awesome.\nFind the open stage that hears without walls.",
-    "image": null
+    "image": "/hitAssests/images/green-path-img2.png"
   },
   {
     "color": "green",
@@ -81,7 +81,7 @@
     "path": "2",
     "qr": "vhzrk",
     "question": "There are more number of  _____ atoms in a molecule of water than the total no of stars in our solar system.",
-    "image": null
+    "image": "public/hitAssests/images/green-path-img3.png"
   },
   {
     "color": "green",
@@ -95,7 +95,7 @@
     "path": "2",
     "qr": "bqwjt",
     "question": "",
-    "image": null
+    "image": "/hitAssests/images/green-path-img4.jpg"
   },
   {
     "color": "green",
@@ -165,20 +165,6 @@
     "path": "3",
     "qr": "bytpw",
     "question": "Guess the lab??",
-    "image": null
-  },
-  {
-    "color": "green",
-    "path": "final",
-    "qr": "fqxmv",
-    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
-    "image": null
-  },
-  {
-    "color": "green",
-    "path": "fooled",
-    "qr": "kwhzn",
-    "question": "Ha Ha Misguided 😂",
-    "image": null
+    "image": "/hitAssests/images/green-path-img5.png"
   }
 ]
