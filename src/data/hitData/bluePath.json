@@ -3,181 +3,169 @@
     "color": "blue",
     "path": "1",
     "qr": "fgbkj",
-    "question": "Strength unmatched, yet a servant \nhe stayed, Find the path where duty is never swayed.",
+    "question": "A = [224, 194, 210, 197, 195]\nB = [162, 212, 166, 183, 190]\nC[i] = floor((A[i] + B[i]) / 2)",
     "image": null
   },
   {
     "color": "blue",
     "path": "1",
     "qr": "bkwud",
-    "question": "Where champions step in , ready to push their limits",
-    "image": null
+    "question": "",
+    "image": "hitAssests/images/blueimg1.png"
   },
   {
     "color": "blue",
     "path": "1",
     "qr": "xwzpi",
-    "question": "News, updates, events to see, \nstanding tall for all to read.",
+    "question": "నా పచ్చని రూపం మాట్లాడదాం అని అనుకోని బయటకి చెప్పని మాటల వెనుక దాగి ఉన్న,నా ఉగ్రరూపం శుంభ, నిశుంభుల వధ కోసం ఖడ్గాన్ని ధరించిన,మీరు మాత్రం నన్ను మీ మేధో దాహాన్ని తీర్చడానికి ఎల్లప్పుడూ శ్వేత వర్ణంలో ప్రకాశించే నన్ను ప్రార్థిస్తారు ,నేను ఎవరిని",
     "image": null
   },
   {
     "color": "blue",
     "path": "1",
     "qr": "jpsnx",
-    "question": "Find the board that tells smokers, 'No thank you!'",
+    "question": "I'm two words found on many college sites and in campus databases.\nThe first word is awarded for merit and can also sound like a vessel or status you attain.\nThe second word is an HTML5 semantic element, a book's subdivision, and what an index points to.\nTogether I'm the place (and often the URL fragment) where funding opportunities for students are listed. What am I?",
     "image": null
   },
   {
     "color": "blue",
     "path": "1",
     "qr": "tczqv",
-    "question": "A golden glow, a sacred sight, \nremover of obstacles, shining bright.",
+    "question": "Where the real viva happens — with the security guard?",
     "image": null
   },
   {
     "color": "blue",
     "path": "1",
     "qr": "qzlum",
-    "question": "using System;\n\nclass Program {\n    static void Main() {\n        Console.WriteLine(new string(new char[] { (char)71, (char)114, (char)111, (char)111, (char)116 }));\n    }\n}\n\nusing System;\n\nclass Program {\n    static void Main() {\n        Console.WriteLine(new string(new char[] { (char)71, (char)114, (char)111, (char)111, (char)116 }));\n    }\n}",
-    "image": null
+    "question": "",
+    "image": "/hitAssests/images/blueimg2.jpg"
   },
   {
     "color": "blue",
     "path": "1",
     "qr": "mvydw",
-    "question": "",
-    "image": "https://drive.google.com/file/d/11irutb1MT_odYtNZY4PZX2EmFVmFHmFO/view?usp=drive_link"
+    "question": "where devotion meets hydration - both calm your soul",
+    "image": null
   },
   {
     "color": "blue",
     "path": "1",
     "qr": "ytnhb",
-    "question": "Think about the combination of two words: \none representing learners and the \nother representing strength or movement.",
+    "question": "Near the busy student walkway, there's a place where code breaks meet coffee breaks — where data scientists and developers share meals instead of datasets.\nIt's not a classroom, but you'll always find groups in discussion; not a server, yet it constantly serves.\nWhich location fits this description?",
     "image": null
   },
   {
     "color": "blue",
     "path": "2",
     "qr": "mkddf",
-    "question": "A place where time flies, yet the queue moves slow,\nMorning haste and break-time glow.\nNot for hunger, but for needs in class?",
-    "image": null
+    "question": "",
+    "image": "/hitAssests/images/blueimg3.png"
   },
   {
     "color": "blue",
     "path": "2",
     "qr": "mlasd",
-    "question": "I ascend and descend without a sound, \nwithin the halls where postgraduates are found.",
+    "question": "Where silence speaks louder than sound,\nAnd stories rest on stone all around —\nA calm between two worlds of haste this is a place where people can worship too,\nCan you find the heart of this quiet space?",
     "image": null
   },
   {
     "color": "blue",
     "path": "2",
     "qr": "ujdie",
-    "question": "I stand behind the sacred form, a path from dark to light I transform.\nSeen yet unseen, a symbol so vast, what am I, linking future to past?",
-    "image": null
+    "question": "",
+    "image": "/hitAssests/images/blueimg4.png"
   },
   {
     "color": "blue",
     "path": "2",
     "qr": "uhdid",
-    "question": "A person with a mass of 70 kg climbs a staircase of height 152.5 meters.\nCalculate the gravitational potential energy gained and express your answer in non-SI units.\n(Take g=9.8 m/s² and 1 calorie = 4184 joules)",
+    "question": "Peace comes from within. Do not seek it without.",
     "image": null
   },
   {
     "color": "blue",
     "path": "2",
     "qr": "jdird",
-    "question": "A statue that stands tall in the \nnecklace road and in our clg?",
+    "question": "🧑‍🎓+ 🚗 + 🈲",
     "image": null
   },
   {
     "color": "blue",
     "path": "2",
     "qr": "vhdis",
-    "question": "puts [84, 83, 32, 49, 50, 32, 69, 80, 32, 51, 50, 51, 56].map(&:chr).join\n",
+    "question": "I never sleep, yet I serve you day and night.\nI speak in numbers, not words, and hand out what you crave in sight.\nYou trust me with codes only you should know,\nTell me — what am I?",
     "image": null
   },
   {
     "color": "blue",
     "path": "2",
     "qr": "djned",
-    "question": "Where do players head to refresh, \njust after the whistle blows and the game's complete?"
+    "question": "clues = [\n    \"⚡ \",\n    \"🔋 \",\n    \"👩‍🏫 \"\n]\nfor clue in clues:\n    print(\"💡 Clue:\", clue)\nprint(\"\\n🤔 Combine the answers wisely...\")\nhint = [\"E------c\", \"C------g\", \"F------y\"]\nprint(\"🧩 Hint pattern:\", \" \".join(hint))"
   },
   {
     "color": "blue",
     "path": "2",
     "qr": "oklsp",
     "question": "",
-    "image": "https://drive.google.com/file/d/1w9rlBVfp2UGfR7Xeksy-RhRcEMEuaeOw/view?usp=drivesdk"
+    "image": "/hitAssests/images/blueimg5.png"
   },
   {
     "color": "blue",
     "path": "3",
     "qr": "vbnmc",
-    "question": "Near the hostel mess, in the place between blocks, \nfind the bulletin where the exam seating chart is pasted. \nDecode the hidden pattern within the seating arrangement to reveal your next clue!",
-    "image": null
+    "question": "find your nearest highlighted item from the video",
+    "image": null,
+    "video": "/hitAssests/videos/blueHINT1minions.mp4"
   },
   {
     "color": "blue",
     "path": "3",
     "qr": "bygtf",
-    "question": "",
-    "image": "https://drive.google.com/file/d/1q4jJwT3vRba3wsEwOCMUydNGUxpHy6z6/view?usp=drive_link"
-  },
-  {
-    "color": "blue",
-    "path": "3",
-    "qr": "plkbd",
-    "question": "You get me when u divide circle's surface area by pi",
+    "question": "Average adult resting respiratory rate ≈ 18 breaths/min\nEach level = 1 energy unit = 1 breath match\n → So the climber reaches the same numbered level",
     "image": null
   },
   {
     "color": "blue",
     "path": "3",
+    "qr": "plkbd",
+    "question": "",
+    "image": null,
+    "audio": "/hitAssests/audios/BlueP3H2.mp3"
+  },
+  {
+    "color": "blue",
+    "path": "3",
     "qr": "vbwzx",
-    "question": "I stand tall with leaves so wide, my fruit is sweet, my heart I hide. \nI give without a single seed, in every part, I serve a need. What am I?",
+    "question": "The zone where vehicles have degrees too.",
     "image": null
   },
   {
     "color": "blue",
     "path": "3",
     "qr": "qwuhd",
-    "question": "module Main where\n\nlocation = map toEnum [65]  \nname = map toEnum [65, 108, 98, 101, 114, 116, 32, 101, 105, 110, 115, 116, 105, 101, 110, 32]\n\nmain :: IO ()\nmain = putStrLn (show location ++ \" Block has: \" ++ name)",
-    "image": null
+    "question": "",
+    "image": "/hitAssests/images/blueimg6.png"
   },
   {
     "color": "blue",
     "path": "3",
     "qr": "nvybd",
-    "question": "I'm a club's storage room where the used \npapers are stored. what am I?",
+    "question": "The highest education is that which does not merely give us information but makes our life in harmony with all existence.\n\nFind the person by whom these lines were said.",
     "image": null
   },
   {
     "color": "blue",
     "path": "3",
     "qr": "cbwqa",
-    "question": "Begin at the circle where paths meet, \npass the Azadirachta Indica tree and \nfind your next clue near the hostel bus parking.",
+    "question": "Access granted to the realm of peace,\nWhen soul runs the Bhakti.exe release.\nGuardian-Bull in spiritual firewall mode,\nElephant sentinel at sacred node.\n\"Om\" frequency always online,\nShankha-signal in divine design —\nFind the Temple Server in our campus spine.",
     "image": null
   },
   {
     "color": "blue",
     "path": "3",
     "qr": "xvgdw",
-    "question": "With 6205, I tread unknown lanes, \nNot bound by time, nor by chains. \nIn digits, a clue, a secret untold, A riddle of numbers, its meaning unfolds. \nWhere do I go, and what do I seek? \nThe answer's hidden, it's not for the meek.",
-    "image": null
-  },
-  {
-    "color": "blue",
-    "path": "final",
-    "qr": "iksls",
-    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
-    "image": null
-  },
-  {
-    "color": "blue",
-    "path": "fooled",
-    "qr": "bhdki",
-    "question": "Ha Ha Misguided 😂",
+    "question": "I stand where players gather round,\nbeside a patch of open ground.\nI rise when pressure drops,\nI fall when weight takes one side's spot.\nNo circuit thinks for me\nonly simple physics and gravity.\nOne side gains weight, the other must obey.\nWhere am I standing?",
     "image": null
   }
 ]
