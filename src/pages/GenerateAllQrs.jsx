@@ -164,7 +164,7 @@ const GenerateAllQrs = () => {
                     } catch (error) {
                       console.error("Failed to generate document:", error);
                       alert(
-                        "Failed to generate Word document. Please try again."
+                        "Failed to generate PDF. Please try again."
                       );
                     } finally {
                       setGeneratingDoc(null);
@@ -191,7 +191,7 @@ const GenerateAllQrs = () => {
                   </svg>
                   {generatingDoc === groupKey
                     ? "Generating..."
-                    : "Download Word Doc"}
+                    : "Download PDF"}
                 </button>
               </div>
             </div>
