@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { QRCode } from "react-qrcode-logo";
 import qrData from "../data/hitData";
 import { generateAllQRDoc } from "../utils/generateQRDoc";
-import { CloudCog } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 const GenerateAllQrs = () => {
   const [generatingDoc, setGeneratingDoc] = useState(null);
@@ -106,7 +106,15 @@ const GenerateAllQrs = () => {
     return acc;
   }, {});
 
-  function DownloadPdfComp({ groupKey, items, color, path, groupIndex, generatingDoc, setGeneratingDoc }) {
+  function DownloadPdfComp({
+    groupKey,
+    items,
+    color,
+    path,
+    groupIndex,
+    generatingDoc,
+    setGeneratingDoc,
+  }) {
     const [qrDocSize, setQrDocSize] = useState(250);
 
     const handleDownload = async () => {
@@ -253,6 +261,15 @@ const GenerateAllQrs = () => {
                             {obj.question}
                           </p>
                         )}
+                        <div
+                          onClick={() => {
+                            window.open(`/hit?q=${obj.qr}`);
+                          }}
+                          className="mt-2 text-center text-sm text-blue-600 hover:text-blue-800 hover:underline cursor-pointer font-medium transition-colors flex items-center justify-center gap-1"
+                        >
+                          <span>Visit Link</span>
+                          <ExternalLink className="w-4 h-4" />
+                        </div>
                       </div>
 
                       <button
