@@ -108,14 +108,14 @@
     "color": "green",
     "path": "2",
     "qr": "xrkzf",
-    "question": "variable = '9238';\nwhile(engine == off):\n search(rows)",
+    "question": "variable = '9238';\nwhile(engine == off):\n &nbsp &nbsp search(rows)",
     "image": null
   },
   {
     "color": "green",
     "path": "3",
     "qr": "cjnpx",
-    "question": "; 🔐 Riddle in Assembly — \"---\" \n\nsection .data\n    msg db \"I guard your money, speak in digits,\", 10\n        db \"Serve you day and night without a tongue.\", 10\n        db \"What am I?\", 10, 10\n        db \"Answer: ATM\", 10\n    len equ $-msg\n\nsection .text\n    global _start\n\n_start:\n    mov rax, 1      ; sys_write\n    mov rdi, 1      ; stdout\n    mov rsi, msg\n    mov rdx, len\n    syscall\n    mov rax, 60     ; sys_exit\n    xor rdi, rdi\n    syscall",
+    "question": "; 🔐 Riddle in Assembly — \"---\" \n\nsection .data\n &nbsp msg db \"I guard your money, speak in digits,\", 10\n        &nbsp &nbsp db \"Serve you day and night without a tongue.\", 10\n        &nbsp &nbsp db \"What am I?\", 10, 10\n        &nbsp &nbsp db \"Answer: ATM\", 10\n    &nbsp  len equ $-msg\n\nsection .text\n   &nbsp global _start\n\n_start:\n    &nbsp mov rax, 1 &nbsp ;sys_write\n    &nbsp mov rdi, 1 &nbsp ;stdout\n    &nbsp mov rsi, msg\n    &nbsp mov rdx, len\n    &nbsp syscall\n    &nbsp mov rax, 60 &nbsp ;sys_exit\n    &nbsp xor rdi, rdi\n    &nbsp syscall",
     "image": null
   },
   {
