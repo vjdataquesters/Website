@@ -101,7 +101,7 @@
     "color": "blue",
     "path": "2",
     "qr": "djned",
-    "question": "clues = [\n    \"⚡ \",\n    \"🔋 \",\n    \"👩‍🏫 \"\n]\nfor clue in clues:\n    print(\"💡 Clue:\", clue)\nprint(\"\\n🤔 Combine the answers wisely...\")\nhint = [\"E------c\", \"C------g\", \"F------y\"]\nprint(\"🧩 Hint pattern:\", \" \".join(hint))"
+    "question": "clues = [\n    \"⚡ \",\n    \"🔋 \",\n    \"👩‍🏫 \"\n]\nfor clue in clues:\n &nbsp &nbsp print(\"💡 Clue:\", clue)\n &nbsp &nbsp print(\"\\n🤔 Combine the answers wisely...\")\n &nbsp &nbsp hint = [\"E------c\", \"C------g\", \"F------y\"]\n &nbsp &nbsp print(\"🧩 Hint pattern:\", \" \".join(hint))"
   },
   {
     "color": "blue",

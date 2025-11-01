@@ -261,6 +261,7 @@ const GenerateAllQrs = () => {
                             {obj.question}
                           </p>
                         )}
+                        <div className="text-center my-3">code: {obj.qr}</div>
                         <div
                           onClick={() => {
                             window.open(`/hit?q=${obj.qr}`);
