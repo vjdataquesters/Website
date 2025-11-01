@@ -138,7 +138,7 @@
     "color": "red",
     "path": "3",
     "qr": "nehug",
-    "question": "",
+    "question": null,
     "image": "/hitAssests/images/red-path3.png"
   },
   {

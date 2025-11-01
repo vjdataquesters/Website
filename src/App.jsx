@@ -80,7 +80,7 @@ function App() {
         </Routes>
       </div>
       <DynamicComponent Component={PromoSection} blacklist={promoBlacklist} />
-      <Footer />
+      <DynamicComponent Component={Footer} blacklist={headerBlacklist} />
     </Router>
   );
 }

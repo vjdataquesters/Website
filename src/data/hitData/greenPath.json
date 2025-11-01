@@ -45,8 +45,8 @@
     "color": "green",
     "path": "1",
     "qr": "zcbpw",
-    "question": "",
-    "image":"hitAssests/images/green-path-img1.png"
+    "question": null,
+    "image": "hitAssests/images/green-path-img1.png"
   },
   {
     "color": "green",
@@ -94,7 +94,7 @@
     "color": "green",
     "path": "2",
     "qr": "bqwjt",
-    "question": "",
+    "question": null,
     "image": "/hitAssests/images/green-path-img4.jpg"
   },
   {

@@ -152,7 +152,7 @@ function Hit() {
                 }
                 loop={queryRes.path === "final" || queryRes.path === "fooled"}
                 muted={queryRes.path === "final" || queryRes.path === "fooled"}
-                className="w-full rounded-lg shadow-md max-h-[90vh]"
+                className="w-full rounded-lg shadow-md min-h-80 max-h-[90vh]"
               />
             </div>
           )}

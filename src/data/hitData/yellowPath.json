@@ -73,7 +73,7 @@
     "color": "yellow",
     "path": "2",
     "qr": "jscfg",
-    "question": "",
+    "question": null,
     "image": null
   },
   {
@@ -158,14 +158,14 @@
     "color": "yellow",
     "path": "3",
     "qr": "elonm",
-    "question": "",
+    "question": null,
     "image": "/hitAssests/images/yellowimg2.png"
   },
   {
     "color": "yellow",
     "path": "3",
     "qr": "lbird",
-    "question":"",
+    "question": null,
     "image": "/hitAssests/images/yellowimg3.png"
   },
   {

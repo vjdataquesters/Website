@@ -10,7 +10,7 @@
     "color": "blue",
     "path": "1",
     "qr": "bkwud",
-    "question": "",
+    "question": null,
     "image": "hitAssests/images/blueimg1.png"
   },
   {
@@ -38,7 +38,7 @@
     "color": "blue",
     "path": "1",
     "qr": "qzlum",
-    "question": "",
+    "question": null,
     "image": "/hitAssests/images/blueimg2.jpg"
   },
   {
@@ -59,7 +59,7 @@
     "color": "blue",
     "path": "2",
     "qr": "mkddf",
-    "question": "",
+    "question": null,
     "image": "/hitAssests/images/blueimg3.png"
   },
   {
@@ -73,7 +73,7 @@
     "color": "blue",
     "path": "2",
     "qr": "ujdie",
-    "question": "",
+    "question": null,
     "image": "/hitAssests/images/blueimg4.png"
   },
   {
@@ -107,7 +107,7 @@
     "color": "blue",
     "path": "2",
     "qr": "oklsp",
-    "question": "",
+    "question": null,
     "image": "/hitAssests/images/blueimg5.png"
   },
   {
@@ -129,7 +129,7 @@
     "color": "blue",
     "path": "3",
     "qr": "plkbd",
-    "question": "",
+    "question": null,
     "image": null,
     "audio": "/hitAssests/audios/BlueP3H2.mp3"
   },
@@ -144,7 +144,7 @@
     "color": "blue",
     "path": "3",
     "qr": "qwuhd",
-    "question": "",
+    "question": null,
     "image": "/hitAssests/images/blueimg6.png"
   },
   {
