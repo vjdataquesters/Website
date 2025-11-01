@@ -49,13 +49,21 @@ function App() {
   function LoadingWrapper() {
     const { pathname } = useLocation();
 
-    return <>{pathname !== "/hit" && <Loading load={load} />}</>;
+    return (
+      <>
+        {pathname !== "/hit" && (
+          <>
+            <Loading load={load} />
+            <Header />
+          </>
+        )}
+      </>
+    );
   }
   return (
     <Router>
       <Analytics />
       <LoadingWrapper load={load} />
-      <Header />
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-blue-50/70">
         <Routes>

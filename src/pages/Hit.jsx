@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import data from "../data/hitData";
-import bg_img from "../assets/bg_img.jpg";
+import bg_img from "/hitAssests/bg.jpg";
+import bg_img_big from "/hitAssests/bg_big.jpg";
 
 /**
  * Example JSON format:
@@ -22,6 +23,7 @@ function Hit() {
   const [loading, setLoading] = useState(true);
   const [queryRes, setQueryRes] = useState(null);
   const [animation, setAnimation] = useState(false);
+  const [isBigScreen, setIsBigScreen] = useState(window.innerWidth >= 1024);
 
   // when qr key changes
   useEffect(() => {
@@ -41,6 +43,14 @@ function Hit() {
   useEffect(() => {
     if (queryRes) setAnimation(true);
   }, [queryRes]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsBigScreen(window.innerWidth >= 600);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Home Page
   const renderHomePage = () => (
@@ -92,7 +102,11 @@ function Hit() {
       >
         <div className="bg-white rounded-lg shadow-xl p-6 border-t-4">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Question</h1>
+            {queryRes.path !== "final" && queryRes.path !== "fooled" && (
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                Question
+              </h1>
+            )}
             <div
               className={`w-16 h-1 mx-auto rounded-full bg-${pathColor}-500`}
             ></div>
@@ -122,21 +136,25 @@ function Hit() {
             </div>
           )}
 
-        
-
           {/* Video */}
           {queryRes.video && (
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                Watch this clip 🎬
-              </h3>
+              {queryRes.path !== "final" && queryRes.path !== "fooled" && (
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                  Watch this clip 🎬
+                </h3>
+              )}
               <video
                 src={queryRes.video}
-                controls={queryRes.path !== "final"}
-                autoPlay={queryRes.path === "final"}
-                loop={queryRes.path === "final"}
-                muted={queryRes.path === "final"}
-                className="w-full rounded-lg shadow-md"
+                controls={
+                  queryRes.path !== "final" && queryRes.path !== "fooled"
+                }
+                autoPlay={
+                  queryRes.path === "final" || queryRes.path === "fooled"
+                }
+                loop={queryRes.path === "final" || queryRes.path === "fooled"}
+                muted={queryRes.path === "final" || queryRes.path === "fooled"}
+                className="w-full rounded-lg shadow-md max-h-[90vh]"
               />
             </div>
           )}
@@ -166,7 +184,7 @@ function Hit() {
     <section
       className="fixed inset-0 py-10 px-4 flex justify-center items-center bg-cover bg-center bg-no-repeat overflow-y-auto"
       style={{
-        backgroundImage: `url(${bg_img})`,
+        backgroundImage: `url(${isBigScreen ? bg_img_big : bg_img})`,
         backgroundBlendMode: "overlay",
         backgroundSize: "cover",
       }}
