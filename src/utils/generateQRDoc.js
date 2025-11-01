@@ -55,12 +55,14 @@ export async function generateAllQRDoc(
     }
 
     // Layout configuration
-    const qrsPerRow = 3;
     const margin = 15; // mm
-    const availableWidth = pageWidth - margin * 2;
     const spacing = 5; // mm spacing between QR codes
-    const qrWidth = (availableWidth - spacing * (qrsPerRow - 1)) / qrsPerRow;
-    const qrHeight = qrWidth; // Square QR codes
+
+    const qrWidthMM = (qrSize * 25.4) / 96;
+    const qrHeightMM = qrWidthMM; // Square QR codes
+
+    const availableWidth = pageWidth - margin * 2;
+    const qrsPerRow = Math.max(1, Math.floor((availableWidth + spacing) / (qrWidthMM + spacing)));
 
     let currentX = margin;
     let currentY = 35; // Start below heading
@@ -72,21 +74,21 @@ export async function generateAllQRDoc(
 
       // Check if we need a new row
       if (columnIndex === 0 && i > 0) {
-        currentY += qrHeight + spacing;
+        currentY += qrHeightMM + spacing;
         currentX = margin;
 
         // Check if we need a new page
-        if (currentY + qrHeight > pageHeight - margin) {
+        if (currentY + qrHeightMM > pageHeight - margin) {
           doc.addPage();
           currentY = margin;
         }
       }
 
       // Add the QR code image
-      doc.addImage(qrImages[i], "PNG", currentX, currentY, qrWidth, qrHeight);
+      doc.addImage(qrImages[i], "PNG", currentX, currentY, qrWidthMM, qrHeightMM);
 
       // Move to next column position
-      currentX += qrWidth + spacing;
+      currentX += qrWidthMM + spacing;
     }
 
     // Save the PDF

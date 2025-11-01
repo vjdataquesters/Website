@@ -27,43 +27,46 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  const loadingAnimationBlacklist = ["/hit", "/genqr", "/register"];
+  const headerBlacklist = ["/hit", "/register"];
+  const promoBlacklist = ["/hit", "/genqr", "/register"];
+
   function PromoSection() {
-    const { pathname } = useLocation();
     return (
-      pathname !== "/hit" &&
-      pathname !== "/hitreloadedultrasecretendpoint" &&
-      pathname !== "/register" && (
-        <div className="fixed bottom-2 md:bottom-14 right-2 flex flex-col gap-2 z-10">
-          {events.upcoming.map((e, i) => (
-            <PromoDiv
-              key={i}
-              eventName={e.name}
-              eventLink={e.link}
-              eventStatus="upcoming"
-            />
-          ))}
-        </div>
-      )
+      <div className="fixed bottom-2 md:bottom-14 right-2 flex flex-col gap-2 z-10">
+        {events.upcoming.map((e, i) => (
+          <PromoDiv
+            key={i}
+            eventName={e.name}
+            eventLink={e.link}
+            eventStatus="upcoming"
+          />
+        ))}
+      </div>
     );
   }
-  function LoadingWrapper() {
-    const { pathname } = useLocation();
+
+  function DynamicComponent({ Component, blacklist, ...props }) {
+    const { pathname: currentPath } = useLocation();
 
     return (
       <>
-        {pathname !== "/hit" && (
-          <>
-            <Loading load={load} />
-            <Header />
-          </>
+        {!blacklist.some((path) => path === currentPath) && (
+          <Component {...props} />
         )}
       </>
     );
   }
+
   return (
     <Router>
       <Analytics />
-      <LoadingWrapper load={load} />
+      <DynamicComponent
+        Component={Loading}
+        blacklist={loadingAnimationBlacklist}
+        load={load}
+      />
+      <DynamicComponent Component={Header} blacklist={headerBlacklist} />
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-blue-50/70">
         <Routes>
@@ -76,7 +79,7 @@ function App() {
           ))}
         </Routes>
       </div>
-      <PromoSection />
+      <DynamicComponent Component={PromoSection} blacklist={promoBlacklist} />
       <Footer />
     </Router>
   );
