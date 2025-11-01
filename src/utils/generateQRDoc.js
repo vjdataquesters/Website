@@ -1,5 +1,4 @@
-import PDFDocument from "pdfkit/js/pdfkit.standalone";
-import blobStream from "blob-stream";
+import { jsPDF } from "jspdf";
 
 export async function generateAllQRDoc(
   items,
@@ -12,118 +11,89 @@ export async function generateAllQRDoc(
     return;
   }
 
-  return new Promise((resolve, reject) => {
-    try {
-      // Create a new PDF document
-      const doc = new PDFDocument({
-        size: "A4",
-        margins: {
-          top: 50,
-          bottom: 50,
-          left: 50,
-          right: 50,
-        },
-      });
+  try {
+    // Create a new PDF document (A4 size)
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
 
-      // Create a blob stream to capture the PDF
-      const stream = doc.pipe(blobStream());
+    // Add heading
+    doc.setFontSize(24);
+    doc.setFont("helvetica", "bold");
+    const pageWidth = doc.internal.pageSize.getWidth();
+    doc.text(heading, pageWidth / 2, 20, { align: "center" });
 
-      // Add heading
-      doc
-        .fontSize(24)
-        .font("Helvetica-Bold")
-        .text(heading, { align: "center" })
-        .moveDown(2);
+    // Collect QR code images
+    const qrImages = [];
 
-      // Collect QR code images
-      const qrImages = [];
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (!item.qr) continue;
 
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        if (!item.qr) continue;
+      const globalIndex = groupIndex * items.length + i;
+      const qrId =
+        item.path === "final" || item.path === "fooled"
+          ? `qr-${item.color}-${item.path}-${item.qr}`
+          : `qr-${globalIndex}`;
 
-        const globalIndex = groupIndex * items.length + i;
-        const qrId =
-          item.path === "final" || item.path === "fooled"
-            ? `qr-${item.color}-${item.path}-${item.qr}`
-            : `qr-${globalIndex}`;
-
-        const qrContainer = document.getElementById(qrId);
-        if (!qrContainer) {
-          console.warn(`QR container not found for ID: ${qrId}, skipping...`);
-          continue;
-        }
-
-        const canvas = qrContainer.querySelector("canvas");
-        if (!canvas) {
-          console.warn(`Canvas not found for ${item.qr}, skipping...`);
-          continue;
-        }
-
-        const dataUrl = canvas.toDataURL("image/png", 1.0);
-        qrImages.push(dataUrl);
+      const qrContainer = document.getElementById(qrId);
+      if (!qrContainer) {
+        console.warn(`QR container not found for ID: ${qrId}, skipping...`);
+        continue;
       }
 
-      // Layout configuration
-      const qrsPerRow = 3;
-      const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
-      const spacing = 20;
-      const imageWidth = (pageWidth - spacing * (qrsPerRow - 1)) / qrsPerRow;
-      const imageHeight = imageWidth; // Square QR codes
-
-      let currentX = doc.page.margins.left;
-      let currentY = doc.y;
-
-      // Add QR codes in a grid
-      for (let i = 0; i < qrImages.length; i++) {
-        const columnIndex = i % qrsPerRow;
-
-        // Check if we need a new row
-        if (columnIndex === 0 && i > 0) {
-          currentY += imageHeight + spacing;
-          currentX = doc.page.margins.left;
-
-          // Check if we need a new page
-          if (currentY + imageHeight > doc.page.height - doc.page.margins.bottom) {
-            doc.addPage();
-            currentY = doc.page.margins.top;
-          }
-        }
-
-        // Add the QR code image
-        doc.image(qrImages[i], currentX, currentY, {
-          width: imageWidth,
-          height: imageHeight,
-        });
-
-        // Move to next column position
-        currentX += imageWidth + spacing;
+      const canvas = qrContainer.querySelector("canvas");
+      if (!canvas) {
+        console.warn(`Canvas not found for ${item.qr}, skipping...`);
+        continue;
       }
 
-      // Finalize the PDF
-      doc.end();
-
-      // When the stream is finished, save the blob
-      stream.on("finish", function () {
-        const blob = stream.toBlob("application/pdf");
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `${heading.replace(/\s+/g, "_")}_QRs.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-        resolve();
-      });
-
-      stream.on("error", (error) => {
-        console.error("PDF generation error:", error);
-        reject(error);
-      });
-    } catch (error) {
-      console.error("Failed to generate PDF:", error);
-      reject(error);
+      const dataUrl = canvas.toDataURL("image/png", 1.0);
+      qrImages.push(dataUrl);
     }
-  });
+
+    // Layout configuration
+    const qrsPerRow = 3;
+    const margin = 15; // mm
+    const availableWidth = pageWidth - margin * 2;
+    const spacing = 5; // mm spacing between QR codes
+    const qrWidth = (availableWidth - spacing * (qrsPerRow - 1)) / qrsPerRow;
+    const qrHeight = qrWidth; // Square QR codes
+
+    let currentX = margin;
+    let currentY = 35; // Start below heading
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    // Add QR codes in a grid
+    for (let i = 0; i < qrImages.length; i++) {
+      const columnIndex = i % qrsPerRow;
+
+      // Check if we need a new row
+      if (columnIndex === 0 && i > 0) {
+        currentY += qrHeight + spacing;
+        currentX = margin;
+
+        // Check if we need a new page
+        if (currentY + qrHeight > pageHeight - margin) {
+          doc.addPage();
+          currentY = margin;
+        }
+      }
+
+      // Add the QR code image
+      doc.addImage(qrImages[i], "PNG", currentX, currentY, qrWidth, qrHeight);
+
+      // Move to next column position
+      currentX += qrWidth + spacing;
+    }
+
+    // Save the PDF
+    const filename = `${heading.replace(/\s+/g, "_")}_QRs.pdf`;
+    doc.save(filename);
+  } catch (error) {
+    console.error("Failed to generate PDF:", error);
+    throw error;
+  }
 }
