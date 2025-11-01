@@ -159,7 +159,7 @@ function Hit() {
 
           {/* Question text */}
           {queryRes.question && (
-            <div className="bg-gray-50 p-5 rounded-lg">
+            <div className="bg-gray-50 p-5 rounded-lg text-sm">
               <p
                 className="text-left font-mono text-gray-700 whitespace-pre-line"
                 dangerouslySetInnerHTML={{ __html: queryRes.question }}
