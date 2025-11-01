@@ -4,7 +4,7 @@ import qrData from "../data/hitData";
 import { generateAllQRDoc } from "../utils/generateQRDoc";
 
 const GenerateAllQrs = () => {
-  const [qrDocSize, setQrDocSize] = useState(200);
+  const [qrDocSize, setQrDocSize] = useState(250);
   const [generatingDoc, setGeneratingDoc] = useState(null);
 
   const colorMap = {
