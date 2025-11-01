@@ -214,7 +214,7 @@ const GenerateAllQrs = () => {
                     <div className="flex justify-center mb-3">
                       <div id={qrId}>
                         <QRCode
-                          value={`https://vjdataquesters.vercel.app/hit?q=${obj.qr}`}
+                          value={`https://vjdataquesters.com/hit?q=${obj.qr}`}
                           size={350}
                           fgColor={qrColor}
                           eyeColor={eyeColor}
