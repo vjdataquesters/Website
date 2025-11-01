@@ -221,7 +221,7 @@ const GenerateAllQrs = () => {
                 return (
                   <div
                     key={globalIndex}
-                    className="w-full bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
+                    className="w-full flex flex-col justify-between bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
                   >
                     <div className="flex justify-center mb-3">
                       <div id={qrId}>
@@ -239,7 +239,7 @@ const GenerateAllQrs = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col items-center space-y-3">
+                    <div className="flex flex-col items-center space-y-3 gap-3">
                       <div className="bg-gray-50 p-3 rounded-md w-full">
                         {obj.image || obj.audio || obj.video ? (
                           <div className="flex flex-col items-center">

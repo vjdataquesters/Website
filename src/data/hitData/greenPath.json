@@ -52,7 +52,7 @@
     "color": "green",
     "path": "1",
     "qr": "fnqry",
-    "question": "CREATE TABLE Visionary (\n    id INT PRIMARY KEY,\n    first_name VARCHAR(10),\n    last_name VARCHAR(10),\n    domain VARCHAR(20),\n    title VARCHAR(30),\n    dream VARCHAR(100)\n);\n\nINSERT INTO Visionary VALUES\n(1, '*****', '*****', 'Aerospace', 'People\\'s President', 'Dream, Dream, Dream...');\n\n\nSELECT first_name, last_name\nFROM Visionary\nWHERE domain = 'Aerospace'\n  AND title LIKE '%President%'\n  AND dream LIKE '%Dream%';",
+    "question": "CREATE&nbsp TABLE&nbsp Visionary&nbsp (\n&nbsp &nbsp &nbsp &nbsp id&nbsp INT&nbsp PRIMARY&nbsp KEY,\n&nbsp &nbsp &nbsp &nbsp first_name&nbsp VARCHAR(10),\n&nbsp &nbsp &nbsp &nbsp last_name&nbsp VARCHAR(10),\n&nbsp &nbsp &nbsp &nbsp domain&nbsp VARCHAR(20),\n&nbsp &nbsp &nbsp &nbsp title&nbsp VARCHAR(30),\n&nbsp &nbsp &nbsp &nbsp dream&nbsp VARCHAR(100)\n);\n\nINSERT&nbsp INTO&nbsp Visionary&nbsp VALUES\n(1,&nbsp '*****',&nbsp '*****',&nbsp 'Aerospace',&nbsp 'People\\'s&nbsp President',&nbsp 'Dream,&nbsp Dream,&nbsp Dream...');\n\n\nSELECT&nbsp first_name,&nbsp last_name\nFROM&nbsp Visionary\nWHERE&nbsp domain&nbsp =&nbsp 'Aerospace'\n&nbsp &nbsp AND&nbsp title&nbsp LIKE&nbsp '%President%'\n&nbsp &nbsp AND&nbsp dream&nbsp LIKE&nbsp '%Dream%';",
     "image": null
   },
   {
