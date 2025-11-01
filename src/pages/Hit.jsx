@@ -31,10 +31,8 @@ function Hit() {
       const res = data.find((obj) => obj.qr === key);
       if (res) {
         setQueryRes(res);
-        // reset to home after 5 seconds
-        setTimeout(() => {
-          navigate("/hit", { replace: true });
-        }, 5000);
+        // removing qr code in params
+        window.history.replaceState({}, "", "/hit");
       }
     }
     setLoading(false);
