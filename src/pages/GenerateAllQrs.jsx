@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { QRCode } from "react-qrcode-logo";
 import qrData from "../data/hitData";
+import { generateAllQRDoc } from "../utils/generateQRDoc";
 
 const GenerateAllQrs = () => {
+  const [qrDocSize, setQrDocSize] = useState(200);
+  const [generatingDoc, setGeneratingDoc] = useState(null);
+
   const colorMap = {
     red: "#ff6600",
     yellow: "#ffcc00",
@@ -113,14 +117,83 @@ const GenerateAllQrs = () => {
         const colorHex = colorMap[color] || "#000000";
         return (
           <div key={groupKey} className="mb-10">
-            <div className="flex items-center mb-4 border-b pb-2">
-              <div
-                className="w-6 h-6 rounded-full mr-2"
-                style={{ backgroundColor: colorHex }}
-              ></div>
-              <h2 className="text-xl font-semibold">
-                {color.charAt(0).toUpperCase() + color.slice(1)} Path {path}
-              </h2>
+            <div className="flex items-center justify-between mb-4 border-b pb-2">
+              <div className="flex items-center">
+                <div
+                  className="w-6 h-6 rounded-full mr-2"
+                  style={{ backgroundColor: colorHex }}
+                ></div>
+                <h2 className="text-xl font-semibold">
+                  {color.charAt(0).toUpperCase() + color.slice(1)} Path {path}
+                </h2>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <label
+                    htmlFor={`size-${groupKey}`}
+                    className="text-sm text-gray-600"
+                  >
+                    Size:
+                  </label>
+                  <input
+                    id={`size-${groupKey}`}
+                    type="number"
+                    min="100"
+                    max="500"
+                    step="50"
+                    value={qrDocSize}
+                    onChange={(e) => setQrDocSize(Number(e.target.value))}
+                    className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                  />
+                  <span className="text-sm text-gray-500">px</span>
+                </div>
+                <button
+                  onClick={async () => {
+                    const heading = `${
+                      color.charAt(0).toUpperCase() + color.slice(1)
+                    } Path ${path}`;
+                    setGeneratingDoc(groupKey);
+                    try {
+                      await generateAllQRDoc(
+                        items,
+                        heading,
+                        qrDocSize,
+                        groupIndex
+                      );
+                    } catch (error) {
+                      console.error("Failed to generate document:", error);
+                      alert(
+                        "Failed to generate Word document. Please try again."
+                      );
+                    } finally {
+                      setGeneratingDoc(null);
+                    }
+                  }}
+                  disabled={generatingDoc === groupKey}
+                  className={`px-4 py-2 ${
+                    generatingDoc === groupKey
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-blue-600 hover:bg-blue-700"
+                  } text-white rounded-lg transition-colors flex items-center gap-2 text-sm`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  {generatingDoc === groupKey
+                    ? "Generating..."
+                    : "Download Word Doc"}
+                </button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
