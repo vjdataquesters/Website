@@ -26,7 +26,7 @@ const router = [
   { path: "/cred", component: Credentials },
   { path: "/register", component: RegistrationForm },
   { path: "/hit", component: Hit },
-  { path: "/genqr", component: GenerateAllQrs },
+  { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
   { path: "*", component: Home },
 ];
 
