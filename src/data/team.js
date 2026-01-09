@@ -14,10 +14,10 @@ export const faculty = [
     bio: "As the faculty coordinator, I am honored to mentor and work alongside such a dynamic and talented group of students. This club provides a platform for young minds to explore new ideas, develop technical and leadership skills, and collaborate on meaningful projects. My role is to guide, support, and ensure that each initiative aligns with our department's vision of holistic development. I firmly believe that co-curricular activities are essential for shaping well-rounded individuals. It brings me great satisfaction to witness the enthusiasm and growth of our students as they turn their ideas into impactful realities.",
   },
   {
-    name: "Mr. P. Veeranjaneyulu",
+    name: "Mrs. D. Jothsna",
     role: "Coordinator",
-    image: "veeru.png",
-    linkedin: "https://www.linkedin.com/in/veeru-pagadala-b4ba6238/",
+    image: "faculty3.png",
+    // linkedin: "https://www.linkedin.com/in/veeru-pagadala-b4ba6238/",
     bio: "As a faculty coordinator, it brings me great joy to be part of a student-driven initiative that constantly inspires creativity, innovation, and teamwork. I see this club as a vibrant learning environment where students challenge themselves, take ownership of their ideas, and transform concepts into action. My focus is to provide guidance, encourage critical thinking, and help create opportunities that nurture both technical and interpersonal skills. Supporting these young minds in their journey beyond the classroom is both a privilege and a responsibility I deeply value. Together, we continue to build a culture of learning, leadership, and lasting impact.",
   },
 ];

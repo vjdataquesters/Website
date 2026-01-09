@@ -181,7 +181,7 @@ export default function Team() {
         <h1 className="font-semibold text-3xl mb-2">Who are we?</h1>
         <p className="text-lg text-gray-600 mb-8">The people behind VJDQ</p>
         <div className="mx-auto flex flex-wrap justify-center gap-5 max-w-7xl">
-          {faculty.slice(0,2).map((member, index) => (
+          {faculty.map((member, index) => (
             <Image
               key={index}
               name={member.name}

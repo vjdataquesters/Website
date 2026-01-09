@@ -39,7 +39,7 @@ const TeamCard = ({ person }) => {
 };
 
 export default function Home() {
-  const topTeam = faculty?.slice(0, 2) || [];
+  const topTeam = faculty || [];
   return (
     <div>
       {/* Landing section */}
