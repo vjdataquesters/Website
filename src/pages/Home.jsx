@@ -39,7 +39,7 @@ const TeamCard = ({ person }) => {
 };
 
 export default function Home() {
-  const topTeam = faculty?.slice(0, 3) || [];
+  const topTeam = faculty?.slice(0, 2) || [];
   return (
     <div>
       {/* Landing section */}
@@ -165,10 +165,12 @@ export default function Home() {
             Our Coordinators
           </h1>
           <div className="flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-4 max-w-5xl mx-auto px-4">
+            <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto px-4">
               {topTeam &&
                 topTeam.map((person, index) => (
-                  <TeamCard key={index} person={person} />
+                  <div key={index} className="w-[280px]">
+                    <TeamCard person={person} />
+                  </div>
                 ))}
             </div>
           </div>

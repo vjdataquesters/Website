@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../clip-art.css";
-
+import { useSearchParams } from "react-router-dom";
 import events from "../data/events.js";
 import Reveal from "../components/Reveal.jsx";
 
@@ -71,9 +71,20 @@ export default function Events() {
   const recentYear = Object.keys(events.past)[0];
   const [pastevents, setPastevents] = useState(events.past[recentYear]);
   const [year, setyear] = useState(recentYear.slice(1));
+  
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pastEventsYear = searchParams.get("pastEventsYear");
+
+  useEffect(() => {
+    if (pastEventsYear && events.past[`e${pastEventsYear}`]) {
+      setPastevents(events.past[`e${pastEventsYear}`]);
+      setyear(pastEventsYear);
+    }
+  }, [pastEventsYear]);
 
   const handleYearChange = (e) => {
     setPastevents(events.past[e]);
+    setSearchParams({ pastEventsYear: e.slice(1) });
     setyear(e.slice(1));
   };
 

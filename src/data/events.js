@@ -40,6 +40,52 @@ const events = {
   past: {
     e2025: [
       {
+        name: "Convergence 2k25R – HIT: Reloaded",
+        eventId: "hit-reloaded-2",
+        image: "/events/HitReloaded2025Nov/img1.png",
+        date: "November 3rd 2025",
+        venue: "VNR VJIET",
+        timings: "11:00 AM to 4:40 PM",
+        pics: [
+          "/events/HitReloaded2025Nov/img1.png",
+          "/events/HitReloaded2025Nov/img2.png",
+          "/events/HitReloaded2025Nov/img3.png",
+          "/events/HitReloaded2025Nov/img4.png",
+        ],
+        winners:
+          "<b>1st Place - Team Synergize</b><br>Kothakonda Tejasree (MLRITM, CSD)<br>Gurrala Harshitha Reddy (MLRIT, CSE)<br><br><b>2nd Place - Team BY</b><br>Rajitha (VNRVJIET, Robotics & AI)<br>Yashashree (VNRVJIET, Robotics & AI)<br>Bhavishya (VNRVJIET, Robotics & AI)<br><br><b>3rd Place - Team Sherlock Homes</b><br>Punith (VNRVJIET, CSE-B)<br>Tanuja (VNRVJIET, CSE-B)<br>Sunay (VNRVJIET, CSDS-B)",
+        outcome:
+          "A day of thrilling puzzles and collaborative problem-solving culminated in the crowning of code-cracking champions at HIT: RELOADED 2.0. Participants navigated through challenging checkpoints, solving riddles and puzzles that tested their wit and teamwork. The event brought together teams from multiple colleges including MLRITM, MLRIT, and VNRVJIET, showcasing the spirit of inter-college competition. The hunt left participants with sharpened minds, stronger bonds, and a taste for adventure, contributing to the vibrant atmosphere of Convergence 2k25R.",
+        isGFormEmbeddable: false,
+        event_tags: ["Fun Event", "Treasure Hunt"],
+        description:
+          "The hunt is back, reloaded and ready to set the campus ablaze! HIT: Reloaded returns as part of Convergence 2k25R at VNRVJIET! Grab your team (2-3 members), trust your instincts, and let the hunt begin. Prize pool up to ₹10,000!",
+        link: "/events/hit-reloaded-2",
+      },
+      {
+        name: "Software Hackathon",
+        eventId: "software-hackathon-2025",
+        image: "/events/SoftwareHackathon2025/img1.png",
+        date: "November 3rd & 4th 2025",
+        venue: "VNR VJIET",
+        timings: "24 Hours",
+        pics: [
+          "/events/SoftwareHackathon2025/img1.png",
+          "/events/SoftwareHackathon2025/img2.png",
+          "/events/SoftwareHackathon2025/img3.png",
+          "/events/SoftwareHackathon2025/img4.png",
+        ],
+        winners:
+          "<b>Healthcare Tech & Wellness - Team Fusion</b><br>Sowmya Lakshmi Tayyala<br>Bollaram Gayathri Reddy<br>Muddasani Rohan Karthik<br>Gangam Akshitha Reddy<br><br><b>Climate, Energy & Green Technologies - Team Horizon</b><br>Kankanala Savant<br>Srihitha<br>Rishi<br>T. Sumith Karthik<br><br><b>Tech for Social Good / Smart & Safe Living - Team Bug Eaterz</b><br>Harshitha J<br>Rishika Reddy S<br>Varshini S<br>Siri Nandini A<br><br><b>FinTech & Enterprise - Team Money Minds</b><br>Srihan Raj<br>Faizuddin Mohammed<br>Manoj Kumar",
+        outcome:
+          "A 24-hour national-level coding marathon where teams tackled real-world challenges across Healthcare, Climate Tech, Social Good, and FinTech domains. Through PPT submissions and intensive prototype development, participants showcased creativity and technical expertise, fostering innovation and collaboration at Convergence 2k25R.",
+        isGFormEmbeddable: false,
+        event_tags: ["Hackathon", "Coding", "National Level"],
+        description:
+          "Think, Code, Transform - All in 24 Hours! A 24-hour national-level hackathon as part of Convergence 2k25R. Round 1: PPT Submission (FREE, no Convergence Pass required). Round 2: Prototype Development offline at VNR VJIET for shortlisted teams. Team size: 3-4 members. Prize pool up to ₹50,000 + Certificates!",
+        link: "/events/software-hackathon-2025",
+      },
+      {
         name: "Technovista 2k25",
         eventId: "tv25",
         image: "/events/Technovista2025/img1.jpg",

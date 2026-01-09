@@ -1,5 +1,5 @@
 import { faculty, currentteam, pastteams } from '../data/team';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Reveal from '../components/Reveal';
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -54,16 +54,16 @@ const backdropVariants = {
 };
 
 const modalVariants = {
-  hidden: { opacity: 0, y: 80, scale: 0.92 },
+  hidden: { opacity: 0, y: -80, scale: 0.92 },
   visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 250, damping: 22 } },
-  exit:   { opacity: 0, y: 80, scale: 0.92, transition: { duration: 0.18 } }
+  exit:   { opacity: 0, y: 80, scale: 0.92, transition: { type: "spring", stiffness: 300, damping: 25 } }
 };
 
 const BioModal = ({ member, onClose }) => {
+  if (!member) return null;
+
   return (
-    <AnimatePresence>
-      {member && (
-        <motion.div
+    <motion.div
           className="fixed inset-0 z-50 flex justify-center items-start md:items-center p-4"
           variants={backdropVariants}
           initial="hidden"
@@ -132,9 +132,7 @@ const BioModal = ({ member, onClose }) => {
               </div>
             </div>
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    </motion.div>
   );
 };
 
@@ -142,6 +140,16 @@ export default function Team() {
   const [pastMembers, setPastMembers] = useState([]);
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMember, setSelectedMember] = useState(null);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedMember(null);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
 
   const handleYearChange = (year) => {
     if(selectedYear === year){
@@ -163,9 +171,11 @@ export default function Team() {
 
   return (
     <div className="w-full py-20 px-4 text-center">
-      {selectedMember && (
-        <BioModal member={selectedMember} onClose={closeModal} />
-      )}
+      <AnimatePresence>
+        {selectedMember && (
+          <BioModal member={selectedMember} onClose={closeModal} />
+        )}
+      </AnimatePresence>
       
       <section className="mb-16">
         <h1 className="font-semibold text-3xl mb-2">Who are we?</h1>
