@@ -86,7 +86,7 @@ const BioModal = ({ member, onClose }) => {
             animate="visible"
             exit="exit"
           >
-            <div className="flex flex-col md:flex-row md:gap-8 gap-6 items-start justify-start">
+            <div className="flex flex-col md:flex-row md:gap-8 gap-6 items-center justify-center">
               {/* Image: centered on mobile, left on desktop */}
               <div className="flex-shrink-0 flex w-full justify-center md:w-auto md:justify-start">
                 <img
@@ -181,7 +181,7 @@ export default function Team() {
         <h1 className="font-semibold text-3xl mb-2">Who are we?</h1>
         <p className="text-lg text-gray-600 mb-8">The people behind VJDQ</p>
         <div className="mx-auto flex flex-wrap justify-center gap-5 max-w-7xl">
-          {faculty.map((member, index) => (
+          {faculty.slice(0,2).map((member, index) => (
             <Image
               key={index}
               name={member.name}
