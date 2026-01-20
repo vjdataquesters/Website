@@ -12,6 +12,7 @@ import Carousel3D from "../components/TechnoVistaComponents/Carousel";
 import Credentials from "./Credentials";
 import Hit from "./Hit";
 import GenerateAllQrs from "./GenerateAllQrs";
+import Members from "./Members";
 
 const router = [
   { path: "/", component: Home },
@@ -21,6 +22,7 @@ const router = [
   { path: "/events/tv24", component: Technovista },
   { path: "/events/:eventname", component: Event },
   { path: "/team", component: Team },
+  { path: "/members", component: Members },
   { path: "/newsletter", component: NewsLetter },
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
