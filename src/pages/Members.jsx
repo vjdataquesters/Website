@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Search, User, Calendar, Briefcase, Hash, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import Papa from "papaparse/papaparse.min.js";
 
 export default function Members() {
   const [memberId, setMemberId] = useState("");
@@ -12,55 +13,50 @@ export default function Members() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const response = await fetch("/Members/VJDQ_MEMBER_DETAILS_24-28 - DOMAIN_DIVISION_FINAL.csv");
-        const text = await response.text();
+  const fetchMembers = async () => {
+    try {
+      const response = await fetch(
+        "/Members/VJDQ_MEMBER_DETAILS_24-28 - DOMAIN_DIVISION_FINAL.csv"
+      );
+      const text = await response.text();
 
-        // Parse CSV
-        const lines = text.split("\n");
-        // Headers are: SNO,Name,Roll Number,DS,Section,DQ IDS FF,DOMAIN ASSIGNED,WHATSAPP LINK
+      Papa.parse(text, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => {
+          const db = {};
 
-        const db = {};
+          result.data.forEach((row) => {
+            const id = row["DQ IDS"]?.trim()?.toUpperCase();
+            if (!id) return;
 
-        // Start from index 1 to skip header
-        for (let i = 1; i < lines.length; i++) {
-          if (!lines[i].trim()) continue;
+            db[id] = {
+              id,
+              name: row["Name"]?.trim(),
+              batch: "2028",
+              domain: row["DOMAIN ASSIGNED"]?.trim(),
+              whatsappLink: row["WHATSAPP LINK"]?.trim()
+            };
+          });
 
-          // Handle potential commas in fields by using a regex or simple split if simple CSV
-          // The file seems to be simple CSV.
-          const values = lines[i].split(",");
-
-          if (values.length >= 7) {
-            const name = values[1].trim();
-            const id = values[5].trim().toUpperCase();
-            // Batch is not in CSV, assuming 2028 based on filename/context
-            const batch = "2028";
-            const domain = values[6].trim();
-            const whatsappLink = values[7] ? values[7].trim() : "";
-
-            if (id) {
-              db[id] = { name, batch, domain, id, whatsappLink };
-            }
-          }
+          setMembersDatabase(db);
+          setLoading(false);
         }
+      });
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load member database.");
+      setLoading(false);
+    }
+  };
 
-        setMembersDatabase(db);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error loading members data:", err);
-        setError("Failed to load member database.");
-        setLoading(false);
-      }
-    };
-
-    fetchMembers();
-  }, []);
+  fetchMembers();
+}, []);
 
   const handleSearch = () => {
+    if (loading) return;
     setError("");
     setMemberData(null);
-
     if (!memberId.trim()) {
       setError("Please enter a Member ID");
       return;
@@ -134,12 +130,18 @@ export default function Members() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               </div>
             </div>
-            <button
-              onClick={handleSearch}
-              className="w-full md:w-auto px-8 py-3 bg-[#0f323f] text-white font-medium rounded-lg hover:bg-[#135168] transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-[#0f323f]"
-            >
-              Search
-            </button>
+           <button
+  onClick={handleSearch}
+  disabled={loading}
+  className={`w-full md:w-auto px-8 py-3 rounded-lg text-white font-medium transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-[#0f323f]
+    ${loading
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-[#0f323f] hover:bg-[#135168]"
+    }`}
+>
+  {loading ? "Loading..." : "Search"}
+</button>
+
           </div>
 
           {/* Error Message */}
