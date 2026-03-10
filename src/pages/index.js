@@ -13,6 +13,7 @@ import Credentials from "./Credentials";
 import Hit from "./Hit";
 import GenerateAllQrs from "./GenerateAllQrs";
 import Members from "./Members";
+import SSDRegistration from "./SSDRegistration";
 
 const router = [
   { path: "/", component: Home },
@@ -27,6 +28,7 @@ const router = [
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
   { path: "/register", component: RegistrationForm },
+  { path: "/register/ssd", component: SSDRegistration },
   { path: "/hit", component: Hit },
   { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
   { path: "*", component: Home },
