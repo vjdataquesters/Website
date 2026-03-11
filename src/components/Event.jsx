@@ -81,7 +81,7 @@ export default function Event() {
             <p className="text-gray-700 leading-relaxed">{event.description}</p>
           </div>
 
-          {event.register && (
+          {event.register && !event.isGFormEmbeddable && (
             <div className="self-end">
               <button
                 onClick={() => handleRegister(event.register)}

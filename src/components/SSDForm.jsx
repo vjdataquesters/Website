@@ -5,6 +5,7 @@ import { Send, CheckCircle, Lock, Network } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { QR_CONFIG, activeQR } from "../config/qrConfig";
+import DropdownCombobox from "./DropdownCombobox";
 
 const SERVER_URL =
   import.meta.env.MODE === "development"
@@ -61,6 +62,19 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
     }
   }, [rollno, setValue]);
 
+  // Register dropdown fields manually for validation (DropdownCombobox doesn't support ...register())
+  React.useEffect(() => {
+    register("year", { required: "Year is required" });
+    register("branch", { required: "Department is required" });
+    register("section", { required: "Section is required" });
+    register("paymentplatform", { required: "Please select a payment platform" });
+  }, [register]);
+
+  const yearValue = watch("year", "");
+  const branchValue = watch("branch", "");
+  const sectionValue = watch("section", "");
+  const paymentPlatformValue = watch("paymentplatform", "");
+
   const submitForm = async (data) => {
     try {
       setLoadingStatus(true);
@@ -108,7 +122,7 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
       <div className="flex flex-col justify-center">
         <div className="flex items-center gap-2">
           <Network size={22} className="text-[#135168]" />
-          <h1 className="text-lg md:text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl md:text-2xl font-bold text-gray-900">
             Summer{" "}
             <span className="text-[#135168]">System Design</span>
           </h1>
@@ -151,19 +165,20 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
           </div>
           <div>
             <label className="text-sm text-gray-950 font-medium">Year</label>
-            <select
-              {...register("year", { required: "Year is required" })}
-              className="border border-gray-300 p-2.5 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all"
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select Year
-              </option>
-              <option value="1">1st Year</option>
-              <option value="2">2nd Year</option>
-              <option value="3">3rd Year</option>
-              <option value="4">4th Year</option>
-            </select>
+            <div className="mt-1">
+              <DropdownCombobox
+                options={[
+                  { label: "1st Year", value: "1" },
+                  { label: "2nd Year", value: "2" },
+                  { label: "3rd Year", value: "3" },
+                  { label: "4th Year", value: "4" },
+                ]}
+                value={yearValue}
+                onChange={(val) => setValue("year", val, { shouldValidate: true })}
+                placeholder="Select Year"
+                disableSearch
+              />
+            </div>
             {errors.year && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.year.message}
@@ -178,29 +193,18 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
             <label className="text-sm text-gray-950 font-medium">
               Department
             </label>
-            <select
-              {...register("branch", { required: "Department is required" })}
-              className="border border-gray-300 p-2.5 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all"
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select Dept
-              </option>
-              <option value="CSE">CSE</option>
-              <option value="IT">IT</option>
-              <option value="CSBS">CSBS</option>
-              <option value="CSE-DS">CSE-DS</option>
-              <option value="CSE-CyS">CSE-CyS</option>
-              <option value="AI&DS">AI&DS</option>
-              <option value="AIML">AIML</option>
-              <option value="IOT">IOT</option>
-              <option value="ECE">ECE</option>
-              <option value="EEE">EEE</option>
-              <option value="EIE">EIE</option>
-              <option value="MECHANICAL">MECHANICAL</option>
-              <option value="CIVIL">CIVIL</option>
-              <option value="AUTOMOBILE">AUTOMOBILE</option>
-            </select>
+            <div className="mt-1">
+              <DropdownCombobox
+                options={[
+                  "CSE", "IT", "CSBS", "CSE-DS", "CSE-CyS",
+                  "AI&DS", "AIML", "IOT", "ECE", "EEE",
+                  "EIE", "MECHANICAL", "CIVIL", "AUTOMOBILE",
+                ]}
+                value={branchValue}
+                onChange={(val) => setValue("branch", val, { shouldValidate: true })}
+                placeholder="Select Dept"
+              />
+            </div>
             {errors.branch && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.branch.message}
@@ -211,19 +215,15 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
             <label className="text-sm text-gray-950 font-medium">
               Section
             </label>
-            <select
-              {...register("section", { required: "Section is required" })}
-              className="border border-gray-300 p-2.5 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all"
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select Section
-              </option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-            </select>
+            <div className="mt-1">
+              <DropdownCombobox
+                options={["A", "B", "C", "D"]}
+                value={sectionValue}
+                onChange={(val) => setValue("section", val, { shouldValidate: true })}
+                placeholder="Select Section"
+                disableSearch
+              />
+            </div>
             {errors.section && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.section.message}
@@ -287,25 +287,18 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
           <label className="text-sm text-gray-950 font-medium block">
             Payment Platform
           </label>
-          <select
-            {...register("paymentplatform", { required: "Please select a payment platform" })}
-            className="border border-gray-300 p-2.5 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select Payment Platform
-            </option>
-            <option value="Google Pay">Google Pay</option>
-            <option value="PhonePe">PhonePe</option>
-            <option value="Paytm">Paytm</option>
-            <option value="Amazon Pay">Amazon Pay</option>
-            <option value="BHIM UPI">BHIM UPI</option>
-            <option value="FamPay">Fampay</option>
-            <option value="Mobikwik">Mobikwik</option>
-            <option value="WhatsApp Pay">WhatsApp Pay</option>
-            <option value="FreeCharge">FreeCharge</option>
-            <option value="other">other</option>
-          </select>
+          <div className="mt-1">
+            <DropdownCombobox
+              options={[
+                "Google Pay", "PhonePe", "Paytm", "Amazon Pay",
+                "BHIM UPI", "FamPay", "Mobikwik", "WhatsApp Pay",
+                "FreeCharge", "Other",
+              ]}
+              value={paymentPlatformValue}
+              onChange={(val) => setValue("paymentplatform", val, { shouldValidate: true })}
+              placeholder="Select Payment Platform"
+            />
+          </div>
           {errors.paymentplatform && (
             <p className="text-red-500 text-sm mt-1">
               {errors.paymentplatform.message}
@@ -464,7 +457,7 @@ const SSDForm = () => {
 
   return (
     <motion.div
-      className="w-full max-w-full md:shadow-lg p-4 border overflow-y-auto md:max-h-[90vh] small-scrollbar md:rounded-r-lg"
+      className="w-full max-w-full pt-2 px-4 pb-4 overflow-y-auto md:max-h-[90vh] small-scrollbar md:rounded-r-lg"
       initial={{ opacity: 0, filter: "blur(10px)" }}
       animate={{ opacity: 1, filter: "blur(0px)" }}
       transition={{ duration: 1, ease: "easeOut" }}
