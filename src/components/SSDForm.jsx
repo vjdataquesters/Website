@@ -19,7 +19,6 @@ const api = axios.create({
   },
 });
 
-
 const transitionVariants = {
   initial: { opacity: 0, filter: "blur(10px)" },
   animate: {
@@ -67,7 +66,9 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
     register("year", { required: "Year is required" });
     register("branch", { required: "Department is required" });
     register("section", { required: "Section is required" });
-    register("paymentplatform", { required: "Please select a payment platform" });
+    register("paymentplatform", {
+      required: "Please select a payment platform",
+    });
   }, [register]);
 
   const yearValue = watch("year", "");
@@ -82,7 +83,9 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
       const file = data.screenshot[0];
       const uniqueFileName = `${Date.now()}_${file.name}`;
 
-      const { data: { signedUrl, fileName } } = await api.post("/register/get-signed-url", {
+      const {
+        data: { signedUrl, fileName },
+      } = await api.post("/register/get-signed-url", {
         fileName: uniqueFileName,
         fileType: file.type,
       });
@@ -91,7 +94,12 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
         headers: { "Content-Type": file.type },
       });
 
-      const payload = { ...data, screenshot: fileName, event: "ssd", qr: QR_CONFIG[activeQR].qrValue };
+      const payload = {
+        ...data,
+        screenshot: fileName,
+        event: "ssd",
+        qr: QR_CONFIG[activeQR].qrValue,
+      };
       const response = await api.post("/register", payload);
 
       setSubmitStatus(false);
@@ -123,8 +131,7 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
         <div className="flex items-center gap-2">
           <Network size={22} className="text-[#135168]" />
           <h1 className="text-2xl md:text-2xl font-bold text-gray-900">
-            Summer{" "}
-            <span className="text-[#135168]">System Design</span>
+            Summer <span className="text-[#135168]">System Design</span>
           </h1>
         </div>
         <p className="text-sm text-gray-500 mt-1">
@@ -174,15 +181,15 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
                   { label: "4th Year", value: "4" },
                 ]}
                 value={yearValue}
-                onChange={(val) => setValue("year", val, { shouldValidate: true })}
+                onChange={(val) =>
+                  setValue("year", val, { shouldValidate: true })
+                }
                 placeholder="Select Year"
                 disableSearch
               />
             </div>
             {errors.year && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.year.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.year.message}</p>
             )}
           </div>
         </div>
@@ -196,12 +203,25 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
             <div className="mt-1">
               <DropdownCombobox
                 options={[
-                  "CSE", "IT", "CSBS", "CSE-DS", "CSE-CyS",
-                  "AI&DS", "AIML", "IOT", "ECE", "EEE",
-                  "EIE", "MECHANICAL", "CIVIL", "AUTOMOBILE",
+                  "CSE",
+                  "IT",
+                  "CSBS",
+                  "CSE-DS",
+                  "CSE-CyS",
+                  "AI&DS",
+                  "AIML",
+                  "IOT",
+                  "ECE",
+                  "EEE",
+                  "EIE",
+                  "MECHANICAL",
+                  "CIVIL",
+                  "AUTOMOBILE",
                 ]}
                 value={branchValue}
-                onChange={(val) => setValue("branch", val, { shouldValidate: true })}
+                onChange={(val) =>
+                  setValue("branch", val, { shouldValidate: true })
+                }
                 placeholder="Select Dept"
               />
             </div>
@@ -212,14 +232,14 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
             )}
           </div>
           <div>
-            <label className="text-sm text-gray-950 font-medium">
-              Section
-            </label>
+            <label className="text-sm text-gray-950 font-medium">Section</label>
             <div className="mt-1">
               <DropdownCombobox
                 options={["A", "B", "C", "D"]}
                 value={sectionValue}
-                onChange={(val) => setValue("section", val, { shouldValidate: true })}
+                onChange={(val) =>
+                  setValue("section", val, { shouldValidate: true })
+                }
                 placeholder="Select Section"
                 disableSearch
               />
@@ -290,12 +310,21 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
           <div className="mt-1">
             <DropdownCombobox
               options={[
-                "Google Pay", "PhonePe", "Paytm", "Amazon Pay",
-                "BHIM UPI", "FamPay", "Mobikwik", "WhatsApp Pay",
-                "FreeCharge", "Other",
+                "Google Pay",
+                "PhonePe",
+                "Paytm",
+                "Amazon Pay",
+                "BHIM UPI",
+                "FamPay",
+                "Mobikwik",
+                "WhatsApp Pay",
+                "FreeCharge",
+                "Other",
               ]}
               value={paymentPlatformValue}
-              onChange={(val) => setValue("paymentplatform", val, { shouldValidate: true })}
+              onChange={(val) =>
+                setValue("paymentplatform", val, { shouldValidate: true })
+              }
               placeholder="Select Payment Platform"
             />
           </div>
@@ -311,7 +340,9 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
             Transaction ID
           </label>
           <input
-            {...register("transactionid", { required: "Transaction ID is required" })}
+            {...register("transactionid", {
+              required: "Transaction ID is required",
+            })}
             placeholder="Transaction ID"
             className="border border-gray-300 p-2.5 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all"
           />
@@ -327,7 +358,9 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
             Payment Screenshot
           </label>
           <input
-            {...register("screenshot", { required: "Payment screenshot is required" })}
+            {...register("screenshot", {
+              required: "Payment screenshot is required",
+            })}
             type="file"
             accept="image/*"
             className="border border-gray-300 p-2 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[#0f323f] file:text-white hover:file:bg-[#135168] file:cursor-pointer"
@@ -384,7 +417,7 @@ const SubmittedComp = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="mt-6 px-6 py-2 font-semibold rounded-full shadow-md bg-gradient-to-r bg-[#0f323fee] hover:bg-[#135168] text-white"
-        onClick={() => window.top.location.href = "/events"}
+        onClick={() => (window.top.location.href = "/events")}
       >
         Back to Events
       </motion.button>
