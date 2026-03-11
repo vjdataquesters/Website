@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { QR_CONFIG, activeQR } from "../config/qrConfig";
 import DropdownCombobox from "./DropdownCombobox";
 
+const IS_FORM_OPEN = true;
+
 const SERVER_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:3000"
@@ -484,7 +486,7 @@ const SSDForm = () => {
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(false);
   const [formStatus] = useState({
-    isFormOpen: true,
+    isFormOpen: IS_FORM_OPEN,
   });
 
   return (
