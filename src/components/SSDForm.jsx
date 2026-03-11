@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { QR_CONFIG, activeQR } from "../config/qrConfig";
 import DropdownCombobox from "./DropdownCombobox";
 
-const IS_FORM_OPEN = true;
+const IS_FORM_OPEN = false;
 
 const SERVER_URL =
   import.meta.env.MODE === "development"
