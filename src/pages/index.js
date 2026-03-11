@@ -27,10 +27,10 @@ const router = [
   { path: "/newsletter", component: NewsLetter },
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
-  { path: "/register", component: RegistrationForm },
   { path: "/register/ssd", component: SSDRegistration },
-  { path: "/hit", component: Hit },
-  { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
+  // { path: "/register", component: RegistrationForm }, 
+  // { path: "/hit", component: Hit },
+  // { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
   { path: "*", component: Home },
 ];
 
