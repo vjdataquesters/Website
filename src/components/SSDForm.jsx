@@ -354,7 +354,6 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
 };
 
 const SubmittedComp = () => {
-  const navigate = useNavigate();
   return (
     <motion.div
       key="submitted"
@@ -362,7 +361,7 @@ const SubmittedComp = () => {
       animate="animate"
       exit="exit"
       variants={transitionVariants}
-      className="flex flex-col items-center justify-center min-h-[80vh] text-center"
+      className="flex flex-col items-center justify-center min-h-[40vh] text-center"
     >
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
@@ -385,7 +384,7 @@ const SubmittedComp = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="mt-6 px-6 py-2 font-semibold rounded-full shadow-md bg-gradient-to-r bg-[#0f323fee] hover:bg-[#135168] text-white"
-        onClick={() => navigate("/events")}
+        onClick={() => window.top.location.href = "/events"}
       >
         Back to Events
       </motion.button>
@@ -395,7 +394,7 @@ const SubmittedComp = () => {
 
 const LoadingComp = () => {
   return (
-    <div className="flex flex-col items-center justify-center text-center min-h-[80vh]">
+    <div className="flex flex-col items-center justify-center text-center min-h-[40vh]">
       <motion.img
         src="/icon-logo.jpg"
         alt="Loading Logo"
@@ -420,7 +419,7 @@ const FormClosedComp = () => {
       initial={{ opacity: 0, filter: "blur(10px)" }}
       animate={{ opacity: 1, filter: "blur(0px)" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="flex flex-col items-center justify-center min-h-[80vh] p-6"
+      className="flex flex-col items-center justify-center min-h-[40vh] p-6"
     >
       <Lock size={48} className="text-gray-500 mb-4" />
       <h2 className="text-xl font-bold text-gray-800 mb-2">
