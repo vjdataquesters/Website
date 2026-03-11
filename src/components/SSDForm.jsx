@@ -62,8 +62,22 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
   const submitForm = async (data) => {
     try {
       setLoadingStatus(true);
-      const payload = { ...data, event: "ssd" };
+
+      const file = data.screenshot[0];
+      const uniqueFileName = `${Date.now()}_${file.name}`;
+
+      const { data: { signedUrl, fileName } } = await api.post("/register/get-signed-url", {
+        fileName: uniqueFileName,
+        fileType: file.type,
+      });
+
+      await axios.put(signedUrl, file, {
+        headers: { "Content-Type": file.type },
+      });
+
+      const payload = { ...data, screenshot: fileName, event: "ssd" };
       const response = await api.post("/register", payload);
+
       setSubmitStatus(false);
       if (response.data.success) {
         setSubmitStatus(true);
