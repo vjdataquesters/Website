@@ -38,7 +38,7 @@
 const events = {
   upcoming: [
     {
-      name: "Summer System Design",
+      name: "SSD",
       eventId: "SSD",
       image: "/events/SummerSoftwareDesign/Summer System Design(final).png",
       date: "March 16th & 17th 2026",
