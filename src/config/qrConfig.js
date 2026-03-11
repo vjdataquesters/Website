@@ -1,4 +1,4 @@
-const GET_RICH = false;
+const GET_RICH = true;
 
 export const QR_CONFIG = {
   vnr: { qrImage: "/qr/vnr-qr.jpg", qrValue: "vnr" },
