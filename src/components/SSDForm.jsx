@@ -4,6 +4,7 @@ import axios from "axios";
 import { Send, CheckCircle, Lock, Network } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { QR_CONFIG, activeQR } from "../config/qrConfig";
 
 const SERVER_URL =
   import.meta.env.MODE === "development"
@@ -16,6 +17,7 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
+
 
 const transitionVariants = {
   initial: { opacity: 0, filter: "blur(10px)" },
@@ -75,7 +77,7 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
         headers: { "Content-Type": file.type },
       });
 
-      const payload = { ...data, screenshot: fileName, event: "ssd" };
+      const payload = { ...data, screenshot: fileName, event: "ssd", qr: QR_CONFIG[activeQR].qrValue };
       const response = await api.post("/register", payload);
 
       setSubmitStatus(false);
@@ -274,11 +276,8 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
         {/* Payment QR Code */}
         <div className="text-center">
           <label className="text-md text-gray-950 block">Payment QR Code</label>
-          <p>
-            Account Holder: <span id="accountHolder">VNRVJIET</span>
-          </p>
           <img
-            src=""
+            src={QR_CONFIG[activeQR].qrImage}
             alt="Payment QR Code"
             className="max-w-[200px] mx-auto rounded shadow"
           />
