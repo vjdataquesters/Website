@@ -13,6 +13,7 @@ import Credentials from "./Credentials";
 import Hit from "./Hit";
 import GenerateAllQrs from "./GenerateAllQrs";
 import Members from "./Members";
+import SSDRegistration from "./SSDRegistration";
 
 const router = [
   { path: "/", component: Home },
@@ -26,9 +27,10 @@ const router = [
   { path: "/newsletter", component: NewsLetter },
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
-  { path: "/register", component: RegistrationForm },
-  { path: "/hit", component: Hit },
-  { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
+  { path: "/register/ssd", component: SSDRegistration },
+  // { path: "/register", component: RegistrationForm }, 
+  // { path: "/hit", component: Hit },
+  // { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
   { path: "*", component: Home },
 ];
 

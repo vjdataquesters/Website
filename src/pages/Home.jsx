@@ -21,7 +21,7 @@ const TeamCard = ({ person }) => {
             className="w-[200px] h-[200px] object-cover rounded-full"
             src={
               person.image
-                ? `teamImages/${person.image}`
+                ? `/teamImages/${person.image}`
                 : "https://picsum.photos/200"
             }
             alt={person.name + " image"}
@@ -47,7 +47,7 @@ export default function Home() {
         <div className="z-10 w-full absolute h-full flex flex-row justify-evenly items-center">
           <motion.div className="hidden lg:block ">
             <img
-              src="logo.png"
+              src="/logo.png"
               alt="Data Questers logo"
               className="max-w-sm"
               draggable={false}
@@ -74,7 +74,7 @@ export default function Home() {
       <div className="clip-art-1">
         <div className="z-10 text-justify sm:text-left max-w-5xl mx-auto">
           <div className="lg:hidden">
-            <img src="logo.png" className="max-w-64 mx-auto" />
+            <img src="/logo.png" className="max-w-64 mx-auto" />
           </div>
           <div className="px-2 pb-20 lg:pt-4">
             <h2 className="text-white pb-3 text-center text-3xl font-semibold flex flex-row items-start justify-center">
@@ -108,7 +108,7 @@ export default function Home() {
               <Link to={d?.example} key={index} className="flex justify-center">
                 <div className="w-40 h-16 sm:w-60 sm:h-20 px-2 sm:p-4 flex items-center justify-evenly border border-black/50 rounded-lg  bg-white shadow-2xl hover:scale-105 transition-all duration-[300ms] ease-in-out">
                   <img
-                    src={d.imgURL}
+                    src={`/${d.imgURL}`}
                     alt="What we do Image"
                     className="w-[15%] sm:w-[20%] object-contain"
                     draggable={false}

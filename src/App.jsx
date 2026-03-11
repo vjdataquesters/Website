@@ -27,9 +27,9 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  const loadingAnimationBlacklist = ["/hit", "/hit-gen-qr-ultrasecretendpoint", "/register"];
-  const headerBlacklist = ["/hit", "/register"];
-  const promoBlacklist = ["/hit", "/hit-gen-qr-ultrasecretendpoint", "/register"];
+  const loadingAnimationBlacklist = ["/hit", "/hit-gen-qr-ultrasecretendpoint", "/register", "/register/ssd"];
+  const headerBlacklist = ["/hit", "/register", "/register/ssd"];
+  const promoBlacklist = ["/hit", "/hit-gen-qr-ultrasecretendpoint", "/register", "/register/ssd"];
 
   function PromoSection() {
     return (

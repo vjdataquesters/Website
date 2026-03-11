@@ -314,7 +314,7 @@ const SubmittedComp = () => {
       animate="animate"
       exit="exit"
       variants={transitionVariants}
-      className="flex flex-col items-center justify-center min-h-[80vh] text-center"
+      className="flex flex-col items-center justify-center min-h-[40vh] text-center"
     >
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
@@ -346,7 +346,7 @@ const SubmittedComp = () => {
 };
 const LoadingComp = () => {
   return (
-    <div className="flex flex-col items-center justify-center text-center min-h-[80vh]">
+    <div className="flex flex-col items-center justify-center text-center min-h-[40vh]">
       {/* Spinning Loader */}
       <motion.img
         src="/icon-logo.jpg"
@@ -373,7 +373,7 @@ const FormClosedComp = () => {
       initial={{ opacity: 0, filter: "blur(10px)" }}
       animate={{ opacity: 1, filter: "blur(0px)" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="flex flex-col items-center justify-center min-h-[80vh] p-6"
+      className="flex flex-col items-center justify-center min-h-[40vh] p-6"
     >
       <Lock size={48} className="text-gray-500 mb-4" />
       <h2 className="text-xl font-bold text-gray-800 mb-2">Registration Closed</h2>
@@ -403,8 +403,8 @@ const FormClosedComp = () => {
   );
 };
 const Form = () => {
-  const [loadingStatus, setLoadingStatus] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(true);
+  const [submitStatus, setSubmitStatus] = useState(true);
   const [formStatus, setFormStatus] = useState({
     isFormOpen: false,
     // currentRegistrations: 0,
