@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Send, CheckCircle, Lock, Network } from "lucide-react";
+import { Send, CheckCircle, AlertCircle, Lock, Network } from "lucide-react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import { QR_CONFIG, activeQR } from "../config/qrConfig";
 import DropdownCombobox from "./DropdownCombobox";
 
@@ -46,7 +45,12 @@ const pulseVariants = {
   },
 };
 
-const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
+const FormComp = ({
+  setLoadingStatus,
+  setSubmitStatus,
+  submitMessage,
+  setSubmitMessage,
+}) => {
   const {
     register,
     handleSubmit,
@@ -81,6 +85,7 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
   const submitForm = async (data) => {
     try {
       setLoadingStatus(true);
+      setSubmitMessage("");
 
       const file = data.screenshot[0];
       const uniqueFileName = `${Date.now()}_${file.name}`;
@@ -103,17 +108,27 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
         qr: QR_CONFIG[activeQR].qrValue,
       };
       const response = await api.post("/register", payload);
+      const { success, message } = response.data;
 
-      setSubmitStatus(false);
-      if (response.data.success) {
-        setSubmitStatus(true);
+      if (success) {
+        setSubmitStatus(
+          message === "Registration updated successfully"
+            ? "updated"
+            : "created",
+        );
         reset();
-      } else {
-        setSubmitStatus(false);
+        return;
       }
+
+      if (message === "Registration already exists") {
+        setSubmitMessage(message);
+        return;
+      }
+
+      throw new Error(message || "Unexpected response from server.");
     } catch (error) {
       alert("Error submitting form. Please try again later.");
-      setSubmitStatus(false);
+      setSubmitStatus(null);
       console.error("Error submitting form:", error);
     } finally {
       setLoadingStatus(false);
@@ -374,6 +389,14 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
           )}
         </div>
         {/* Submit Button */}
+        {submitMessage ? (
+          <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            <div className="flex items-start gap-2">
+              <AlertCircle size={18} className="mt-0.5 shrink-0" />
+              <p>{submitMessage}</p>
+            </div>
+          </div>
+        ) : null}
         <div className="mt-3 flex justify-center">
           <button
             type="submit"
@@ -388,7 +411,9 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
   );
 };
 
-const SubmittedComp = () => {
+const SubmittedComp = ({ submitStatus }) => {
+  const isUpdated = submitStatus === "updated";
+
   return (
     <div className="flex items-center justify-center h-full">
       <motion.div
@@ -414,11 +439,15 @@ const SubmittedComp = () => {
         </motion.div>
 
         <h2 className="text-2xl font-semibold text-gray-900 mt-4">
-          Registration Successful!
+          {isUpdated ? "Registration Updated!" : "Registration Successful!"}
         </h2>
         <p className="text-gray-600 mt-2">
-          Thank you for registering for Summer System Design. You will receive a
-          confirmation email soon.
+          {isUpdated
+            ? "Your Summer System Design registration has been updated successfully."
+            : "Thank you for registering for Summer System Design."}
+        </p>
+        <p className="text-gray-600 mt-1">
+          You will receive a confirmation email soon.
         </p>
 
         <motion.button
@@ -493,7 +522,8 @@ const FormClosedComp = () => {
 
 const SSDForm = () => {
   const [loadingStatus, setLoadingStatus] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitMessage, setSubmitMessage] = useState("");
   const [formStatus] = useState({
     isFormOpen: IS_FORM_OPEN,
   });
@@ -510,11 +540,13 @@ const SSDForm = () => {
       ) : !formStatus.isFormOpen ? (
         <FormClosedComp />
       ) : submitStatus ? (
-        <SubmittedComp />
+        <SubmittedComp submitStatus={submitStatus} />
       ) : (
         <FormComp
           setLoadingStatus={setLoadingStatus}
           setSubmitStatus={setSubmitStatus}
+          submitMessage={submitMessage}
+          setSubmitMessage={setSubmitMessage}
         />
       )}
     </motion.div>
