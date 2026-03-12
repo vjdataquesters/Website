@@ -507,7 +507,7 @@ const SSDForm = () => {
     >
       {loadingStatus ? (
         <LoadingComp />
-      ) : formStatus.isFormOpen ? (
+      ) : !formStatus.isFormOpen ? (
         <FormClosedComp />
       ) : submitStatus ? (
         <SubmittedComp />
