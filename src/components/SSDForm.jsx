@@ -390,95 +390,104 @@ const FormComp = ({ setLoadingStatus, setSubmitStatus }) => {
 
 const SubmittedComp = () => {
   return (
-    <motion.div
-      key="submitted"
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      variants={transitionVariants}
-      className="flex flex-col items-center justify-center min-h-[40vh] text-center"
-    >
+    <div className="flex items-center justify-center h-full">
       <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1.2, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 150, damping: 10, delay: 0.2 }}
-        className="bg-green-500 text-white p-4 rounded-full shadow-lg"
+        key="submitted"
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={transitionVariants}
+        className="flex flex-col items-center justify-center min-h-[40vh] text-center"
       >
-        <CheckCircle size={50} />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1.2, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 150,
+            damping: 10,
+            delay: 0.2,
+          }}
+          className="bg-green-500 text-white p-4 rounded-full shadow-lg"
+        >
+          <CheckCircle size={50} />
+        </motion.div>
+
+        <h2 className="text-2xl font-semibold text-gray-900 mt-4">
+          Registration Successful!
+        </h2>
+        <p className="text-gray-600 mt-2">
+          Thank you for registering for Summer System Design. You will receive a
+          confirmation email soon.
+        </p>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="mt-6 px-6 py-2 font-semibold rounded-full shadow-md bg-gradient-to-r bg-[#0f323fee] hover:bg-[#135168] text-white"
+          onClick={() => (window.top.location.href = "/events")}
+        >
+          Back to Events
+        </motion.button>
       </motion.div>
-
-      <h2 className="text-2xl font-semibold text-gray-900 mt-4">
-        Registration Successful!
-      </h2>
-      <p className="text-gray-600 mt-2">
-        Thank you for registering for Summer System Design. You will receive a
-        confirmation email soon.
-      </p>
-
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="mt-6 px-6 py-2 font-semibold rounded-full shadow-md bg-gradient-to-r bg-[#0f323fee] hover:bg-[#135168] text-white"
-        onClick={() => (window.top.location.href = "/events")}
-      >
-        Back to Events
-      </motion.button>
-    </motion.div>
+    </div>
   );
 };
 
 const LoadingComp = () => {
   return (
-    <div className="flex flex-col items-center justify-center text-center min-h-[40vh]">
-      <motion.img
-        src="/icon-logo.jpg"
-        alt="Loading Logo"
-        variants={pulseVariants}
-        animate="animate"
-        className="w-24 h-24 object-contain"
-      />
-      <motion.p
-        variants={pulseVariants}
-        animate="animate"
-        className="text-gray-700 font-semibold text-lg mt-2"
-      >
-        Loading, please wait...
-      </motion.p>
+    <div className="flex h-full items-center justify-center">
+      <div className="flex flex-col items-center justify-center text-center min-h-[40vh]">
+        <motion.img
+          src="/icon-logo.jpg"
+          alt="Loading Logo"
+          variants={pulseVariants}
+          animate="animate"
+          className="w-24 h-24 object-contain"
+        />
+        <p>Loading, please wait...</p>
+      </div>
     </div>
   );
 };
 
 const FormClosedComp = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0, filter: "blur(10px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="flex flex-col items-center justify-center min-h-[40vh] p-6"
-    >
-      <Lock size={48} className="text-gray-500 mb-4" />
-      <h2 className="text-xl font-bold text-gray-800 mb-2">
-        Registration Closed
-      </h2>
-      <p className="text-gray-600 text-center">
-        Thank you for your interest in Summer System Design!
-      </p>
-      <p className="text-gray-600 text-center mb-6">
-        Registration is no longer being accepted.
-      </p>
-
-      <div className="mt-6 border-t pt-6 w-full max-w-md">
-        <p className="text-gray-800 font-medium text-center mb-3">
-          In case of any queries, contact our coordinators!
+    <div className="flex items-center justify-center h-full">
+      <motion.div
+        initial={{ opacity: 0, filter: "blur(10px)" }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="flex flex-col items-center justify-center min-h-[40vh] p-6"
+      >
+        <Lock size={48} className="text-gray-500 mb-4" />
+        <h2 className="text-xl font-bold text-gray-800 mb-2">
+          Registration Closed
+        </h2>
+        <p className="text-gray-600 text-center">
+          Thank you for your interest in Summer System Design!
         </p>
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <div className="bg-gray-100 px-4 py-3 rounded-lg text-center w-full sm:w-auto">
-            <p className="font-medium text-gray-800">VJ DataQuesters</p>
-            <p className="text-gray-600">Team</p>
+        <p className="text-gray-600 text-center mb-6">
+          Registration is no longer being accepted.
+        </p>
+
+        <div className="mt-6 border-t pt-6 w-full max-w-md">
+          <p className="text-gray-800 font-medium text-center mb-3">
+            In case of any queries, contact our coordinators!
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <div className="bg-gray-100 px-4 py-3 rounded-lg text-center w-full sm:w-auto">
+              <p className="font-medium text-gray-800">Rohith</p>
+              <p className="text-gray-600"> 77998 82377</p>
+            </div>
+            <div className="bg-gray-100 px-4 py-3 rounded-lg text-center w-full sm:w-auto">
+              <p className="font-medium text-gray-800">Siddharth</p>
+              <p className="text-gray-600">91824 91865</p>
+            </div>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
@@ -491,14 +500,14 @@ const SSDForm = () => {
 
   return (
     <motion.div
-      className="w-full max-w-full pt-2 px-4 pb-4 overflow-y-auto md:max-h-[90vh] small-scrollbar md:rounded-r-lg"
+      className="w-full max-w-full pt-2 px-4 pb-4 overflow-y-auto md:max-h-[90vh] small-scrollbar md:rounded-r-lg h-full"
       initial={{ opacity: 0, filter: "blur(10px)" }}
       animate={{ opacity: 1, filter: "blur(0px)" }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
       {loadingStatus ? (
         <LoadingComp />
-      ) : !formStatus.isFormOpen ? (
+      ) : formStatus.isFormOpen ? (
         <FormClosedComp />
       ) : submitStatus ? (
         <SubmittedComp />
