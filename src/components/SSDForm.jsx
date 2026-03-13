@@ -103,6 +103,7 @@ const FormComp = ({
         headers: {
           "Content-Type": file.type,
           "x-goog-content-length-range": `0,${MAX_FILE_SIZE}`,
+          "cache-control": "public, max-age=31536000, immutable",
         },
       });
 
