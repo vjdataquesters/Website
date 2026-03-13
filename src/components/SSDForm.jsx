@@ -60,8 +60,11 @@ const FormComp = ({
     reset,
   } = useForm();
 
+  const MAX_FILE_SIZE = 20 * 1024 * 1024; // 10 MB
+
   // Upload state: null | 'uploading' | 'done' | 'error'
   const [uploadState, setUploadState] = useState(null);
+  const [uploadErrorMsg, setUploadErrorMsg] = useState("");
   const [uploadedFileName, setUploadedFileName] = useState(null);
   const uploadVersionRef = useRef(0);
 
@@ -73,8 +76,16 @@ const FormComp = ({
       return;
     }
 
+    if (file.size > MAX_FILE_SIZE) {
+      setUploadState("error");
+      setUploadErrorMsg("File exceeds 10 MB limit. Please choose a smaller file.");
+      setUploadedFileName(null);
+      return;
+    }
+
     const version = ++uploadVersionRef.current;
     setUploadState("uploading");
+    setUploadErrorMsg("");
     setUploadedFileName(null);
 
     try {
@@ -89,7 +100,10 @@ const FormComp = ({
       if (version !== uploadVersionRef.current) return;
 
       await axios.put(signedUrl, file, {
-        headers: { "Content-Type": file.type },
+        headers: {
+          "Content-Type": file.type,
+          "x-goog-content-length-range": `0,${MAX_FILE_SIZE}`,
+        },
       });
 
       if (version !== uploadVersionRef.current) return;
@@ -99,6 +113,11 @@ const FormComp = ({
     } catch (err) {
       if (version !== uploadVersionRef.current) return;
       setUploadState("error");
+      setUploadErrorMsg(
+        err?.response?.status === 403
+          ? "File exceeds 10 MB limit. Please choose a smaller file."
+          : "Upload failed. Retry by re-selecting the file.",
+      );
       console.error("File pre-upload error:", err);
     }
   };
@@ -390,9 +409,7 @@ const FormComp = ({
             <p className="text-green-600 text-sm mt-1">✓ Uploaded</p>
           )}
           {uploadState === "error" && (
-            <p className="text-red-500 text-sm mt-1">
-              ✗ Upload failed. Retry by re-selecting the file.
-            </p>
+            <p className="text-red-500 text-sm mt-1">✗ {uploadErrorMsg}</p>
           )}
           {errors.screenshot && !uploadState && (
             <p className="text-red-500 text-sm mt-1">
