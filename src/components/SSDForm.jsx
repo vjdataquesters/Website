@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Send, CheckCircle, AlertCircle, Lock, Network } from "lucide-react";
@@ -60,6 +60,49 @@ const FormComp = ({
     reset,
   } = useForm();
 
+  // Upload state: null | 'uploading' | 'done' | 'error'
+  const [uploadState, setUploadState] = useState(null);
+  const [uploadedFileName, setUploadedFileName] = useState(null);
+  const uploadVersionRef = useRef(0);
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setUploadState(null);
+      setUploadedFileName(null);
+      return;
+    }
+
+    const version = ++uploadVersionRef.current;
+    setUploadState("uploading");
+    setUploadedFileName(null);
+
+    try {
+      const uniqueFileName = `${Date.now()}_${file.name}`;
+      const {
+        data: { signedUrl, fileName },
+      } = await api.post("/register/get-signed-url", {
+        fileName: uniqueFileName,
+        fileType: file.type,
+      });
+
+      if (version !== uploadVersionRef.current) return;
+
+      await axios.put(signedUrl, file, {
+        headers: { "Content-Type": file.type },
+      });
+
+      if (version !== uploadVersionRef.current) return;
+
+      setUploadState("done");
+      setUploadedFileName(fileName);
+    } catch (err) {
+      if (version !== uploadVersionRef.current) return;
+      setUploadState("error");
+      console.error("File pre-upload error:", err);
+    }
+  };
+
   const rollno = watch("rollno", "");
   React.useEffect(() => {
     if (rollno && rollno !== rollno.toUpperCase()) {
@@ -82,28 +125,25 @@ const FormComp = ({
   const sectionValue = watch("section", "");
   const paymentPlatformValue = watch("paymentplatform", "");
 
+  const fileRegister = register("screenshot", {
+    required: "Payment screenshot is required",
+  });
+
   const submitForm = async (data) => {
     try {
       setLoadingStatus(true);
       setSubmitMessage("");
 
-      const file = data.screenshot[0];
-      const uniqueFileName = `${Date.now()}_${file.name}`;
-
-      const {
-        data: { signedUrl, fileName },
-      } = await api.post("/register/get-signed-url", {
-        fileName: uniqueFileName,
-        fileType: file.type,
-      });
-
-      await axios.put(signedUrl, file, {
-        headers: { "Content-Type": file.type },
-      });
+      if (!uploadedFileName) {
+        setSubmitMessage(
+          "Screenshot upload is not complete. Please re-select the file.",
+        );
+        return;
+      }
 
       const payload = {
         ...data,
-        screenshot: fileName,
+        screenshot: uploadedFileName,
         event: "ssd",
         qr: QR_CONFIG[activeQR].qrValue,
       };
@@ -117,6 +157,8 @@ const FormComp = ({
             : "created",
         );
         reset();
+        setUploadState(null);
+        setUploadedFileName(null);
         return;
       }
 
@@ -313,11 +355,50 @@ const FormComp = ({
         {/* Payment QR Code */}
         <div className="text-center">
           <label className="text-md text-gray-950 block">Payment QR Code</label>
+          <p className="text-sm text-gray-500 mt-0.5 mb-2">
+            Registration Fee:{" "}
+            <span className="font-semibold text-gray-800">₹75</span>
+          </p>
           <img
             src={QR_CONFIG[activeQR].qrImage}
             alt="Payment QR Code"
             className="max-w-[200px] mx-auto rounded shadow"
           />
+        </div>
+        {/* Payment Screenshot */}
+        <div>
+          <label className="text-sm text-gray-950 font-medium">
+            Payment Screenshot
+          </label>
+          <input
+            {...fileRegister}
+            onChange={(e) => {
+              fileRegister.onChange(e);
+              handleFileChange(e);
+            }}
+            type="file"
+            accept="image/*"
+            className="border border-gray-300 p-2 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[#0f323f] file:text-white hover:file:bg-[#135168] file:cursor-pointer"
+          />
+          {uploadState === "uploading" && (
+            <p className="text-[#135168] text-sm mt-1 flex items-center gap-1.5">
+              <span className="inline-block w-3.5 h-3.5 border-2 border-[#135168] border-t-transparent rounded-full animate-spin" />
+              Uploading...
+            </p>
+          )}
+          {uploadState === "done" && (
+            <p className="text-green-600 text-sm mt-1">✓ Uploaded</p>
+          )}
+          {uploadState === "error" && (
+            <p className="text-red-500 text-sm mt-1">
+              ✗ Upload failed. Retry by re-selecting the file.
+            </p>
+          )}
+          {errors.screenshot && !uploadState && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.screenshot.message}
+            </p>
+          )}
         </div>
         {/* Payment Platform */}
         <div className="mt-1">
@@ -369,25 +450,6 @@ const FormComp = ({
             </p>
           )}
         </div>
-        {/* Payment Screenshot */}
-        <div>
-          <label className="text-sm text-gray-950 font-medium">
-            Payment Screenshot
-          </label>
-          <input
-            {...register("screenshot", {
-              required: "Payment screenshot is required",
-            })}
-            type="file"
-            accept="image/*"
-            className="border border-gray-300 p-2 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[#0f323f] file:text-white hover:file:bg-[#135168] file:cursor-pointer"
-          />
-          {errors.screenshot && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.screenshot.message}
-            </p>
-          )}
-        </div>
         {/* Submit Button */}
         {submitMessage ? (
           <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -400,7 +462,8 @@ const FormComp = ({
         <div className="mt-3 flex justify-center">
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r px-8 bg-[#0f323fee] hover:bg-[#135168] md:from-blue-900 md:to-teal-400 text-white font-semibold py-2.5 rounded-full shadow-lg hover:shadow-xl hover:opacity-90 transition-all duration-300"
+            disabled={uploadState === "uploading"}
+            className="flex items-center justify-center gap-2 bg-gradient-to-r px-8 bg-[#0f323fee] hover:bg-[#135168] md:from-blue-900 md:to-teal-400 text-white font-semibold py-2.5 rounded-full shadow-lg hover:shadow-xl hover:opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span>Register Now</span>
             <Send size={16} />
