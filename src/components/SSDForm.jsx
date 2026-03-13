@@ -528,7 +528,7 @@ const SubmittedComp = ({ submitStatus }) => {
             : "Thank you for registering for Summer System Design."}
         </p>
         <p className="text-gray-600 mt-1">
-          You will receive a confirmation email soon.
+          Keep an eye on your inbox — we'll send you a confirmation email.
         </p>
 
         <motion.button
