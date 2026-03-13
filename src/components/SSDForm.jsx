@@ -60,7 +60,7 @@ const FormComp = ({
     reset,
   } = useForm();
 
-  const MAX_FILE_SIZE = 20 * 1024 * 1024; // 10 MB
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
   // Upload state: null | 'uploading' | 'done' | 'error'
   const [uploadState, setUploadState] = useState(null);
