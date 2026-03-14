@@ -1,113 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { Search, User, Calendar, Briefcase, Hash, MessageCircle } from "lucide-react";
+import React, { useState } from "react";
+import { Search, User, Calendar, Briefcase, Hash, BookOpen, Layers } from "lucide-react";
 import { motion } from "framer-motion";
+import { api } from "../utils/api";
+
+const TRR_REPS = [
+  { id: 1, name: "Srishanth", image: "/teamImages/Srishanth-2027.png", phone: "918919776534" },
+  { id: 2, name: "Sahasra", image: "/teamImages/Sahasra-2027.png", phone: "919346477090" },
+  { id: 3, name: "Shashank", image: "/teamImages/Shashank-2027.png", phone: "918639950475" },
+];
 
 export default function Members() {
   const [memberId, setMemberId] = useState("");
   const [memberData, setMemberData] = useState(null);
+  const [noDomain, setNoDomain] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // State for storing the full member database
-  const [membersDatabase, setMembersDatabase] = useState({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        // Fetch encrypted data to hide contents from network tab
-        const response = await fetch("/Members/members_data.enc");
-        const encryptedText = await response.text();
-
-        // Decrypt data
-        const SECRET_KEY = "VJDQ_Secret_Key_24_28";
-        let decryptedText = "";
-        for (let i = 0; i < encryptedText.length; i += 2) {
-          const hex = encryptedText.substr(i, 2);
-          const charCode = parseInt(hex, 16);
-          const keyChar = SECRET_KEY.charCodeAt((i / 2) % SECRET_KEY.length);
-          decryptedText += String.fromCharCode(charCode ^ keyChar);
-        }
-
-        const text = decryptedText;
-
-        // Parse CSV
-        const lines = text.split("\n");
-        // Headers are: SNO,Name,Roll Number,DS,Section,DQ IDS FF,DOMAIN ASSIGNED,WHATSAPP LINK
-
-        const db = {};
-
-        // Start from index 1 to skip header
-        for (let i = 1; i < lines.length; i++) {
-          if (!lines[i].trim()) continue;
-
-          // Handle potential commas in fields by using a regex or simple split if simple CSV
-          // The file seems to be simple CSV.
-          const values = lines[i].split(",");
-
-          if (values.length >= 7) {
-            const name = values[1].trim();
-            const id = values[5].trim().toUpperCase();
-            // Batch is not in CSV, assuming 2028 based on filename/context
-            const batch = "2028";
-            const domain = values[6].trim();
-            const whatsappLink = values[7] ? values[7].trim() : "";
-
-            if (id) {
-              db[id] = { name, batch, domain, id, whatsappLink };
-            }
-          }
-        }
-
-        setMembersDatabase(db);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error loading members data:", err);
-        setError("Failed to load member database.");
-        setLoading(false);
-      }
-    };
-
-    fetchMembers();
-  }, []);
-
-  const handleSearch = () => {
+  const handleSearch = async () => {
     setError("");
     setMemberData(null);
+    setNoDomain(false);
 
     if (!memberId.trim()) {
       setError("Please enter a Member ID");
       return;
     }
 
-    const member = membersDatabase[memberId.toUpperCase()];
+    setLoading(true);
+    try {
+      const response = await api.get(`/members/${memberId.trim().toUpperCase()}`);
+      const member = response.data.member;
 
-    if (member) {
-      setMemberData(member);
-    } else {
-      // Check if ID is in the range VJDQ2K25001 to VJDQ2K25148
-      const idPattern = /^VJDQ2K25(\d{3})$/i;
-      const match = memberId.match(idPattern);
-
-      let showDomainError = false;
-      if (match) {
-        const number = parseInt(match[1], 10);
-        if (number >= 1 && number <= 148) {
-          showDomainError = true;
-        }
-      }
-
-      if (showDomainError) {
-        setError("You haven't opted for domain division. Please contact the following Team Relation Representatives.");
+      if (member.domain === null) {
+        setNoDomain(true);
+        setMemberData(member);
       } else {
-        setError("Member ID not found. Please check and try again.");
+        setMemberData(member);
       }
+    } catch (err) {
+      if (err.response?.status === 404) {
+        setError("Member ID not found. Please check and try again.");
+      } else {
+        setError("Failed to fetch member details. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
+    if (e.key === "Enter") handleSearch();
   };
 
   return (
@@ -127,10 +69,7 @@ export default function Members() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8">
           <div className="flex flex-col md:flex-row gap-4 items-end">
             <div className="w-full flex-1">
-              <label
-                htmlFor="memberId"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="memberId" className="block text-sm font-medium text-gray-700 mb-2">
                 Member ID
               </label>
               <div className="relative">
@@ -140,7 +79,7 @@ export default function Members() {
                   value={memberId}
                   onChange={(e) => setMemberId(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="e.g., VJDQ2K25999"
+                  placeholder="e.g., VJDQ2K25049"
                   className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0f323f] focus:border-transparent transition-all"
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -148,9 +87,10 @@ export default function Members() {
             </div>
             <button
               onClick={handleSearch}
-              className="w-full md:w-auto px-8 py-3 bg-[#0f323f] text-white font-medium rounded-lg hover:bg-[#135168] transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-[#0f323f]"
+              disabled={loading}
+              className="w-full md:w-auto px-8 py-3 bg-[#0f323f] text-white font-medium rounded-lg hover:bg-[#135168] transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-[#0f323f] disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Search
+              {loading ? "Searching..." : "Search"}
             </button>
           </div>
 
@@ -159,55 +99,53 @@ export default function Members() {
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
-              className={`mt-4 p-4 rounded-xl border ${error.includes("domain division")
-                ? "bg-blue-50 border-blue-100"
-                : "bg-red-50 border-red-100 text-red-700"
-                }`}
+              className="mt-4 p-4 rounded-xl border bg-red-50 border-red-100"
             >
               <div className="flex items-center gap-3">
-                <span className="text-xl">
-                  {error.includes("domain division") ? "⚠️" : "⚠️"}
-                </span>
-                <p className={`font-medium ${error.includes("domain division") ? "text-blue-800" : "text-red-700"}`}>
-                  {error}
+                <span className="text-xl">⚠️</span>
+                <p className="font-medium text-red-700">{error}</p>
+              </div>
+            </motion.div>
+          )}
+
+          {/* No Domain Warning */}
+          {noDomain && memberData && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              className="mt-4 p-4 rounded-xl border bg-blue-50 border-blue-100"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-xl">⚠️</span>
+                <p className="font-medium text-blue-800">
+                  {memberData.name}, you haven't opted for domain division. Please contact the following Team Relation Representatives.
                 </p>
               </div>
-
-              {error.includes("domain division") && (
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[
-                    { id: 1, name: "Srishanth", image: "/teamImages/Srishanth-2027.png", phone: "918919776534" },
-                    { id: 2, name: "Sahasra", image: "/teamImages/Sahasra-2027.png", phone: "919346477090" },
-                    { id: 3, name: "Shashank", image: "/teamImages/Shashank-2027.png", phone: "918639950475" }
-                  ].map((rep) => (
-                    <div key={rep.id} className="bg-white p-4 rounded-lg border border-blue-100 shadow-sm flex flex-col items-center text-center">
-                      <div className="w-16 h-16 bg-gray-200 rounded-full mb-3 overflow-hidden">
-                        <img
-                          src={rep.image}
-                          alt={rep.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <h3 className="font-semibold text-gray-900">{rep.name}</h3>
-                      <p className="text-sm text-gray-500 mb-2">TRR</p>
-                      <a
-                        href={`https://wa.me/${rep.phone}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-white font-medium bg-green-500 px-3 py-1 rounded-full hover:bg-green-600 transition-colors"
-                      >
-                        Contact via WhatsApp
-                      </a>
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {TRR_REPS.map((rep) => (
+                  <div key={rep.id} className="bg-white p-4 rounded-lg border border-blue-100 shadow-sm flex flex-col items-center text-center">
+                    <div className="w-16 h-16 bg-gray-200 rounded-full mb-3 overflow-hidden">
+                      <img src={rep.image} alt={rep.name} className="w-full h-full object-cover" />
                     </div>
-                  ))}
-                </div>
-              )}
+                    <h3 className="font-semibold text-gray-900">{rep.name}</h3>
+                    <p className="text-sm text-gray-500 mb-2">TRR</p>
+                    <a
+                      href={`https://wa.me/${rep.phone}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-white font-medium bg-green-500 px-3 py-1 rounded-full hover:bg-green-600 transition-colors"
+                    >
+                      Contact via WhatsApp
+                    </a>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           )}
         </div>
 
         {/* Member Details Display */}
-        {memberData && (
+        {memberData && !noDomain && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -220,80 +158,64 @@ export default function Members() {
                   <User className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-white mb-1">
-                    {memberData.name}
-                  </h2>
+                  <h2 className="text-2xl font-bold text-white mb-1">{memberData.name}</h2>
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white">
                     Active Member
                   </span>
                 </div>
               </div>
               <div className="text-right hidden sm:block">
-                <p className="text-white/60 text-sm uppercase tracking-wide">
-                  Member ID
-                </p>
-                <p className="text-white font-mono text-xl">{memberData.id}</p>
+                <p className="text-white/60 text-sm uppercase tracking-wide">Member ID</p>
+                <p className="text-white font-mono text-xl">{memberData.dqId}</p>
               </div>
             </div>
 
             <div className="p-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-100">
                   <div className="flex items-center gap-3 mb-2 text-gray-500">
                     <Hash className="w-4 h-4" />
-                    <span className="text-sm font-medium uppercase tracking-wide">
-                      ID
-                    </span>
+                    <span className="text-sm font-medium uppercase tracking-wide">Roll Number</span>
                   </div>
-                  <p className="text-lg font-semibold text-gray-900 font-mono">
-                    {memberData.id}
-                  </p>
+                  <p className="text-lg font-semibold text-gray-900 font-mono">{memberData.rollNumber}</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-100">
+                  <div className="flex items-center gap-3 mb-2 text-gray-500">
+                    <BookOpen className="w-4 h-4" />
+                    <span className="text-sm font-medium uppercase tracking-wide">Branch</span>
+                  </div>
+                  <p className="text-lg font-semibold text-gray-900">{memberData.branch}</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-100">
+                  <div className="flex items-center gap-3 mb-2 text-gray-500">
+                    <Layers className="w-4 h-4" />
+                    <span className="text-sm font-medium uppercase tracking-wide">Section</span>
+                  </div>
+                  <p className="text-lg font-semibold text-gray-900">{memberData.section}</p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-100">
                   <div className="flex items-center gap-3 mb-2 text-gray-500">
                     <Calendar className="w-4 h-4" />
-                    <span className="text-sm font-medium uppercase tracking-wide">
-                      Batch
-                    </span>
+                    <span className="text-sm font-medium uppercase tracking-wide">Batch</span>
                   </div>
-                  <p className="text-lg font-semibold text-gray-900">
-                    {memberData.batch}
-                  </p>
+                  <p className="text-lg font-semibold text-gray-900">{memberData.batch}</p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-100">
+                <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-100 sm:col-span-2 md:col-span-2">
                   <div className="flex items-center gap-3 mb-2 text-gray-500">
                     <Briefcase className="w-4 h-4" />
-                    <span className="text-sm font-medium uppercase tracking-wide">
-                      Domain
-                    </span>
+                    <span className="text-sm font-medium uppercase tracking-wide">Domain</span>
                   </div>
-                  <p className="text-lg font-semibold text-gray-900">
-                    {memberData.domain}
-                  </p>
+                  <p className="text-lg font-semibold text-gray-900">{memberData.domain}</p>
                 </div>
-              </div>
-
-              <div className="mt-8 flex justify-center">
-                <button
-                  className="flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#128C7E] transition-colors shadow-sm"
-                  onClick={() => {
-                    if (memberData.whatsappLink) {
-                      window.open(memberData.whatsappLink, "_blank");
-                    } else {
-                      alert("WhatsApp link not available for this member.");
-                    }
-                  }}
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  Join WhatsApp Group
-                </button>
               </div>
             </div>
           </motion.div>
         )}
       </div>
-    </div >
+    </div>
   );
 }

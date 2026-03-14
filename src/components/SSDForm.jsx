@@ -5,20 +5,9 @@ import { Send, CheckCircle, AlertCircle, Lock, Network } from "lucide-react";
 import { motion } from "framer-motion";
 import { QR_CONFIG, activeQR } from "../config/qrConfig";
 import DropdownCombobox from "./DropdownCombobox";
+import { api } from "../utils/api";
 
 const IS_FORM_OPEN = true;
-
-const SERVER_URL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:3000"
-    : "https://api.vjdataquesters.com";
-
-const api = axios.create({
-  baseURL: SERVER_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 const transitionVariants = {
   initial: { opacity: 0, filter: "blur(10px)" },
@@ -45,6 +34,18 @@ const pulseVariants = {
   },
 };
 
+// batch 2028 → joined 2024; academic year starts after June
+// e.g. March 2026 (before June): academicYearStart = 2025, year = 2025 - 2024 + 1 = 2
+function getYearFromBatch(batch) {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+  const academicYearStart = currentMonth < 6 ? currentYear - 1 : currentYear;
+  const joinYear = parseInt(batch) - 4;
+  const year = academicYearStart - joinYear + 1;
+  return String(Math.min(Math.max(year, 1), 4));
+}
+
 const FormComp = ({
   setLoadingStatus,
   setSubmitStatus,
@@ -61,6 +62,31 @@ const FormComp = ({
   } = useForm();
 
   const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+
+  // Ref for validation closures; state for re-rendering UI
+  const memberDetectedRef = useRef(false);
+  const [memberDetected, setMemberDetected] = useState(false);
+  const handleLookup = async (id) => {
+    try {
+      const response = await api.get(`/members/${id}`);
+      const member = response.data.member;
+      const year = getYearFromBatch(member.batch);
+
+      memberDetectedRef.current = true;
+      setMemberDetected(true);
+
+      setValue("name", member.name, { shouldValidate: true });
+      setValue("email", member.email, { shouldValidate: true });
+      setValue("phno", member.phoneNumber, { shouldValidate: true });
+      setValue("branch", member.branch, { shouldValidate: true });
+      setValue("section", member.section, { shouldValidate: true });
+      setValue("year", year, { shouldValidate: true });
+    } catch {
+      // Not a DQ member — silently ignore, keep form as-is
+      memberDetectedRef.current = false;
+      setMemberDetected(false);
+    }
+  };
 
   // Upload state: null | 'uploading' | 'done' | 'error'
   const [uploadState, setUploadState] = useState(null);
@@ -123,20 +149,15 @@ const FormComp = ({
     }
   };
 
-  const rollno = watch("rollno", "");
-  React.useEffect(() => {
-    if (rollno && rollno !== rollno.toUpperCase()) {
-      setValue("rollno", rollno.toUpperCase());
-    }
-  }, [rollno, setValue]);
-
-  // Register dropdown fields manually for validation (DropdownCombobox doesn't support ...register())
+  // Register dropdown fields manually (DropdownCombobox doesn't support ...register())
+  // Payment fields use validate fns that read memberDetectedRef — optional for DQ members
   React.useEffect(() => {
     register("year", { required: "Year is required" });
     register("branch", { required: "Department is required" });
     register("section", { required: "Section is required" });
     register("paymentplatform", {
-      required: "Please select a payment platform",
+      validate: (val) =>
+        memberDetectedRef.current || !!val || "Please select a payment platform",
     });
   }, [register]);
 
@@ -146,7 +167,8 @@ const FormComp = ({
   const paymentPlatformValue = watch("paymentplatform", "");
 
   const fileRegister = register("screenshot", {
-    required: "Payment screenshot is required",
+    validate: (val) =>
+      memberDetectedRef.current || !!val || "Payment screenshot is required",
   });
 
   const submitForm = async (data) => {
@@ -154,7 +176,7 @@ const FormComp = ({
       setLoadingStatus(true);
       setSubmitMessage("");
 
-      if (!uploadedFileName) {
+      if (!memberDetectedRef.current && !uploadedFileName) {
         setSubmitMessage(
           "Screenshot upload is not complete. Please re-select the file.",
         );
@@ -163,7 +185,7 @@ const FormComp = ({
 
       const payload = {
         ...data,
-        screenshot: uploadedFileName,
+        ...(uploadedFileName ? { screenshot: uploadedFileName } : {}),
         event: "ssd",
         qr: QR_CONFIG[activeQR].qrValue,
       };
@@ -179,6 +201,8 @@ const FormComp = ({
         reset();
         setUploadState(null);
         setUploadedFileName(null);
+        memberDetectedRef.current = false;
+        setMemberDetected(false);
         return;
       }
 
@@ -238,11 +262,20 @@ const FormComp = ({
             <label className="text-sm text-gray-950 font-medium">
               Roll Number
             </label>
-            <input
-              {...register("rollno", { required: "Roll Number is required" })}
-              placeholder="e.g. 22071A1234"
-              className="border border-gray-300 p-2.5 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all"
-            />
+            <div className="relative mt-1">
+              <input
+                {...register("rollno", { required: "Roll Number is required" })}
+                placeholder="e.g. 22071A1234"
+                maxLength={11}
+                onChange={(e) => {
+                  const val = e.target.value.toUpperCase();
+                  setValue("rollno", val, { shouldValidate: false });
+                  if (val.length === 11) handleLookup(val);
+                  else { memberDetectedRef.current = false; setMemberDetected(false); }
+                }}
+                className="border border-gray-300 p-2.5 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all"
+              />
+            </div>
             {errors.rollno && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.rollno.message}
@@ -372,8 +405,8 @@ const FormComp = ({
           )}
         </div>
 
-        {/* Payment QR Code */}
-        <div className="text-center">
+        {/* Payment QR, Screenshot, Platform, Transaction ID — hidden for DQ members */}
+        {!memberDetected && (<><div className="text-center">
           <label className="text-md text-gray-950 block">Payment QR Code</label>
           <p className="text-sm text-gray-500 mt-0.5 mb-2">
             Registration Fee:{" "}
@@ -385,7 +418,6 @@ const FormComp = ({
             className="max-w-[200px] mx-auto rounded shadow"
           />
         </div>
-        {/* Payment Screenshot */}
         <div>
           <label className="text-sm text-gray-950 font-medium">
             Payment Screenshot
@@ -418,6 +450,7 @@ const FormComp = ({
             </p>
           )}
         </div>
+
         {/* Payment Platform */}
         <div className="mt-1">
           <label className="text-sm text-gray-950 font-medium block">
@@ -450,6 +483,7 @@ const FormComp = ({
             </p>
           )}
         </div>
+
         {/* Transaction ID */}
         <div>
           <label className="text-sm text-gray-950 font-medium">
@@ -457,7 +491,8 @@ const FormComp = ({
           </label>
           <input
             {...register("transactionid", {
-              required: "Transaction ID is required",
+              validate: (val) =>
+                memberDetectedRef.current || !!val || "Transaction ID is required",
             })}
             placeholder="Transaction ID"
             className="border border-gray-300 p-2.5 w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-[#135168] focus:border-transparent transition-all"
@@ -467,7 +502,8 @@ const FormComp = ({
               {errors.transactionid.message}
             </p>
           )}
-        </div>
+        </div></>)}
+
         {/* Submit Button */}
         {submitMessage ? (
           <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
