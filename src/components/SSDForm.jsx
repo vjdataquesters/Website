@@ -93,7 +93,7 @@ const FormComp = ({
   const [uploadErrorMsg, setUploadErrorMsg] = useState("");
   const [uploadedFileName, setUploadedFileName] = useState(null);
   const uploadVersionRef = useRef(0);
-  const submitMessageRef = useRef(null);
+  const registerButtonRef = useRef(null);
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
@@ -164,7 +164,7 @@ const FormComp = ({
 
   React.useEffect(() => {
     if (submitMessage) {
-      submitMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      registerButtonRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }, [submitMessage]);
 
@@ -221,8 +221,9 @@ const FormComp = ({
       throw new Error(message || "Unexpected response from server.");
     } catch (error) {
       const msg = error?.response?.data?.message;
-      if (msg === "Registrations for DQ members are currently closed") {
-        setSubmitMessage(msg);
+      const status = error?.response?.status;
+      if (msg === "Registrations for DQ members are currently closed" || status === 403) {
+        setSubmitMessage(msg || "Access denied. Please try again later.");
       } else {
         alert("Error submitting form. Please try again later.");
         setSubmitStatus(null);
@@ -518,7 +519,7 @@ const FormComp = ({
 
         {/* Submit Button */}
         {submitMessage ? (
-          <div ref={submitMessageRef} className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          <div  className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
             <div className="flex items-start gap-2">
               <AlertCircle size={18} className="mt-0.5 shrink-0" />
               <p>{submitMessage}</p>
@@ -528,6 +529,7 @@ const FormComp = ({
         <div className="mt-3 flex justify-center">
           <button
             type="submit"
+            ref={registerButtonRef}
             disabled={uploadState === "uploading"}
             className="flex items-center justify-center gap-2 bg-gradient-to-r px-8 bg-[#0f323fee] hover:bg-[#135168] md:from-blue-900 md:to-teal-400 text-white font-semibold py-2.5 rounded-full shadow-lg hover:shadow-xl hover:opacity-90 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
