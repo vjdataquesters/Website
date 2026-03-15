@@ -124,7 +124,7 @@ export default function Events() {
           </div>
 
           <div className="flex flex-col flex-wrap gap-5">
-            <h2 className="text-4xl text-center font-bold">Past Events</h2>
+            <h2 className="text-4xl text-center font-bold">Our Events</h2>
             <div className="text-center flex flex-row justify-around sm:gap-7 sm:justify-center">
               {Object.keys(events.past).map((eventyear) => (
                 <button

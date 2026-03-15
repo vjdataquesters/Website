@@ -133,7 +133,7 @@ export default function EventSessionQuery({ eventname }) {
               onClick={() => setIsSessionQueryOpen((open) => !open)}
               className="inline-flex items-center justify-center rounded-2xl bg-[#0f323f] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0f323f]/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#135168]"
             >
-              {isSessionQueryOpen ? "Hide" : "Ask a Session Query"}
+              {isSessionQueryOpen ? "Hide" : "Ask a Question"}
             </button>
           </div>
         </div>

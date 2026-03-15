@@ -36,25 +36,26 @@
 //   | 'Guest Lecture';
 
 const events = {
-  upcoming: [
-    {
-      name: "Summer System Design",
-      eventId: "SSD",
-      image: "/events/2026/SummerSystemDesign/img1.png",
-      date: "March 16th & 17th 2026",
-      venue: "E-Block,Seminar Hall,E-436,VNRVJIET",
-      timings: "10:00 AM to 4:40 PM",
-      pics: ["/events/2026/SummerSystemDesign/img1.png"],
-      // register: "/register/ssd",
-      isGFormEmbeddable: false,
-      event_tags: ["Workshop", "System Design"],
-      description:
-        "Building Architectures That Don't Melt Under Heat! Join VJ Data Questers for an intensive 2-day workshop on System Design, featuring industry experts Ms. Dolly Yadav (SDE at Salesforce, Ex-Microsoft) and Mr. Naman Roy (ML Engineer at Splunk, Ex-Amazon). ",
-      link: "/events/SSD",
-      sessionQuery: true,
-    },
-  ],
+  upcoming: [],
   past: {
+    e2026: [
+      {
+        name: "Summer System Design",
+        eventId: "SSD",
+        image: "/events/2026/SummerSystemDesign/img1.png",
+        date: "March 16th & 17th 2026",
+        venue: "E-Block,Seminar Hall,E-436,VNRVJIET",
+        timings: "10:00 AM to 4:40 PM",
+        pics: ["/events/2026/SummerSystemDesign/img1.png"],
+        // register: "/register/ssd",
+        isGFormEmbeddable: false,
+        event_tags: ["Workshop", "System Design"],
+        description:
+          "Building Architectures That Don't Melt Under Heat! Join VJ Data Questers for an intensive 2-day workshop on System Design, featuring industry experts Ms. Dolly Yadav (SDE at Salesforce, Ex-Microsoft) and Mr. Naman Roy (ML Engineer at Splunk, Ex-Amazon). ",
+        link: "/events/SSD",
+        sessionQuery: true,
+      },
+    ],
     e2025: [
       {
         name: "Convergence 2k25R – HIT: Reloaded",
