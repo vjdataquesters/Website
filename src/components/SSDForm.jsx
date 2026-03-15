@@ -7,7 +7,7 @@ import { QR_CONFIG, activeQR } from "../config/qrConfig";
 import DropdownCombobox from "./DropdownCombobox";
 import { api } from "../utils/api";
 
-const IS_FORM_OPEN = true;
+const IS_FORM_OPEN = false;
 
 const transitionVariants = {
   initial: { opacity: 0, filter: "blur(10px)" },
