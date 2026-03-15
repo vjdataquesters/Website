@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { api } from "../utils/api";
 
-const SESSION_QUERY_COOLDOWN_MS = 2 * 60 * 1000;
+const SESSION_QUERY_COOLDOWN_MS = 1 * 60 * 1000;
 
 function formatCooldown(ms) {
   const totalSeconds = Math.ceil(ms / 1000);
