@@ -7,11 +7,11 @@ import Event from "../components/Event";
 import Technovista from "../components/Technovista";
 import NewsLetter from "./NewsLetter";
 import Gallery from "./Gallery";
-import RegistrationForm from "./RegistrationForm";
-import Carousel3D from "../components/TechnoVistaComponents/Carousel";
+// import RegistrationForm from "./RegistrationForm";
+// import Carousel3D from "../components/TechnoVistaComponents/Carousel";
 import Credentials from "./Credentials";
-import Hit from "./Hit";
-import GenerateAllQrs from "./GenerateAllQrs";
+// import Hit from "./Hit";
+// import GenerateAllQrs from "./GenerateAllQrs";
 import Members from "./Members";
 import SSDRegistration from "./SSDRegistration";
 
