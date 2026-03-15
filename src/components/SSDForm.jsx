@@ -93,6 +93,7 @@ const FormComp = ({
   const [uploadErrorMsg, setUploadErrorMsg] = useState("");
   const [uploadedFileName, setUploadedFileName] = useState(null);
   const uploadVersionRef = useRef(0);
+  const submitMessageRef = useRef(null);
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
@@ -161,6 +162,12 @@ const FormComp = ({
     });
   }, [register]);
 
+  React.useEffect(() => {
+    if (submitMessage) {
+      submitMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [submitMessage]);
+
   const yearValue = watch("year", "");
   const branchValue = watch("branch", "");
   const sectionValue = watch("section", "");
@@ -213,9 +220,14 @@ const FormComp = ({
 
       throw new Error(message || "Unexpected response from server.");
     } catch (error) {
-      alert("Error submitting form. Please try again later.");
-      setSubmitStatus(null);
-      console.error("Error submitting form:", error);
+      const msg = error?.response?.data?.message;
+      if (msg === "Registrations for DQ members are currently closed") {
+        setSubmitMessage(msg);
+      } else {
+        alert("Error submitting form. Please try again later.");
+        setSubmitStatus(null);
+        console.error("Error submitting form:", error);
+      }
     } finally {
       setLoadingStatus(false);
     }
@@ -506,7 +518,7 @@ const FormComp = ({
 
         {/* Submit Button */}
         {submitMessage ? (
-          <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          <div ref={submitMessageRef} className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
             <div className="flex items-start gap-2">
               <AlertCircle size={18} className="mt-0.5 shrink-0" />
               <p>{submitMessage}</p>
