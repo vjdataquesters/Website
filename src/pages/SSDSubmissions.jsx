@@ -1,6 +1,13 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LoaderCircle, FileText, ArrowLeft, Upload, ImageIcon, CheckCircle2 } from "lucide-react";
+import {
+  LoaderCircle,
+  FileText,
+  ArrowLeft,
+  Upload,
+  ImageIcon,
+  CheckCircle2,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { api } from "../utils/api";
 import axios from "axios";
@@ -12,7 +19,10 @@ export default function SSDSubmissions() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [imageFile, setImageFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState({ type: "idle", message: "" });
+  const [uploadStatus, setUploadStatus] = useState({
+    type: "idle",
+    message: "",
+  });
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -41,9 +51,14 @@ export default function SSDSubmissions() {
         throw problemRes.reason;
       }
 
-      setProblem({ ps: problemRes.value.data.ps, ...problemRes.value.data.problem });
+      setProblem({
+        ps: problemRes.value.data.ps,
+        ...problemRes.value.data.problem,
+      });
       setExistingSubmission(
-        submissionRes.status === "fulfilled" ? submissionRes.value.data.submission : false
+        submissionRes.status === "fulfilled"
+          ? submissionRes.value.data.submission
+          : false,
       );
       setStatus({ type: "success", message: "" });
     } catch (error) {
@@ -59,7 +74,10 @@ export default function SSDSubmissions() {
   const submitSolution = async (e) => {
     e.preventDefault();
     if (!imageFile) {
-      setUploadStatus({ type: "error", message: "Please select an image to upload." });
+      setUploadStatus({
+        type: "error",
+        message: "Please select an image to upload.",
+      });
       return;
     }
 
@@ -68,10 +86,13 @@ export default function SSDSubmissions() {
 
     try {
       // Step 1: get signed URL
-      const { data: signedData } = await api.post("/submission/get-signed-url", {
-        fileName: imageFile.name,
-        fileType: imageFile.type,
-      });
+      const { data: signedData } = await api.post(
+        "/submission/get-signed-url",
+        {
+          fileName: imageFile.name,
+          fileType: imageFile.type,
+        },
+      );
 
       // Step 2: upload image directly to GCS
       await axios.put(signedData.signedUrl, imageFile, {
@@ -96,8 +117,7 @@ export default function SSDSubmissions() {
       setUploadStatus({
         type: "error",
         message:
-          error?.response?.data?.message ||
-          "Upload failed. Please try again.",
+          error?.response?.data?.message || "Upload failed. Please try again.",
       });
     } finally {
       setIsUploading(false);
@@ -132,10 +152,14 @@ export default function SSDSubmissions() {
         >
           <div className="rounded-[calc(1.5rem-1px)] bg-white/95 p-6 backdrop-blur md:p-8">
             <p className="text-slate-600 mb-6">
-              Enter your roll number to view the problem statement assigned to you.
+              Enter your roll number to view the problem statement assigned to
+              you.
             </p>
 
-            <form onSubmit={fetchProblem} className="flex flex-col gap-3 sm:flex-row sm:items-start">
+            <form
+              onSubmit={fetchProblem}
+              className="flex flex-col gap-3 sm:flex-row sm:items-start"
+            >
               <input
                 type="text"
                 value={roll}
@@ -178,8 +202,12 @@ export default function SSDSubmissions() {
                   className="mt-6 border-t border-slate-200/80 pt-6 space-y-5"
                 >
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-[#135168] mb-1">PS {problem.ps}</p>
-                    <h4 className="text-xl font-bold text-slate-900">{problem.title}</h4>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-[#135168] mb-1">
+                      PS {problem.ps}
+                    </p>
+                    <h4 className="text-xl font-bold text-slate-900">
+                      {problem.title}
+                    </h4>
                   </div>
 
                   {problem.content?.map((section, i) => (
@@ -189,7 +217,10 @@ export default function SSDSubmissions() {
                       </h5>
                       <ul className="list-disc pl-5 space-y-1">
                         {section.points.map((point, j) => (
-                          <li key={j} className="text-slate-700 text-sm leading-relaxed">
+                          <li
+                            key={j}
+                            className="text-slate-700 text-sm leading-relaxed"
+                          >
                             {point}
                           </li>
                         ))}
@@ -214,22 +245,51 @@ export default function SSDSubmissions() {
                 {existingSubmission ? (
                   <>
                     <div className="flex items-center gap-2 mb-4">
-                      <CheckCircle2 size={20} className="text-green-600 shrink-0" />
-                      <h3 className="text-xl font-bold text-slate-900">Submission Received</h3>
+                      <CheckCircle2
+                        size={20}
+                        className="text-green-600 shrink-0"
+                      />
+                      <h3 className="text-xl font-bold text-slate-900">
+                        Submission Received
+                      </h3>
                     </div>
                     <div className="space-y-2 text-sm text-slate-600">
-                      <p><span className="font-medium text-slate-800">Roll No:</span> {existingSubmission.rollno}</p>
-                      <p><span className="font-medium text-slate-800">PS:</span> {existingSubmission.ps}</p>
-<p><span className="font-medium text-slate-800">Submitted at:</span> {new Date(existingSubmission.updatedAt).toLocaleString()}</p>
+                      <p>
+                        <span className="font-medium text-slate-800">
+                          Roll No:
+                        </span>{" "}
+                        {existingSubmission.rollno}
+                      </p>
+                      <p>
+                        <span className="font-medium text-slate-800">PS:</span>{" "}
+                        {existingSubmission.ps}
+                      </p>
+                      <p>
+                        <span className="font-medium text-slate-800">
+                          Submitted at:
+                        </span>{" "}
+                        {new Date(
+                          existingSubmission.updatedAt,
+                        ).toLocaleString()}
+                      </p>
                     </div>
-                    <p className="mt-4 text-xs text-slate-400">Only one submission is allowed per participant.</p>
+                    <p className="mt-4 text-xs text-slate-400">
+                      Only one submission is allowed per participant.
+                    </p>
                   </>
                 ) : (
                   <>
-                    <h3 className="mb-1 text-2xl font-bold text-slate-900">Upload your solution</h3>
-                    <p className="text-slate-500 text-sm mb-6">Upload an image of your solution for PS {problem.ps}.</p>
+                    <h3 className="mb-1 text-2xl font-bold text-slate-900">
+                      Upload your solution
+                    </h3>
+                    <p className="text-slate-500 text-sm mb-6">
+                      Upload an image of your solution for PS {problem.ps}.
+                    </p>
 
-                    <form onSubmit={submitSolution} className="flex flex-col gap-4">
+                    <form
+                      onSubmit={submitSolution}
+                      className="flex flex-col gap-4"
+                    >
                       <label
                         htmlFor="solution-image"
                         className={`flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed px-6 py-10 cursor-pointer transition-colors duration-200 ${
@@ -241,11 +301,17 @@ export default function SSDSubmissions() {
                         <ImageIcon size={32} className="text-slate-400" />
                         <div className="text-center">
                           {imageFile ? (
-                            <p className="font-medium text-slate-800">{imageFile.name}</p>
+                            <p className="font-medium text-slate-800">
+                              {imageFile.name}
+                            </p>
                           ) : (
                             <>
-                              <p className="font-medium text-slate-700">Click to select an image</p>
-                              <p className="text-xs text-slate-400 mt-1">PNG, JPG, JPEG, WEBP</p>
+                              <p className="font-medium text-slate-700">
+                                Click to select an image
+                              </p>
+                              <p className="text-xs text-slate-400 mt-1">
+                                PNG, JPG, JPEG, WEBP
+                              </p>
                             </>
                           )}
                         </div>
