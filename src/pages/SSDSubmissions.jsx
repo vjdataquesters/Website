@@ -306,7 +306,11 @@ export default function SSDSubmissions() {
 
   useEffect(() => {
     if (existingSubmission?.status === "completed") {
-      setTimeout(() => scoreRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+      setTimeout(() => {
+        if (!scoreRef.current) return;
+        const top = scoreRef.current.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top, behavior: "smooth" });
+      }, 100);
     }
   }, [existingSubmission?.status]);
 
@@ -609,7 +613,26 @@ export default function SSDSubmissions() {
             </div>
           )}
 
-          {/* ── Section 4: MCQ Review ────────────────────────────────────── */}
+          {/* ── Section 4: Edge Cases ────────────────────────────────────── */}
+          {existingSubmission.edge_cases?.length > 0 && (
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
+                Edge Cases to Consider
+              </p>
+              <ul className="space-y-2">
+                {existingSubmission.edge_cases.map((ec, i) => (
+                  <li key={i} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-100 text-[10px] font-bold text-amber-700">
+                      {i + 1}
+                    </span>
+                    <p className="text-sm text-slate-700 leading-relaxed">{ec}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* ── Section 5: MCQ Review ────────────────────────────────────── */}
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
               MCQ Review
