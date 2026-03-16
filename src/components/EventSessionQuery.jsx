@@ -194,13 +194,13 @@ export default function EventSessionQuery({ eventname }) {
                     {...register("query", {
                       required: "Please enter your query.",
                       minLength: {
-                        value: 8,
+                        value: 4,
                         message:
                           "Query too short.",
                       },
                       maxLength: {
-                        value: 500,
-                        message: "Please keep the query within 500 characters.",
+                        value: 1000,
+                        message: "Please keep the query within 1000 characters.",
                       },
                     })}
                     className="w-full rounded-[1.5rem] border border-slate-200 bg-white px-4 py-3 text-slate-800 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-[#1d816f] focus:ring-0"
