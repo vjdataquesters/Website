@@ -14,6 +14,7 @@ import Credentials from "./Credentials";
 // import GenerateAllQrs from "./GenerateAllQrs";
 import Members from "./Members";
 import SSDRegistration from "./SSDRegistration";
+import SSDSubmissions from "./SSDSubmissions";
 
 const router = [
   { path: "/", component: Home },
@@ -21,6 +22,7 @@ const router = [
   { path: "/testimonials", component: Testimonials },
   { path: "/events", component: Events },
   { path: "/events/tv24", component: Technovista },
+  { path: "/events/SSD/submissions", component: SSDSubmissions },
   { path: "/events/:eventname", component: Event },
   { path: "/team", component: Team },
   { path: "/members", component: Members },

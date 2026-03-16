@@ -94,6 +94,21 @@ export default function Event() {
           )}
         </div>
 
+        {event.sessionSubmissions && (
+          <Link
+            to={`/events/${eventname}/submissions`}
+            className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-[#0f323f] to-[#135168] px-6 py-4 text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg my-4"
+          >
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-0.5">
+                Submissions
+              </p>
+              <p className="text-lg font-bold">View your Problem Statement</p>
+            </div>
+            <span className="text-2xl">→</span>
+          </Link>
+        )}
+
         {event.sessionQuery && (
           <EventSessionQuery eventname={eventname} />
         )}

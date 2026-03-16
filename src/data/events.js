@@ -54,6 +54,7 @@ const events = {
           "Building Architectures That Don't Melt Under Heat! Join VJ Data Questers for an intensive 2-day workshop on System Design, featuring industry experts Ms. Dolly Yadav (SDE at Salesforce, Ex-Microsoft) and Mr. Naman Roy (ML Engineer at Splunk, Ex-Amazon). ",
         link: "/events/SSD",
         sessionQuery: true,
+        sessionSubmissions:false
       },
     ],
     e2025: [
