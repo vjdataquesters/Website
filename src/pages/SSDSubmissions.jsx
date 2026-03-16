@@ -10,12 +10,16 @@ import {
   Clock,
   Timer,
   AlertTriangle,
+  Trophy,
+  Check,
+  X,
+  XCircle,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { api } from "../utils/api";
 import axios from "axios";
 
-const MCQ_SECONDS_PER_QUESTION = 30;
+const MCQ_DURATION_MS = 5 * 60 * 1000; // 5 minutes, server-authoritative
 
 function formatTime(seconds) {
   const m = Math.floor(seconds / 60);
@@ -25,58 +29,95 @@ function formatTime(seconds) {
 
 // ── MCQ Exam ─────────────────────────────────────────────────────────────────
 
-function McqExam({ submission, roll, onComplete }) {
-  const questions = submission.questions ?? [];
-  const DURATION = questions.length * MCQ_SECONDS_PER_QUESTION;
-  const storageKey = `ssd-mcq-start:${roll}`;
-
-  const getTimeLeft = () => {
-    const stored = localStorage.getItem(storageKey);
-    if (!stored) {
-      const now = Date.now();
-      localStorage.setItem(storageKey, String(now));
-      return DURATION;
-    }
-    return Math.max(DURATION - Math.floor((Date.now() - Number(stored)) / 1000), 0);
-  };
-
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
+function McqExam({ roll, onComplete }) {
+  // "idle" → user sees start screen | "starting" → API in flight | "active" → exam running
+  const [phase, setPhase] = useState("idle");
+  const [questions, setQuestions] = useState([]);
+  const [startError, setStartError] = useState("");
   const [answers, setAnswers] = useState({});
+  const [timeLeft, setTimeLeft] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const submitted = useRef(false);
 
-  const handleSubmit = useCallback(
-    async (auto = false) => {
-      if (submitted.current) return;
-      submitted.current = true;
-      setIsSubmitting(true);
-      setSubmitError("");
-      try {
-        await api.post("/submission/mcq/submit", {
-          rollno: roll,
-          answers: questions.map((q, i) => ({
-            question: q.question,
-            selected: answers[i] ?? "",
-          })),
-        });
-        localStorage.removeItem(storageKey);
-        const { data } = await api.get(`/submission/${roll}`);
-        onComplete(data.submission);
-      } catch (err) {
-        submitted.current = false;
-        setIsSubmitting(false);
-        setSubmitError(
-          err?.response?.data?.message || "Submission failed. Please try again."
-        );
-      }
-    },
-    [answers, questions, roll, storageKey, onComplete]
-  );
+  const handleStart = async () => {
+    setPhase("starting");
+    setStartError("");
+    try {
+      const { data } = await api.post("/submission/mcq/start", {
+        rollno: roll,
+      });
+      const remaining = Math.max(
+        Math.floor((data.mcqStartedAt + MCQ_DURATION_MS - Date.now()) / 1000),
+        0,
+      );
+      setQuestions(data.questions);
+      // Restore previously saved answers from the server (for rejoin)
+      const restored = {};
+      data.questions.forEach((q, i) => {
+        if (q.selected) restored[i] = q.selected;
+      });
+      setAnswers(restored);
+      setTimeLeft(remaining);
+      setPhase("active");
+    } catch (err) {
+      setStartError(
+        err?.response?.data?.message ||
+          "Failed to start exam. Please try again.",
+      );
+      setPhase("idle");
+    }
+  };
+
+  const handleAnswer = (questionIndex, questionText, option) => {
+    setAnswers((prev) => ({ ...prev, [questionIndex]: option }));
+    // Fire-and-forget auto-save
+    api
+      .post("/submission/mcq/answer", {
+        rollno: roll,
+        question: questionText,
+        selected: option,
+      })
+      .catch(() => {
+        /* silent — submit will send full answers as safety net */
+      });
+  };
+
+  const handleSubmit = useCallback(async () => {
+    if (submitted.current) return;
+    submitted.current = true;
+    setIsSubmitting(true);
+    setSubmitError("");
+    try {
+      await api.post("/submission/mcq/submit", {
+        rollno: roll,
+        answers: questions.map((q, i) => ({
+          question: q.question,
+          selected: answers[i] ?? "",
+        })),
+      });
+      const { data } = await api.get(`/submission/${roll}`);
+      onComplete(data.submission);
+    } catch (err) {
+      submitted.current = false;
+      setIsSubmitting(false);
+      setSubmitError(
+        err?.response?.data?.message || "Submission failed. Please try again.",
+      );
+    }
+  }, [answers, questions, roll, onComplete]);
+
+  const handleExpiry = useCallback(async () => {
+    if (submitted.current) return;
+    submitted.current = true;
+    const { data } = await api.get(`/submission/${roll}`);
+    onComplete(data.submission);
+  }, [roll, onComplete]);
 
   useEffect(() => {
+    if (timeLeft === null) return;
     if (timeLeft === 0) {
-      handleSubmit(true);
+      handleExpiry();
       return;
     }
     const id = setInterval(() => {
@@ -89,59 +130,90 @@ function McqExam({ submission, roll, onComplete }) {
       });
     }, 1000);
     return () => clearInterval(id);
-  }, [timeLeft, handleSubmit]);
+  }, [timeLeft, handleExpiry]);
 
   const answeredCount = Object.keys(answers).length;
   const allAnswered = answeredCount === questions.length;
-  const isLow = timeLeft <= 60;
+  const isLow = (timeLeft ?? 0) <= 60;
+
+  // ── Start screen ────────────────────────────────────────────────────────────
+  if (phase === "idle" || phase === "starting") {
+    return (
+      <div className="flex flex-col items-center gap-6 py-6 text-center">
+        <div className="rounded-full bg-[#0f323f]/8 p-5">
+          <Timer size={32} className="text-[#135168]" />
+        </div>
+        <div className="space-y-1">
+          <h4 className="text-lg font-bold text-slate-900">Ready to begin?</h4>
+          <p className="text-sm text-slate-500 max-w-sm">
+            You have{" "}
+            <span className="font-semibold text-slate-700">5 minutes</span> to
+            complete the exam. The timer starts the moment you click{" "}
+            <span className="font-semibold text-slate-700">Start Exam</span>.
+          </p>
+        </div>
+        {startError && (
+          <div className="w-full rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+            {startError}
+          </div>
+        )}
+        <button
+          onClick={handleStart}
+          disabled={phase === "starting"}
+          className="inline-flex items-center gap-2 rounded-2xl bg-[#0f323f] px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0f323f]/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#135168] disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {phase === "starting" ? (
+            <>
+              <LoaderCircle size={16} className="animate-spin" />
+              Starting…
+            </>
+          ) : (
+            "Start Exam"
+          )}
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      {/* Timer bar */}
-      <div
-        className={`flex items-center justify-between rounded-2xl px-5 py-3 ${
-          isLow ? "bg-red-50 border border-red-200" : "bg-slate-50 border border-slate-200"
-        }`}
-      >
-        <div className="flex items-center gap-2">
-          <Timer size={16} className={isLow ? "text-red-500" : "text-slate-500"} />
-          <span className={`text-sm font-medium ${isLow ? "text-red-600" : "text-slate-600"}`}>
-            Time remaining
-          </span>
+    <div className="space-y-8">
+      {/* Timer + answered count */}
+      <div className="flex items-center justify-between">
+        <div className={`flex items-center gap-2 rounded-lg px-2.5 py-1 text-sm font-medium ${
+          isLow ? "bg-red-50 text-red-600 border border-red-100" : "bg-slate-100 text-slate-600"
+        }`}>
+          <Timer size={14} className={isLow ? "animate-pulse" : ""} />
+          <span className="tabular-nums">{formatTime(timeLeft)} remaining</span>
         </div>
-        <span
-          className={`text-xl font-bold tabular-nums ${
-            isLow ? "text-red-600" : "text-slate-800"
-          }`}
-        >
-          {formatTime(timeLeft)}
-        </span>
+        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          {answeredCount} of {questions.length} answered
+        </p>
       </div>
 
-      {/* Progress */}
-      <p className="text-sm text-slate-500">
-        {answeredCount} of {questions.length} answered
-      </p>
-
       {/* Questions */}
-      <div className="space-y-8">
+      <div className="space-y-10">
         {questions.map((q, i) => (
-          <div key={i} className="space-y-3">
-            <p className="font-semibold text-slate-900">
-              <span className="text-[#135168] mr-2">Q{i + 1}.</span>
-              {q.question}
-            </p>
-            <div className="grid grid-cols-1 gap-2">
+          <div key={i} className="space-y-4">
+            <div className="flex items-start gap-3">
+              <span className="text-xs font-bold text-[#135168] uppercase tracking-widest shrink-0 mt-0.5">
+                Q{i + 1}.
+              </span>
+              <p className="text-base font-semibold text-slate-900 leading-snug">
+                {q.question}
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-2 ml-0 sm:ml-9">
               {q.options.map((option, oi) => {
                 const label = ["A", "B", "C", "D"][oi];
                 const selected = answers[i] === option;
                 return (
                   <label
                     key={oi}
-                    className={`flex items-start gap-3 rounded-xl border px-4 py-3 cursor-pointer transition-colors duration-150 ${
+                    className={`flex items-center gap-3 rounded-lg border px-4 py-3 cursor-pointer transition-colors duration-150 ${
                       selected
-                        ? "border-[#135168] bg-[#135168]/5"
-                        : "border-slate-200 hover:border-slate-300 bg-white"
+                        ? "border-slate-800 bg-slate-50"
+                        : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 bg-white"
                     }`}
                   >
                     <input
@@ -149,15 +221,26 @@ function McqExam({ submission, roll, onComplete }) {
                       name={`q-${i}`}
                       value={option}
                       checked={selected}
-                      onChange={() =>
-                        setAnswers((prev) => ({ ...prev, [i]: option }))
-                      }
-                      className="mt-0.5 accent-[#135168] shrink-0"
+                      onChange={() => handleAnswer(i, q.question, option)}
+                      className="hidden"
                     />
-                    <span className="text-sm text-slate-800">
-                      <span className="font-semibold mr-1">{label}.</span>
-                      {option}
-                    </span>
+                    
+                    <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all ${
+                      selected 
+                        ? "border-slate-800 bg-slate-800" 
+                        : "border-slate-300"
+                    }`}>
+                      {selected && <div className="h-1.5 w-1.5 rounded-full bg-white" />}
+                    </div>
+                    
+                    <div className="flex-1 text-sm">
+                      <span className={`font-semibold mr-1.5 ${selected ? "text-slate-900" : "text-slate-400"}`}>
+                        {label}.
+                      </span>
+                      <span className={selected ? "font-medium text-slate-900" : "text-slate-700"}>
+                        {option}
+                      </span>
+                    </div>
                   </label>
                 );
               })}
@@ -166,33 +249,37 @@ function McqExam({ submission, roll, onComplete }) {
         ))}
       </div>
 
-      {!allAnswered && (
-        <div className="flex items-center gap-2 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
-          <AlertTriangle size={15} className="shrink-0" />
-          {questions.length - answeredCount} question(s) unanswered. You can still submit.
-        </div>
-      )}
-
-      {submitError && (
-        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-          {submitError}
-        </div>
-      )}
-
-      <button
-        onClick={() => handleSubmit(false)}
-        disabled={isSubmitting}
-        className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0f323f] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0f323f]/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#135168] disabled:cursor-not-allowed disabled:opacity-70"
-      >
-        {isSubmitting ? (
-          <>
-            <LoaderCircle size={16} className="animate-spin" />
-            Submitting...
-          </>
-        ) : (
-          "Submit Exam"
+      <div className="mt-10 space-y-4 border-t border-slate-100 pt-8">
+        {!allAnswered && (
+          <div className="flex items-center gap-2.5 rounded-xl border border-amber-100 bg-amber-50/50 px-4 py-3 text-sm text-amber-700">
+            <AlertTriangle size={16} className="shrink-0" />
+            <p>
+              {questions.length - answeredCount} question(s) remaining.
+            </p>
+          </div>
         )}
-      </button>
+
+        {submitError && (
+          <div className="rounded-xl border border-red-100 bg-red-50/50 px-4 py-3 text-sm text-red-600">
+            {submitError}
+          </div>
+        )}
+
+        <button
+          onClick={() => handleSubmit(false)}
+          disabled={isSubmitting}
+          className="w-full rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {isSubmitting ? (
+            <span className="flex items-center justify-center gap-2">
+              <LoaderCircle size={16} className="animate-spin" />
+              Submitting...
+            </span>
+          ) : (
+            "Submit Exam"
+          )}
+        </button>
+      </div>
     </div>
   );
 }
@@ -200,26 +287,30 @@ function McqExam({ submission, roll, onComplete }) {
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 export default function SSDSubmissions() {
-  const [roll, setRoll] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [roll, setRoll] = useState(searchParams.get("roll") ?? "");
   const [status, setStatus] = useState({ type: "idle", message: "" });
   const [problem, setProblem] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const [imageFile, setImageFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState({ type: "idle", message: "" });
+  const [uploadStatus, setUploadStatus] = useState({
+    type: "idle",
+    message: "",
+  });
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
 
   const [existingSubmission, setExistingSubmission] = useState(null);
+  const scoreRef = useRef(null);
 
-  const fetchProblem = async (e) => {
-    e.preventDefault();
-    const trimmedRoll = roll.trim();
-    if (!trimmedRoll) {
-      setStatus({ type: "error", message: "Please enter your roll number." });
-      return;
+  useEffect(() => {
+    if (existingSubmission?.status === "completed") {
+      setTimeout(() => scoreRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
     }
+  }, [existingSubmission?.status]);
 
+  const doFetch = useCallback(async (trimmedRoll) => {
     setIsLoading(true);
     setStatus({ type: "idle", message: "" });
     setProblem(null);
@@ -233,25 +324,64 @@ export default function SSDSubmissions() {
 
       if (problemRes.status === "rejected") throw problemRes.reason;
 
-      setProblem({ ps: problemRes.value.data.ps, ...problemRes.value.data.problem });
-      setExistingSubmission(
-        submissionRes.status === "fulfilled" ? submissionRes.value.data.submission : false
-      );
+      setProblem({
+        ps: problemRes.value.data.ps,
+        ...problemRes.value.data.problem,
+      });
+      const sub =
+        submissionRes.status === "fulfilled"
+          ? submissionRes.value.data.submission
+          : false;
+
+      // mcqs-attempting + timer already expired → re-fetch so backend auto-completes
+      if (
+        sub &&
+        sub.status === "mcqs-attempting" &&
+        sub.mcqStartedAt + MCQ_DURATION_MS - Date.now() <= 0
+      ) {
+        const { data: refreshed } = await api.get(`/submission/${trimmedRoll}`);
+        setExistingSubmission(refreshed.submission);
+      } else {
+        setExistingSubmission(sub);
+      }
       setStatus({ type: "success", message: "" });
     } catch (error) {
       setStatus({
         type: "error",
-        message: error?.response?.data?.message || "Could not fetch your problem statement. Please try again.",
+        message:
+          error?.response?.data?.message ||
+          "Could not fetch your problem statement. Please try again.",
       });
     } finally {
       setIsLoading(false);
     }
+  }, []);
+
+  // Auto-fetch on mount if roll is in the URL
+  useEffect(() => {
+    const urlRoll = searchParams.get("roll");
+    if (urlRoll) doFetch(urlRoll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchProblem = (e) => {
+    e.preventDefault();
+    const trimmedRoll = roll.trim();
+    if (!trimmedRoll) {
+      setStatus({ type: "error", message: "Please enter your roll number." });
+      return;
+    }
+    setSearchParams({ roll: trimmedRoll }, { replace: true });
+    doFetch(trimmedRoll);
   };
 
   const submitSolution = async (e) => {
     e.preventDefault();
     if (!imageFile) {
-      setUploadStatus({ type: "error", message: "Please select an image to upload." });
+      setUploadStatus({
+        type: "error",
+        message: "Please select an image to upload.",
+      });
       return;
     }
 
@@ -259,10 +389,13 @@ export default function SSDSubmissions() {
     setUploadStatus({ type: "idle", message: "" });
 
     try {
-      const { data: signedData } = await api.post("/submission/get-signed-url", {
-        fileName: imageFile.name,
-        fileType: imageFile.type,
-      });
+      const { data: signedData } = await api.post(
+        "/submission/get-signed-url",
+        {
+          fileName: imageFile.name,
+          fileType: imageFile.type,
+        },
+      );
 
       await axios.put(signedData.signedUrl, imageFile, {
         headers: {
@@ -274,6 +407,7 @@ export default function SSDSubmissions() {
       await api.post("/submission/submit", {
         rollno: roll.trim(),
         imageKey: signedData.imageKey,
+        imageMimeType: imageFile.type,
       });
 
       const { data: subData } = await api.get(`/submission/${roll.trim()}`);
@@ -284,7 +418,8 @@ export default function SSDSubmissions() {
     } catch (error) {
       setUploadStatus({
         type: "error",
-        message: error?.response?.data?.message || "Upload failed. Please try again.",
+        message:
+          error?.response?.data?.message || "Upload failed. Please try again.",
       });
     } finally {
       setIsUploading(false);
@@ -297,7 +432,9 @@ export default function SSDSubmissions() {
       // No submission yet — show upload form
       return (
         <>
-          <h3 className="mb-1 text-2xl font-bold text-slate-900">Upload your solution</h3>
+          <h3 className="mb-1 text-2xl font-bold text-slate-900">
+            Upload your solution
+          </h3>
           <p className="text-slate-500 text-sm mb-6">
             Upload an image of your solution for PS {problem.ps}.
           </p>
@@ -316,8 +453,12 @@ export default function SSDSubmissions() {
                   <p className="font-medium text-slate-800">{imageFile.name}</p>
                 ) : (
                   <>
-                    <p className="font-medium text-slate-700">Click to select an image</p>
-                    <p className="text-xs text-slate-400 mt-1">PNG, JPG, JPEG, WEBP</p>
+                    <p className="font-medium text-slate-700">
+                      Click to select an image
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1">
+                      PNG, JPG, JPEG, WEBP
+                    </p>
                   </>
                 )}
               </div>
@@ -371,9 +512,11 @@ export default function SSDSubmissions() {
             <Clock size={28} className="text-[#135168] animate-pulse" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-slate-900 mb-1">Submission Received</h3>
+            <h3 className="text-xl font-bold text-slate-900 mb-1">
+              Submission Received
+            </h3>
             <p className="text-slate-500 text-sm">
-              Your solution is being reviewed. MCQ questions will appear here once ready.
+              Your solution is being reviewed.
             </p>
           </div>
           <p className="text-xs text-slate-400">
@@ -383,20 +526,25 @@ export default function SSDSubmissions() {
       );
     }
 
-    if (submissionStatus === "mcqs-pending") {
+    if (
+      submissionStatus === "mcqs-pending" ||
+      submissionStatus === "mcqs-attempting"
+    ) {
       return (
         <>
           <div className="mb-6">
             <p className="text-xs font-semibold uppercase tracking-widest text-[#135168] mb-1">
               MCQ Round
             </p>
-            <h3 className="text-2xl font-bold text-slate-900">Answer the questions below</h3>
+            <h3 className="text-2xl font-bold text-slate-900">
+              Answer the questions below
+            </h3>
             <p className="text-slate-500 text-sm mt-1">
-              Based on your submitted solution. The exam is timed — once you start, the clock runs.
+              Based on your submitted solution. The exam is timed — once you
+              start, the clock runs.
             </p>
           </div>
           <McqExam
-            submission={existingSubmission}
             roll={roll.trim()}
             onComplete={(updated) => setExistingSubmission(updated)}
           />
@@ -405,49 +553,137 @@ export default function SSDSubmissions() {
     }
 
     if (submissionStatus === "completed") {
-      return (
-        <>
-          <div className="flex items-center gap-2 mb-6">
-            <CheckCircle2 size={22} className="text-green-600 shrink-0" />
-            <h3 className="text-xl font-bold text-slate-900">Evaluation Complete</h3>
-          </div>
-          <div className="space-y-5">
-            {existingSubmission.score_80 != null && (
-              <div className="flex items-center gap-4 rounded-2xl bg-slate-50 border border-slate-200 px-5 py-4">
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-[#0f323f]">{existingSubmission.score_80}</p>
-                  <p className="text-xs text-slate-500 mt-0.5">/ 80</p>
-                </div>
-                <div className="h-10 w-px bg-slate-200" />
-                <p className="text-sm text-slate-600">Your score</p>
-              </div>
-            )}
+      const questions = existingSubmission.questions ?? [];
+      const totalScore = existingSubmission.totalScore ?? 0;
+      const score80 = existingSubmission.score_80 ?? 0;
+      const mcqScore = existingSubmission.mcqScore ?? 0;
 
-            {existingSubmission.evaluator_feedback && (
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-[#135168] mb-2">
-                  Feedback
+      return (
+        <div className="space-y-8">
+
+          {/* ── Section 1: Total Score ───────────────────────────────────── */}
+          <div ref={scoreRef} className="rounded-2xl bg-gradient-to-br from-[#0f323f] to-[#1d816f] p-6 text-white">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/60 mb-1">
+              Total Score
+            </p>
+            <div className="flex items-end gap-2">
+              <span className="text-5xl font-bold tabular-nums">{totalScore}</span>
+              <span className="text-xl text-white/50 mb-1">/ 100</span>
+            </div>
+          </div>
+
+          {/* ── Section 2: Section-wise Breakdown ───────────────────────── */}
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
+              Section Breakdown
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-xl border border-slate-200 bg-white px-4 py-4">
+                <p className="text-xs text-slate-500 mb-1">Design</p>
+                <p className="text-2xl font-bold text-slate-900 tabular-nums">
+                  {score80}
+                  <span className="text-sm font-normal text-slate-400"> / 80</span>
                 </p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white px-4 py-4">
+                <p className="text-xs text-slate-500 mb-1">MCQ</p>
+                <p className="text-2xl font-bold text-slate-900 tabular-nums">
+                  {mcqScore}
+                  <span className="text-sm font-normal text-slate-400"> / 20</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Section 3: Architecture Feedback ────────────────────────── */}
+          {existingSubmission.evaluator_feedback && (
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
+                Architecture Feedback
+              </p>
+              <div className="rounded-xl border border-slate-200 bg-white px-5 py-4">
                 <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
                   {existingSubmission.evaluator_feedback}
                 </p>
               </div>
-            )}
+            </div>
+          )}
 
-            {existingSubmission.edge_cases?.length > 0 && (
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-[#135168] mb-2">
-                  Edge Cases to Consider
-                </p>
-                <ul className="list-disc pl-5 space-y-1">
-                  {existingSubmission.edge_cases.map((ec, i) => (
-                    <li key={i} className="text-sm text-slate-700">{ec}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+          {/* ── Section 4: MCQ Review ────────────────────────────────────── */}
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
+              MCQ Review
+            </p>
+            <div className="space-y-4">
+              {questions.map((q, i) => {
+                const isCorrect = q.selected === q.correct_answer;
+                return (
+                  <div
+                    key={i}
+                    className="rounded-xl border border-slate-100 bg-white p-5 space-y-4"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="space-y-0.5">
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                          Q{i + 1}
+                        </p>
+                        <p className="font-semibold text-slate-900 text-sm leading-relaxed">
+                          {q.question}
+                        </p>
+                      </div>
+                      {isCorrect ? (
+                        <CheckCircle2 size={18} className="text-green-500 shrink-0 mt-0.5" />
+                      ) : (
+                        <XCircle size={18} className="text-red-400 shrink-0 mt-0.5" />
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                          Your Answer
+                        </span>
+                        <div
+                          className={`rounded-lg border p-2.5 text-sm font-medium ${
+                            isCorrect
+                              ? "border-green-100 bg-green-50/40 text-green-800"
+                              : "border-red-100 bg-red-50/40 text-red-800"
+                          }`}
+                        >
+                          {q.selected || (
+                            <span className="italic opacity-50">Not answered</span>
+                          )}
+                        </div>
+                      </div>
+                      {!isCorrect && (
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                            Correct Answer
+                          </span>
+                          <div className="rounded-lg border border-green-100 bg-green-50/40 p-2.5 text-sm font-medium text-green-800">
+                            {q.correct_answer}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {q.explanation && (
+                      <div className="rounded-lg bg-slate-50 border border-slate-100 px-4 py-3">
+                        <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                          Explanation
+                        </span>
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                          {q.explanation}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </>
+
+        </div>
       );
     }
 
@@ -466,7 +702,10 @@ export default function SSDSubmissions() {
               Problems & Submissions
             </h1>
           </div>
-          <Link to="/events/SSD" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+          <Link
+            to="/events/SSD"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
             <ArrowLeft size={24} className="text-gray-700" />
           </Link>
         </div>
@@ -480,10 +719,14 @@ export default function SSDSubmissions() {
         >
           <div className="rounded-[calc(1.5rem-1px)] bg-white/95 p-6 backdrop-blur md:p-8">
             <p className="text-slate-600 mb-6">
-              Enter your roll number to view the problem statement assigned to you.
+              Enter your roll number to view the problem statement assigned to
+              you.
             </p>
 
-            <form onSubmit={fetchProblem} className="flex flex-col gap-3 sm:flex-row sm:items-start">
+            <form
+              onSubmit={fetchProblem}
+              className="flex flex-col gap-3 sm:flex-row sm:items-start"
+            >
               <input
                 type="text"
                 value={roll}
@@ -502,10 +745,7 @@ export default function SSDSubmissions() {
                     Fetching...
                   </>
                 ) : (
-                  <>
-                    <FileText size={16} />
-                    Get Problem
-                  </>
+                  <>Submit</>
                 )}
               </button>
             </form>
@@ -529,15 +769,22 @@ export default function SSDSubmissions() {
                     <p className="text-xs font-semibold uppercase tracking-widest text-[#135168] mb-1">
                       PS {problem.ps}
                     </p>
-                    <h4 className="text-xl font-bold text-slate-900">{problem.title}</h4>
+                    <h4 className="text-xl font-bold text-slate-900">
+                      {problem.title}
+                    </h4>
                   </div>
 
                   {problem.content?.map((section, i) => (
                     <div key={i}>
-                      <h5 className="mb-2 font-semibold text-slate-800">{section.section}</h5>
+                      <h5 className="mb-2 font-semibold text-slate-800">
+                        {section.section}
+                      </h5>
                       <ul className="list-disc pl-5 space-y-1">
                         {section.points.map((point, j) => (
-                          <li key={j} className="text-slate-700 text-sm leading-relaxed">
+                          <li
+                            key={j}
+                            className="text-slate-700 text-sm leading-relaxed"
+                          >
                             {point}
                           </li>
                         ))}
