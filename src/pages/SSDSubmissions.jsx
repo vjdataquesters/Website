@@ -179,9 +179,13 @@ function McqExam({ roll, onComplete }) {
     <div className="space-y-8">
       {/* Timer + answered count */}
       <div className="flex items-center justify-between">
-        <div className={`flex items-center gap-2 rounded-lg px-2.5 py-1 text-sm font-medium ${
-          isLow ? "bg-red-50 text-red-600 border border-red-100" : "bg-slate-100 text-slate-600"
-        }`}>
+        <div
+          className={`flex items-center gap-2 rounded-lg px-2.5 py-1 text-sm font-medium ${
+            isLow
+              ? "bg-red-50 text-red-600 border border-red-100"
+              : "bg-slate-100 text-slate-600"
+          }`}
+        >
           <Timer size={14} className={isLow ? "animate-pulse" : ""} />
           <span className="tabular-nums">{formatTime(timeLeft)} remaining</span>
         </div>
@@ -202,7 +206,7 @@ function McqExam({ roll, onComplete }) {
                 {q.question}
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 gap-2 ml-0 sm:ml-9">
               {q.options.map((option, oi) => {
                 const label = ["A", "B", "C", "D"][oi];
@@ -224,20 +228,32 @@ function McqExam({ roll, onComplete }) {
                       onChange={() => handleAnswer(i, q.question, option)}
                       className="hidden"
                     />
-                    
-                    <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all ${
-                      selected 
-                        ? "border-slate-800 bg-slate-800" 
-                        : "border-slate-300"
-                    }`}>
-                      {selected && <div className="h-1.5 w-1.5 rounded-full bg-white" />}
+
+                    <div
+                      className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all ${
+                        selected
+                          ? "border-slate-800 bg-slate-800"
+                          : "border-slate-300"
+                      }`}
+                    >
+                      {selected && (
+                        <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                      )}
                     </div>
-                    
+
                     <div className="flex-1 text-sm">
-                      <span className={`font-semibold mr-1.5 ${selected ? "text-slate-900" : "text-slate-400"}`}>
+                      <span
+                        className={`font-semibold mr-1.5 ${selected ? "text-slate-900" : "text-slate-400"}`}
+                      >
                         {label}.
                       </span>
-                      <span className={selected ? "font-medium text-slate-900" : "text-slate-700"}>
+                      <span
+                        className={
+                          selected
+                            ? "font-medium text-slate-900"
+                            : "text-slate-700"
+                        }
+                      >
                         {option}
                       </span>
                     </div>
@@ -253,9 +269,7 @@ function McqExam({ roll, onComplete }) {
         {!allAnswered && (
           <div className="flex items-center gap-2.5 rounded-xl border border-amber-100 bg-amber-50/50 px-4 py-3 text-sm text-amber-700">
             <AlertTriangle size={16} className="shrink-0" />
-            <p>
-              {questions.length - answeredCount} question(s) remaining.
-            </p>
+            <p>{questions.length - answeredCount} question(s) remaining.</p>
           </div>
         )}
 
@@ -299,6 +313,7 @@ export default function SSDSubmissions() {
     message: "",
   });
   const [isUploading, setIsUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
 
   const [existingSubmission, setExistingSubmission] = useState(null);
@@ -308,7 +323,8 @@ export default function SSDSubmissions() {
     if (existingSubmission?.status === "completed") {
       setTimeout(() => {
         if (!scoreRef.current) return;
-        const top = scoreRef.current.getBoundingClientRect().top + window.scrollY - 100;
+        const top =
+          scoreRef.current.getBoundingClientRect().top + window.scrollY - 100;
         window.scrollTo({ top, behavior: "smooth" });
       }, 100);
     }
@@ -445,10 +461,26 @@ export default function SSDSubmissions() {
           <form onSubmit={submitSolution} className="flex flex-col gap-4">
             <label
               htmlFor="solution-image"
+              onDragOver={(e) => {
+                e.preventDefault();
+                setIsDragging(true);
+              }}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={(e) => {
+                e.preventDefault();
+                setIsDragging(false);
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith("image/")) {
+                  setImageFile(file);
+                  setUploadStatus({ type: "idle", message: "" });
+                }
+              }}
               className={`flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed px-6 py-10 cursor-pointer transition-colors duration-200 ${
-                imageFile
-                  ? "border-[#1d816f] bg-[#1d816f]/5"
-                  : "border-slate-200 hover:border-[#135168] bg-slate-50"
+                isDragging
+                  ? "border-[#135168] bg-[#135168]/10"
+                  : imageFile
+                    ? "border-[#1d816f] bg-[#1d816f]/5"
+                    : "border-slate-200 hover:border-[#135168] bg-slate-50"
               }`}
             >
               <ImageIcon size={32} className="text-slate-400" />
@@ -458,7 +490,7 @@ export default function SSDSubmissions() {
                 ) : (
                   <>
                     <p className="font-medium text-slate-700">
-                      Click to select an image
+                      Click or drag & drop an image
                     </p>
                     <p className="text-xs text-slate-400 mt-1">
                       PNG, JPG, JPEG, WEBP
@@ -606,14 +638,18 @@ export default function SSDSubmissions() {
 
       return (
         <div className="space-y-8">
-
           {/* ── Section 1: Total Score ───────────────────────────────────── */}
-          <div ref={scoreRef} className="rounded-2xl bg-gradient-to-br from-[#0f323f] to-[#1d816f] p-6 text-white">
+          <div
+            ref={scoreRef}
+            className="rounded-2xl bg-gradient-to-br from-[#0f323f] to-[#1d816f] p-6 text-white"
+          >
             <p className="text-xs font-semibold uppercase tracking-widest text-white/60 mb-1">
               Total Score
             </p>
             <div className="flex items-end gap-2">
-              <span className="text-5xl font-bold tabular-nums">{totalScore}</span>
+              <span className="text-5xl font-bold tabular-nums">
+                {totalScore}
+              </span>
               <span className="text-xl text-white/50 mb-1">/ 100</span>
             </div>
           </div>
@@ -628,14 +664,20 @@ export default function SSDSubmissions() {
                 <p className="text-xs text-slate-500 mb-1">Design</p>
                 <p className="text-2xl font-bold text-slate-900 tabular-nums">
                   {score80}
-                  <span className="text-sm font-normal text-slate-400"> / 80</span>
+                  <span className="text-sm font-normal text-slate-400">
+                    {" "}
+                    / 80
+                  </span>
                 </p>
               </div>
               <div className="rounded-xl border border-slate-200 bg-white px-4 py-4">
                 <p className="text-xs text-slate-500 mb-1">MCQ</p>
                 <p className="text-2xl font-bold text-slate-900 tabular-nums">
                   {mcqScore}
-                  <span className="text-sm font-normal text-slate-400"> / 20</span>
+                  <span className="text-sm font-normal text-slate-400">
+                    {" "}
+                    / 20
+                  </span>
                 </p>
               </div>
             </div>
@@ -678,9 +720,15 @@ export default function SSDSubmissions() {
                         </p>
                       </div>
                       {isCorrect ? (
-                        <CheckCircle2 size={18} className="text-green-500 shrink-0 mt-0.5" />
+                        <CheckCircle2
+                          size={18}
+                          className="text-green-500 shrink-0 mt-0.5"
+                        />
                       ) : (
-                        <XCircle size={18} className="text-red-400 shrink-0 mt-0.5" />
+                        <XCircle
+                          size={18}
+                          className="text-red-400 shrink-0 mt-0.5"
+                        />
                       )}
                     </div>
 
@@ -697,7 +745,9 @@ export default function SSDSubmissions() {
                           }`}
                         >
                           {q.selected || (
-                            <span className="italic opacity-50">Not answered</span>
+                            <span className="italic opacity-50">
+                              Not answered
+                            </span>
                           )}
                         </div>
                       </div>
@@ -728,7 +778,6 @@ export default function SSDSubmissions() {
               })}
             </div>
           </div>
-
         </div>
       );
     }
