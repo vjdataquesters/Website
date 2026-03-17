@@ -71,7 +71,7 @@ export default function Events() {
   const recentYear = Object.keys(events.past)[0];
   const [pastevents, setPastevents] = useState(events.past[recentYear]);
   const [year, setyear] = useState(recentYear.slice(1));
-  
+
   const [searchParams, setSearchParams] = useSearchParams();
   const pastEventsYear = searchParams.get("pastEventsYear");
 
@@ -123,21 +123,25 @@ export default function Events() {
             )}
           </div>
 
-          {pastevents.filter((e) => e.sessionSubmissions).map((e) => (
-            <Link
-              key={e.eventId}
-              to={`/events/${e.eventId}/submissions`}
-              className="flex items-center justify-between rounded-2xl border border-[#135168]/20 bg-gradient-to-r from-[#0f323f] to-[#135168] mb-4 px-6 py-4 text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
-            >
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-0.5">
-                  {e.name}
-                </p>
-                <p className="text-lg font-bold">View your Problem Statement</p>
-              </div>
-              <span className="text-2xl">→</span>
-            </Link>
-          ))}
+          {pastevents
+            .filter((e) => e.sessionSubmissions)
+            .map((e) => (
+              <Link
+                key={e.eventId}
+                to={`/events/${e.eventId}/submissions`}
+                className="flex items-center justify-between rounded-2xl border border-[#135168]/20 bg-gradient-to-r from-[#123e4fd3] to-[#135168] mb-4 px-6 py-4 text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-0.5">
+                    {e.name}
+                  </p>
+                  <p className="text-lg font-bold">
+                    View your Problem Statement
+                  </p>
+                </div>
+                <span className="text-2xl">→</span>
+              </Link>
+            ))}
 
           <div className="flex flex-col flex-wrap gap-5">
             <h2 className="text-4xl text-center font-bold">Our Events</h2>

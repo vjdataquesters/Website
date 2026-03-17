@@ -149,7 +149,7 @@ function McqExam({ roll, onComplete }) {
             You have{" "}
             <span className="font-semibold text-slate-700">5 minutes</span> to
             complete the exam. The timer starts the moment you click{" "}
-            <span className="font-semibold text-slate-700">Start Exam</span>.
+            <span className="font-semibold text-slate-700">start</span>.
           </p>
         </div>
         {startError && (
@@ -509,6 +509,27 @@ export default function SSDSubmissions() {
 
     const { status: submissionStatus } = existingSubmission;
 
+    if (submissionStatus === "processing") {
+      return (
+        <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
+          <div className="rounded-full bg-[#0f323f]/8 p-4">
+            <Clock size={28} className="text-[#135168] animate-pulse" />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-slate-900 mb-1">
+              Processing Your Submission
+            </h3>
+            <p className="text-slate-500 text-sm">
+              Your solution is being evaluated. This may take a moment.
+            </p>
+          </div>
+          <p className="text-xs text-slate-400">
+            Submitted {new Date(existingSubmission.updatedAt).toLocaleString()}
+          </p>
+        </div>
+      );
+    }
+
     if (submissionStatus === "pending") {
       return (
         <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
@@ -553,6 +574,27 @@ export default function SSDSubmissions() {
             onComplete={(updated) => setExistingSubmission(updated)}
           />
         </>
+      );
+    }
+
+    if (submissionStatus === "test-submitted") {
+      return (
+        <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
+          <div className="rounded-full bg-[#0f323f]/8 p-4">
+            <CheckCircle2 size={28} className="text-[#1d816f]" />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-slate-900 mb-1">
+              MCQ Submitted
+            </h3>
+            <p className="text-slate-500 text-sm">
+              Your answers have been recorded. Results will be revealed soon.
+            </p>
+          </div>
+          <p className="text-xs text-slate-400">
+            Submitted {new Date(existingSubmission.updatedAt).toLocaleString()}
+          </p>
+        </div>
       );
     }
 
