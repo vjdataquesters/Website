@@ -632,73 +632,11 @@ export default function SSDSubmissions() {
 
     if (submissionStatus === "completed") {
       const questions = existingSubmission.questions ?? [];
-      const totalScore = existingSubmission.totalScore ?? 0;
-      const score80 = existingSubmission.score_80 ?? 0;
-      const mcqScore = existingSubmission.mcqScore ?? 0;
 
       return (
         <div className="space-y-8">
-          {/* ── Section 1: Total Score ───────────────────────────────────── */}
-          <div
-            ref={scoreRef}
-            className="rounded-2xl bg-gradient-to-br from-[#0f323f] to-[#1d816f] p-6 text-white"
-          >
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/60 mb-1">
-              Total Score
-            </p>
-            <div className="flex items-end gap-2">
-              <span className="text-5xl font-bold tabular-nums">
-                {totalScore}
-              </span>
-              <span className="text-xl text-white/50 mb-1">/ 100</span>
-            </div>
-          </div>
-
-          {/* ── Section 2: Section-wise Breakdown ───────────────────────── */}
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
-              Section Breakdown
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-xl border border-slate-200 bg-white px-4 py-4">
-                <p className="text-xs text-slate-500 mb-1">Design</p>
-                <p className="text-2xl font-bold text-slate-900 tabular-nums">
-                  {score80}
-                  <span className="text-sm font-normal text-slate-400">
-                    {" "}
-                    / 80
-                  </span>
-                </p>
-              </div>
-              <div className="rounded-xl border border-slate-200 bg-white px-4 py-4">
-                <p className="text-xs text-slate-500 mb-1">MCQ</p>
-                <p className="text-2xl font-bold text-slate-900 tabular-nums">
-                  {mcqScore}
-                  <span className="text-sm font-normal text-slate-400">
-                    {" "}
-                    / 20
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Section 3: Architecture Feedback ────────────────────────── */}
-          {existingSubmission.evaluator_feedback && (
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
-                Architecture Feedback
-              </p>
-              <div className="rounded-xl border border-slate-200 bg-white px-5 py-4">
-                <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
-                  {existingSubmission.evaluator_feedback}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* ── Section 4: MCQ Review ────────────────────────────────────── */}
-          <div>
+          {/* ── MCQ Review ────────────────────────────────────────────────── */}
+          <div ref={scoreRef}>
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
               MCQ Review
             </p>
