@@ -46,8 +46,12 @@ const events = {
         date: "March 16th & 17th 2026",
         venue: "E-Block,Seminar Hall,E-436,VNRVJIET",
         timings: "10:00 AM to 4:40 PM",
-        pics: ["/events/2026/SummerSystemDesign/img1.png"],
+        pics: ["/events/2026/SummerSystemDesign/img1.png","/events/2026/SummerSystemDesign/img2.png","/events/2026/SummerSystemDesign/img3.png","/events/2026/SummerSystemDesign/img4.png"],
         // register: "/register/ssd",
+        winners:
+          "<b>1st Place</b><br>M.V.S.Nithwik (24071A66H9, AIML)<br><br><b>2nd Place</b><br>Rishank Reddy Nagarthi (25075A1212, IT)<br><br><b>3rd Place</b><br>Gireesha (24071A05J5, CSE)<br><br><b>4th Place</b><br>Harshith Annavarapu (24071A67E2, CSE-DS)<br><br><b>5th Place</b><br>Bhashyan Kumar Ramisetti (23071A05B8, CSE)",
+        outcome:
+          "Participants developed a strong foundation in system design by exploring core concepts like scalability and reliability. Through an engaging hands-on competition, they learned how real-world applications such as Instagram, Uber, and Netflix are built. The workshop enhanced their problem-solving skills, empowering them to confidently design, implement, and explain complex scalable systems.",
         isGFormEmbeddable: false,
         event_tags: ["Workshop", "System Design"],
         description:
