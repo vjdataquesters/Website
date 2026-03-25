@@ -1,9 +1,9 @@
 export const faculty = [
   {
-    name: "Dr. T. Sunil Kumar",
+    name: "Dr. G. Ramesh Chandra ",
     role: "Head Of Department",
-    image: "hod.png",
-    linkedin: "https://www.linkedin.com/in/sunil-kumar-517a8715/",
+    image: "temp.png",
+    linkedin: "https://www.linkedin.com/in/dr-gollapudi-ramesh-chandra-77753137/",
     bio: "As the Head of the Department, I take immense pride in guiding our students towards academic excellence and innovation. Our department fosters a culture of curiosity, collaboration, and continuous learning. I believe in empowering students to take initiative, lead with responsibility, and explore their potential beyond textbooks. Through clubs and technical forums, we aim to bridge the gap between classroom knowledge and real-world application. It’s truly rewarding to see students thrive through teamwork and creativity. I am committed to supporting every initiative that enhances their learning journey and prepares them to become future-ready professionals.",
   },
   {
