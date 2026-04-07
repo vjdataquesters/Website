@@ -7,13 +7,15 @@ import Event from "../components/Event";
 import Technovista from "../components/Technovista";
 import NewsLetter from "./NewsLetter";
 import Gallery from "./Gallery";
-import RegistrationForm from "./RegistrationForm";
-import Carousel3D from "../components/TechnoVistaComponents/Carousel";
+// import RegistrationForm from "./RegistrationForm";
+// import Carousel3D from "../components/TechnoVistaComponents/Carousel";
 import Credentials from "./Credentials";
-import Hit from "./Hit";
-import GenerateAllQrs from "./GenerateAllQrs";
+// import Hit from "./Hit";
+// import GenerateAllQrs from "./GenerateAllQrs";
 import Members from "./Members";
 import SSDRegistration from "./SSDRegistration";
+import SSDSubmissions from "./SSDSubmissions";
+import farewell2K26Routes from "./farewell-2k26/routes";
 
 const router = [
   { path: "/", component: Home },
@@ -21,6 +23,7 @@ const router = [
   { path: "/testimonials", component: Testimonials },
   { path: "/events", component: Events },
   { path: "/events/tv24", component: Technovista },
+  { path: "/events/SSD/submissions", component: SSDSubmissions },
   { path: "/events/:eventname", component: Event },
   { path: "/team", component: Team },
   { path: "/members", component: Members },
@@ -28,6 +31,7 @@ const router = [
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
   { path: "/register/ssd", component: SSDRegistration },
+  ...farewell2K26Routes,
   // { path: "/register", component: RegistrationForm }, 
   // { path: "/hit", component: Hit },
   // { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },

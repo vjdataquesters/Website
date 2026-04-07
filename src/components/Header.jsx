@@ -153,7 +153,7 @@ const Header = () => {
             </Link>
           </li>
 
-          <li
+          {/* <li
             className="mx-6 py-5 px-2 border-b border-white/50 w-full
             md:py-0 md:px-0 md:border-0 md:w-auto"
           >
@@ -162,7 +162,7 @@ const Header = () => {
                 Members
               </p>
             </Link>
-          </li>
+          </li> */}
           <li
             className="mx-6 py-5 px-2 border-b border-white/50 w-full
             md:py-0 md:px-0 md:border-0 md:w-auto"

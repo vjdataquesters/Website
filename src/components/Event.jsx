@@ -1,14 +1,15 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { SquareArrowUpRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import events from "../data/events.js";
+import EventSessionQuery from "./EventSessionQuery";
+import EventSubmissions from "./EventSubmissions";
 
 export default function Event() {
   function handleRegister(url) {
@@ -32,6 +33,7 @@ export default function Event() {
   };
 
   const event = findEvent();
+  const navigate = useNavigate();
 
   if (!event) {
     return (
@@ -46,7 +48,7 @@ export default function Event() {
       </div>
     );
   }
-  const navigate = useNavigate();
+
   return (
     <div className="pt-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -61,7 +63,7 @@ export default function Event() {
             <ArrowLeft size={24} className="text-gray-700" />
           </Link>
         </div>
-        <div className="rounded-2xl p-4 shadow-sm space-y-4 flex flex-col">
+        <div className="rounded-2xl p-4 shadow-sm space-y-4 flex flex-col pb-6">
           <div className="grid gap-2 sm:grid-cols-3 sm:gap-4">
             <div className="p-4 rounded-xl bg-[#dadce176]">
               <p className="text-lg font-semibold  mb-1">Date</p>
@@ -93,6 +95,10 @@ export default function Event() {
           )}
         </div>
 
+        {event.sessionQuery && <EventSessionQuery eventname={eventname} />}
+
+        {event.sessionSubmissions && <EventSubmissions />}
+
         {event.pics?.length > 0 && (
           <div className="my-8 relative">
             <Swiper
@@ -106,10 +112,10 @@ export default function Event() {
                 disableOnInteraction: false,
               }}
               navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
+                nextEl: ".event-swiper-button-next",
+                prevEl: ".event-swiper-button-prev",
               }}
-              className="w-full md:h-[42rem] mx-auto rounded-lg overflow-hidden py-8 flex justify-center"
+              className="event-swiper w-full md:h-[42rem] mx-auto rounded-lg overflow-hidden py-8 flex justify-center"
             >
               {event.pics.map((pic, index) => (
                 <SwiperSlide key={index}>
@@ -124,8 +130,8 @@ export default function Event() {
             </Swiper>
             {event.pics?.length > 1 && (
               <>
-                <div className="swiper-button-next hidden md:flex text-black bg-white shadow-md hover:shadow-black transition-all duration-300 rounded-full w-10 h-10 right-4"></div>
-                <div className="swiper-button-prev hidden md:flex text-black bg-white shadow-md hover:shadow-black transition-all duration-300 rounded-full w-10 h-10 left-4"></div>
+                <div className="event-swiper-button-next swiper-button-next hidden md:flex text-black bg-white shadow-md hover:shadow-black transition-all duration-300 rounded-full right-4"></div>
+                <div className="event-swiper-button-prev swiper-button-prev hidden md:flex text-black bg-white shadow-md hover:shadow-black transition-all duration-300 rounded-full left-4"></div>
               </>
             )}
           </div>
@@ -224,7 +230,7 @@ export default function Event() {
                       Download Now
                     </button>
                   </div>
-                )
+                ),
               )}
             </div>
           </div>
