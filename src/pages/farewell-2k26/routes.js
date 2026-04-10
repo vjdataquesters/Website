@@ -27,7 +27,7 @@ import PraneeshFarewell from "./praneesh";
 
 const farewell2K26Routes = [
 	{ path: "/farewell-2k26", component: Farewell2K26Group },
-	{ path: "/farewell-2k26/anish", component: AnishFarewell },
+	// { path: "/farewell-2k26/anish", component: AnishFarewell },
 	{ path: "/farewell-2k26/avinash", component: AvinashFarewell },
 	{ path: "/farewell-2k26/vardhan", component: VardhanFarewell },
 	{ path: "/farewell-2k26/vaishnavi", component: VaishnaviFarewell },

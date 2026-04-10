@@ -1,0 +1,901 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital@0;1&display=swap");
+
+/* ===================== DESIGN SYSTEM ===================== */
+:root {
+  --bg: #0b2a30;
+  --bg-card: #0f3540;
+  --teal: #2dd4bf;
+  --teal-glow: rgba(45, 212, 191, 0.18);
+  --purple: #a855f7;
+  --white: #f0fdfc;
+  --muted: #7fb3ae;
+  --grid: rgba(45, 212, 191, 0.05);
+}
+
+/* ===================== GLOBAL RESET ===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--teal);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===================== CUSTOM CURSOR (DESKTOP ONLY) ===================== */
+.cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid rgba(45, 212, 191, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+@media (pointer: fine) {
+  .cursor-dot,
+  .cursor-ring {
+    display: block;
+  }
+  body {
+    cursor: none;
+  }
+}
+
+/* ===================== INTRO CANVAS ===================== */
+.farewell-root {
+  position: relative;
+  width: 100%;
+  background: var(--bg);
+}
+
+.intro-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg);
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Grid texture in intro */
+.intro-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 10;
+}
+
+/* Film grain on intro */
+.intro-canvas::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 10;
+  mix-blend-mode: overlay;
+}
+
+/* ===================== MEMORY PHOTOS ===================== */
+.intro-photo {
+  position: absolute;
+  background: white;
+  border: 5px solid white;
+  border-radius: 3px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 10px rgba(45, 212, 191, 0.2);
+  filter: sepia(0.2) brightness(0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.intro-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===================== INTRO TEXT (CENTER) ===================== */
+.intro-word-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+}
+
+.intro-word {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(60px, 10vw, 120px);
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* ===================== NAME DISPLAY (HERO STATE) ===================== */
+.intro-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 25;
+  opacity: 0;
+  pointer-events: none;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(80px, 13vw, 150px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+  text-shadow: 0 0 60px rgba(45, 212, 191, 0.6);
+  line-height: 1.1;
+  word-spacing: 100vw;
+}
+
+.intro-name-char {
+  display: inline-block;
+}
+
+.intro-subtitle-line {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 1px;
+  background: var(--teal);
+  opacity: 0;
+  z-index: 25;
+}
+
+.intro-subtitle {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Inter", sans-serif;
+  font-size: clamp(10px, 1.5vw, 14px);
+  font-weight: 600;
+  letter-spacing: 8px;
+  color: var(--muted);
+  text-transform: uppercase;
+  opacity: 0;
+  z-index: 25;
+  white-space: nowrap;
+}
+
+.intro-scroll-hint {
+  position: absolute;
+  bottom: clamp(20px, 5vh, 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(10px, 1.2vw, 14px);
+  color: var(--muted);
+  opacity: 0;
+  z-index: 25;
+  text-align: center;
+}
+
+/* ===================== SCROLLABLE SECTIONS ===================== */
+.section-story {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
+  background: var(--bg-card);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.story-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(40px, 8vw, 80px);
+  max-width: 900px;
+  width: 100%;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+}
+
+@media (min-width: 768px) {
+  .story-container {
+    grid-template-columns: clamp(260px, 35vw, 400px) 1fr;
+  }
+}
+
+.story-photo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.story-photo-clip {
+  position: relative;
+  width: 100%;
+  max-width: clamp(260px, 40vw, 400px);
+  aspect-ratio: 3 / 4;
+}
+
+.story-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(45, 212, 191, 0.12);
+}
+
+.story-photo-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  border-radius: 8px;
+  font-size: 80px;
+  font-weight: 900;
+  color: rgba(45, 212, 191, 0.2);
+}
+
+.story-photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(16px, 3vw, 24px);
+  background: linear-gradient(to top, rgba(11, 42, 48, 0.95), transparent);
+  backdrop-filter: blur(8px);
+}
+
+.story-name {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(26px, 5vw, 50px);
+  font-weight: 700;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.story-role {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(10px, 1.5vw, 14px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--muted);
+}
+
+.story-quote-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quote-mark-left {
+  font-family: "Playfair Display", serif;
+  font-size: 120px;
+  color: var(--purple);
+  opacity: 0.2;
+  line-height: 0.5;
+  margin-bottom: -20px;
+}
+
+.story-quote {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(17px, 2.5vw, 26px);
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.8;
+  max-width: 560px;
+}
+
+.particle-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(45, 212, 191, 0.3);
+  border-radius: 50%;
+  animation: particle-drift 20s linear infinite;
+}
+
+@keyframes particle-drift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100px);
+    opacity: 0;
+  }
+}
+
+/* ===================== SECTION 2: WHATSAPP CHAT ===================== */
+.section-chat {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
+  background: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.chat-window {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-card);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+}
+
+.chat-header {
+  padding: clamp(12px, 2vw, 16px);
+  background: var(--bg-card);
+  border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 16px);
+}
+
+.chat-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  position: relative;
+}
+
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9b59b6, #2dd4bf);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.chat-title {
+  font-size: clamp(13px, 1.8vw, 16px);
+  font-weight: 600;
+  color: var(--white);
+}
+
+.chat-subtitle {
+  font-size: clamp(11px, 1.5vw, 13px);
+  color: var(--muted);
+  margin: 2px 0 0 0;
+}
+
+.chat-status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #4ade80;
+  margin-left: auto;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: clamp(16px, 3vw, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 32px);
+}
+
+.chat-typing-bubble {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+  background: var(--bg);
+  border: 1px solid rgba(45, 212, 191, 0.12);
+  border-radius: 0 18px 18px 18px;
+  padding: 12px 16px;
+  width: 60px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: bounce 1.2s infinite;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px);
+  }
+}
+
+.chat-message-bubble {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.bubble {
+  background: var(--bg);
+  border: 1px solid rgba(45, 212, 191, 0.15);
+  border-radius: 0 18px 18px 18px;
+  padding: clamp(10px, 1.5vw, 14px);
+  max-width: 78%;
+  color: var(--white);
+  font-size: clamp(13px, 1.8vw, 15px);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.sender-name {
+  font-size: clamp(11px, 1.5vw, 12px);
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: 2px;
+}
+
+.message-text {
+  word-wrap: break-word;
+}
+
+.message-time {
+  font-size: clamp(10px, 1.3vw, 11px);
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.message-ticks {
+  font-size: clamp(10px, 1.3vw, 11px);
+  color: var(--teal);
+  text-align: right;
+  margin-top: 2px;
+}
+
+.chat-system-message {
+  text-align: center;
+  padding: clamp(12px, 2vw, 16px);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: clamp(16px, 3vw, 24px);
+}
+
+.system-lock {
+  font-size: clamp(14px, 2vw, 18px);
+}
+
+.chat-system-message p {
+  font-size: clamp(11px, 1.5vw, 12px);
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ===================== SECTION 3: CLUB MEMORIES ===================== */
+.section-memories {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
+  background: var(--bg-card);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 8vw, 60px);
+  z-index: 10;
+}
+
+.memories-header {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.memories-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(32px, 5.5vw, 52px);
+  font-weight: 800;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 16px;
+}
+
+.memories-heading-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--teal);
+  transform-origin: left center;
+  width: 100%;
+}
+
+.memories-filmstrip {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: clamp(12px, 2vw, 20px);
+  padding: 20px 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.memories-filmstrip::-webkit-scrollbar {
+  height: 0px;
+  display: none;
+}
+
+.filmstrip-item {
+  flex: 0 0 clamp(200px, 35vw, 300px);
+  height: 260px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: all 0.3s ease;
+}
+
+.filmstrip-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.filmstrip-item:hover img {
+  scale: 1.04;
+  filter: saturate(1.3) brightness(1.08);
+}
+
+.filmstrip-item:hover {
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
+}
+
+.filmstrip-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(16px, 3vw, 24px);
+  background: linear-gradient(to top, rgba(11, 42, 48, 0.95), transparent);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filmstrip-item:hover .filmstrip-overlay {
+  opacity: 1;
+}
+
+.filmstrip-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(12px, 2vw, 16px);
+  font-weight: 700;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.filmstrip-caption {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(10px, 1.5vw, 13px);
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.memories-dots {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .memories-dots {
+    display: flex;
+  }
+}
+
+.memory-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(45, 212, 191, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.memory-dot:hover {
+  background: var(--teal);
+  transform: scale(1.2);
+}
+
+/* ===================== LIGHTBOX ===================== */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 42, 48, 0.96);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s ease;
+}
+
+.lightbox-content {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  max-width: 1000px;
+  max-height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: clamp(16px, 3vw, 32px);
+  right: clamp(16px, 3vw, 32px);
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid var(--teal);
+  color: var(--teal);
+  font-size: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 9001;
+}
+
+.lightbox-close:hover {
+  background: rgba(45, 212, 191, 0.1);
+  transform: rotate(90deg);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  background: rgba(45, 212, 191, 0.1);
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  color: var(--teal);
+  font-size: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 9001;
+  transform: translateY(-50%);
+}
+
+.lightbox-nav:hover {
+  background: rgba(45, 212, 191, 0.2);
+}
+
+.lightbox-prev {
+  left: clamp(12px, 3vw, 24px);
+}
+
+.lightbox-next {
+  right: clamp(12px, 3vw, 24px);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 480px) {
+  .intro-photo {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .story-container {
+    gap: 24px;
+  }
+
+  .chat-window {
+    border-radius: 0;
+    max-height: 100vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .story-container {
+    grid-template-columns: 1fr;
+  }
+
+  .filmstrip-item {
+    flex: 0 0 clamp(180px, 40vw, 280px);
+  }
+}
+
+/* ===================== PRINT ===================== */
+@media print {
+  .cursor-dot,
+  .cursor-ring,
+  .intro-canvas {
+    display: none;
+  }
+}
