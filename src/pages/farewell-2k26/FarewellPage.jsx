@@ -36,16 +36,64 @@ export default function FarewellPage() {
   // Parallax state (basic mouse tracking)
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
+  // Phase 1 - 3x3 Config
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     if (!person) return;
 
+    const W = window.innerWidth;
+    const mobileMode = W < 768;
+    setIsMobile(mobileMode);
+
     // Generate positions mapping zones cleanly without overlaps
     const generatePhotoPositions = () => {
-        const W = window.innerWidth;
         const H = window.innerHeight;
         const cx = W / 2;
         const cy = H / 2;
         const placed = [];
+        
+        if (mobileMode) {
+            // Mobile: 3x3 Grid covering the screen
+            const mobilePushDirs = [
+                { x: -W*1.1, y: -H*1.1 },
+                { x: 0,       y: -H*1.2 },
+                { x: W*1.1,  y: -H*1.1 },
+                { x: -W*1.2, y: 0 },
+                { x: 0,       y: 0 }, // Center tile goes nowhere
+                { x: W*1.2,  y: 0 },
+                { x: -W*1.1, y: H*1.1 },
+                { x: 0,       y: H*1.2 },
+                { x: W*1.1,  y: H*1.1 }
+            ];
+            
+            const gap = 3;
+            const tileW = (W - gap * 2) / 3;
+            const tileH = (H - gap * 2) / 3;
+            // Spiral indexing delay:
+            const spiralOrder = [0, 2, 6, 8, 1, 3, 5, 7, 4];
+            
+            return Array.from({length: 9}).map((_, i) => {
+                const col = i % 3;
+                const row = Math.floor(i / 3);
+                
+                return {
+                    id: i,
+                    x: col * (tileW + gap),
+                    y: row * (tileH + gap),
+                    width: tileW,
+                    height: tileH,
+                    pushedX: mobilePushDirs[i].x,
+                    pushedY: mobilePushDirs[i].y,
+                    size: tileW, // approximate
+                    rotation: 0,
+                    floatDuration: 0,
+                    depth: 0,
+                    spawnDelay: spiralOrder.indexOf(i) * 0.1,
+                    isCenter: i === 4
+                };
+            });
+        }
         
         const zones = [
             { xMin:10,      xMax:W*0.22,  yMin:10,      yMax:H*0.38 },
@@ -96,7 +144,9 @@ export default function FarewellPage() {
                 size, 
                 rotation: (Math.random() * 24) - 12,
                 floatDuration: 3 + Math.random() * 3,
-                depth: 0.5 + (i % 3) * 0.5 
+                depth: 0.5 + (i % 3) * 0.5,
+                spawnDelay: i * 0.22,
+                isCenter: false
             };
             placed.push(final);
             return final;
@@ -147,8 +197,8 @@ export default function FarewellPage() {
     const handleMouse = (e) => {
         if (window.matchMedia('(pointer:fine)').matches) {
             setMouse({
-                x: (e.clientX - cx) / cx,
-                y: (e.clientY - cy) / cy
+                x: (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2),
+                y: (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2)
             });
         }
     };
@@ -224,23 +274,51 @@ export default function FarewellPage() {
                 
                 let targetX = 0;
                 let targetY = 0;
-                let currentScale = isSpawned ? 1 : 0.6;
+                let currentScale = isSpawned ? 1 : (isMobile ? 0.85 : 0.6);
                 let currentOpacity = isSpawned ? 1 : 0;
-                let currentFilter = isSpawned ? 'blur(0px) brightness(1) saturate(1)' : 'blur(8px) brightness(1) saturate(1)';
-                let currentBoxShadow = '0 8px 24px rgba(0,0,0,0.5)';
-                let photoZIndex = 1;
+                let currentFilter = isSpawned ? 'blur(0px) brightness(1) saturate(1)' : (isMobile ? 'blur(0px) brightness(1) saturate(1)' : 'blur(8px) brightness(1) saturate(1)');
+                let currentBoxShadow = isMobile ? 'none' : '0 8px 24px rgba(0,0,0,0.5)';
+                let photoZIndex = (isMobile && pos.isCenter) ? 5 : 1;
 
-                if (isInWords && currentWordIndex !== -1) {
-                    if (isHighlightedWord) {
-                        currentScale = 1.08;
+                if (isMobile) {
+                    if (isPushed) {
+                        if (pos.isCenter) {
+                            currentScale = 8;
+                            currentOpacity = 0;
+                        } else {
+                            currentScale = 0.7;
+                            currentOpacity = 0;
+                        }
+                    }
+                    if (isInWords) {
                         currentOpacity = 1;
-                        currentFilter = 'blur(0px) brightness(1.2) saturate(1.4)';
-                        currentBoxShadow = '0 0 30px rgba(45,212,191,0.6)';
-                        photoZIndex = 5;
-                    } else {
-                        currentScale = 0.88;
-                        currentOpacity = 0.15;
-                        currentFilter = 'blur(0px) brightness(0.4) saturate(0.3)';
+                        if (isHighlightedWord) {
+                            currentScale = 1.06;
+                            currentFilter = 'brightness(1.3) saturate(1.5)';
+                            photoZIndex = 5;
+                        } else {
+                            currentScale = 1;
+                            currentFilter = 'brightness(0.25) saturate(0.2)';
+                        }
+                    }
+                    if (stage === 'return' || stage === 'page') {
+                        currentOpacity = 1;
+                        currentScale = 1;
+                        currentFilter = 'brightness(1) saturate(1)';
+                    }
+                } else {
+                    if (isInWords && currentWordIndex !== -1) {
+                        if (isHighlightedWord) {
+                            currentScale = 1.08;
+                            currentOpacity = 1;
+                            currentFilter = 'blur(0px) brightness(1.2) saturate(1.4)';
+                            currentBoxShadow = '0 0 30px rgba(45,212,191,0.6)';
+                            photoZIndex = 5;
+                        } else {
+                            currentScale = 0.88;
+                            currentOpacity = 0.15;
+                            currentFilter = 'blur(0px) brightness(0.4) saturate(0.3)';
+                        }
                     }
                 }
                 
@@ -258,8 +336,8 @@ export default function FarewellPage() {
                 return (
                     <motion.div
                         key={pos.id}
-                        style={{ position: 'absolute', left: pos.x, top: pos.y, zIndex: photoZIndex }}
-                        initial={{ x: 0, y: 0, scale: 0.6, rotate: pos.rotation, filter: 'blur(8px)', opacity: 0 }}
+                        style={{ position: 'absolute', left: pos.x, top: pos.y, zIndex: photoZIndex, width: pos.width, height: pos.height }}
+                        initial={{ x: 0, y: 0, scale: isMobile ? 0.85 : 0.6, rotate: pos.rotation, filter: isMobile ? 'blur(0px)' : 'blur(8px)', opacity: 0 }}
                         animate={{ 
                             x: targetX, 
                             y: targetY,
@@ -269,18 +347,18 @@ export default function FarewellPage() {
                             opacity: currentOpacity
                         }}
                         transition={{ 
-                            delay: stage === 'photos_spawn' ? pos.id * 0.22 : 0,
-                            duration: isInWords ? 0.2 : (stage === 'return' ? 1 : (stage === 'push_and_name' ? 0.8 : 0.6)),
-                            ease: isInWords ? "backOut" : "easeOut" 
+                            delay: stage === 'photos_spawn' ? pos.spawnDelay : 0,
+                            duration: isInWords ? 0.2 : (stage === 'return' ? (isMobile ? 0.4 : 1) : (stage === 'push_and_name' ? 0.6 : 0.6)),
+                            ease: isInWords ? "backOut" : (stage === 'push_and_name' ? "easeIn" : "easeOut") 
                         }}
                     >
                         <motion.img 
-                            src={`https://picsum.photos/seed/${pos.id + 1}/300/300`}
-                            animate={isSpawned ? { y: [0, 12, 0] } : {}}
+                            src={person.galleryImages && person.galleryImages.length > 0 ? person.galleryImages[pos.id % person.galleryImages.length] : `https://picsum.photos/seed/${pos.id + 1}/300/300`}
+                            animate={isSpawned && !isMobile ? { y: [0, 12, 0] } : {}}
                             transition={{ duration: pos.floatDuration, repeat: Infinity, ease: "easeInOut" }}
                             style={{ 
-                                width: pos.size, height: pos.size, objectFit: 'cover', 
-                                border: '5px solid white', borderRadius: 3, 
+                                width: isMobile ? '100%' : pos.size, height: isMobile ? '100%' : pos.size, objectFit: 'cover', 
+                                border: isMobile ? 'none' : '5px solid white', borderRadius: isMobile ? 0 : 3, 
                                 boxShadow: currentBoxShadow,
                                 transition: 'box-shadow 0.2s ease-out'
                             }}
