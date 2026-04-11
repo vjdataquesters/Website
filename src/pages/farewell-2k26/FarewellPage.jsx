@@ -1,0 +1,556 @@
+import React, { useEffect, useState, useRef } from "react";
+import { useParams, Navigate } from "react-router-dom";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { farewellData } from "./farewell-data";
+
+export default function FarewellPage() {
+  const { name } = useParams();
+  const person = farewellData[name?.toLowerCase()];
+
+  // Movie Sequence States
+  const [stage, setStage] = useState('init');
+  const [currentWord, setCurrentWord] = useState(null);
+  const [currentWordIndex, setCurrentWordIndex] = useState(-1);
+  const [positions, setPositions] = useState([]);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  // Section Refs for scroll tracking
+  const storyRef = useRef(null);
+  const storyInView = useInView(storyRef, { once: true, amount: 0.3 });
+
+  const chatRef = useRef(null);
+  const chatInView = useInView(chatRef, { once: true, amount: 0.3 });
+
+  const galleryRef = useRef(null);
+  const galleryInView = useInView(galleryRef, { once: true, amount: 0.3 });
+
+  // Chat States
+  const [chatStarted, setChatStarted] = useState(false);
+  const [typedHeading, setTypedHeading] = useState('');
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [visibleMessages, setVisibleMessages] = useState([]);
+  const [typingIndicator, setTypingIndicator] = useState(null);
+  const [sysMessage, setSysMessage] = useState(false);
+  const chatBodyRef = useRef(null);
+  
+  // Parallax state (basic mouse tracking)
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (!person) return;
+
+    // Generate positions mapping zones cleanly without overlaps
+    const generatePhotoPositions = () => {
+        const W = window.innerWidth;
+        const H = window.innerHeight;
+        const cx = W / 2;
+        const cy = H / 2;
+        const placed = [];
+        
+        const zones = [
+            { xMin:10,      xMax:W*0.22,  yMin:10,      yMax:H*0.38 },
+            { xMin:W*0.38,  xMax:W*0.62,  yMin:10,      yMax:H*0.18 },
+            { xMin:W*0.78,  xMax:W-150,   yMin:10,      yMax:H*0.38 },
+            { xMin:10,      xMax:W*0.18,  yMin:H*0.3,   yMax:H*0.7  },
+            { xMin:W*0.82,  xMax:W-150,   yMin:H*0.3,   yMax:H*0.7  },
+            { xMin:10,      xMax:W*0.22,  yMin:H*0.62,  yMax:H-150  },
+            { xMin:W*0.38,  xMax:W*0.62,  yMin:H*0.78,  yMax:H-150  },
+            { xMin:W*0.78,  xMax:W-150,   yMin:H*0.62,  yMax:H-150  },
+            { xMin:10,      xMax:W*0.14,  yMin:H*0.08,  yMax:H*0.28 },
+            { xMin:W*0.86,  xMax:W-150,   yMin:H*0.08,  yMax:H*0.28 },
+            { xMin:10,      xMax:W*0.14,  yMin:H*0.68,  yMax:H*0.88 },
+            { xMin:W*0.86,  xMax:W-150,   yMin:H*0.68,  yMax:H*0.88 },
+        ];
+
+        function overlaps(newPos, size) {
+            return placed.some(p => {
+                const MathAbs = Math.abs;
+                const dx = MathAbs(newPos.x - p.x);
+                const dy = MathAbs(newPos.y - p.y);
+                const minDist = (size + p.size) / 2 + 20; // 20px padding
+                return dx < minDist && dy < minDist;
+            });
+        }
+
+        return zones.map((z, i) => {
+            const size = 80 + Math.random() * 70;
+            let pos, attempts = 0;
+            do {
+                pos = {
+                    x: z.xMin + Math.random() * Math.max(z.xMax - z.xMin - size, 0),
+                    y: z.yMin + Math.random() * Math.max(z.yMax - z.yMin - size, 0),
+                };
+                attempts++;
+            } while (overlaps(pos, size) && attempts < 20);
+            
+            const dx = pos.x - cx;
+            const dy = pos.y - cy;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            
+            const final = { 
+                id: i,
+                x: pos.x, 
+                y: pos.y, 
+                pushedX: dist < 280 ? dx * 2.5 : 0, 
+                pushedY: dist < 280 ? dy * 2.5 : 0, 
+                size, 
+                rotation: (Math.random() * 24) - 12,
+                floatDuration: 3 + Math.random() * 3,
+                depth: 0.5 + (i % 3) * 0.5 
+            };
+            placed.push(final);
+            return final;
+        });
+    };
+    
+    setPositions(generatePhotoPositions());
+
+    document.body.style.overflowY = 'hidden';
+
+    const runSequence = async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+        setStage('canvas_in');
+        await sleep(1300);
+
+        setStage('photos_spawn');
+        await sleep(3500); // 0.6 + ~2.6 delay max
+
+        setStage('push_and_name');
+        await sleep(2600); 
+
+        setStage('fade_out');
+        await sleep(1300);
+
+        setStage('words');
+        const words = ['WILL','NEVER','FORGET','WHAT','YOU','LEFT','BEHIND'];
+        
+        for (let idx = 0; idx < words.length; idx++) {
+            setCurrentWordIndex(idx);
+            setCurrentWord(words[idx]);
+            await sleep(400); // 150ms in + 250ms visible
+            setCurrentWord(null);
+            await sleep(180); // 120ms out + 60ms delay
+        }
+        setCurrentWordIndex(-1);
+        await sleep(500);
+
+        setStage('return');
+        await sleep(2800);
+
+        setStage('page');
+        document.body.style.overflowY = 'auto';
+    };
+
+    runSequence();
+
+    const handleMouse = (e) => {
+        if (window.matchMedia('(pointer:fine)').matches) {
+            setMouse({
+                x: (e.clientX - cx) / cx,
+                y: (e.clientY - cy) / cy
+            });
+        }
+    };
+    window.addEventListener('mousemove', handleMouse);
+    return () => {
+        document.body.style.overflowY = 'auto';
+        window.removeEventListener('mousemove', handleMouse);
+    };
+  }, [person]);
+
+  // Chat simulation effect
+  useEffect(() => {
+    if (chatInView && !chatStarted && person) {
+        setChatStarted(true);
+        const playFullChat = async () => {
+            const sleep = ms => new Promise(r => setTimeout(r, ms));
+            const headingText = "What the Juniors Say";
+            
+            for(let i=1; i<=headingText.length; i++) {
+                setTypedHeading(headingText.substring(0, i));
+                await sleep(80);
+            }
+            await sleep(500);
+            setShowSubtitle(true);
+
+            for(let i=0; i<person.juniorsComments.length; i++) {
+                const c = person.juniorsComments[i];
+                setTypingIndicator(c);
+                await sleep(1400 + Math.random()*400);
+                setTypingIndicator(null);
+                setVisibleMessages(prev => [...prev, c]);
+                await sleep(700);
+            }
+            await sleep(800);
+            setSysMessage(true);
+        };
+        playFullChat();
+    }
+  }, [chatInView, chatStarted, person]);
+
+  // Auto-scroll chat
+  useEffect(() => {
+    if(chatBodyRef.current) {
+        chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+    }
+  }, [visibleMessages, typingIndicator]);
+
+  if (!person) return <Navigate to="/farewell-2k26" replace />;
+
+  const isMovieActive = stage !== 'page';
+  const isPostMovie = stage === 'page';
+
+  return (
+    <div style={{ background: 'var(--bg)', color: 'var(--white)', overflowX: 'hidden', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
+      
+      {/* PHASE 1: CANVAS */}
+      <motion.div 
+        className="grid-bg" 
+        style={{ position:'fixed', top:0, left:0, width:'100vw', height:'100vh', zIndex:100, overflow:'hidden', pointerEvents: isMovieActive ? 'auto' : 'none' }}
+        animate={{ opacity: stage !== 'init' ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div 
+            style={{ position:'absolute', inset:0, zIndex: 1 }}
+            animate={{ opacity: stage === 'fade_out' ? 0 : 1 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+        >
+            {positions.map((pos) => {
+                const isSpawned = stage !== 'init' && stage !== 'canvas_in';
+                const isPushed = stage === 'push_and_name' || stage === 'fade_out';
+                const isInWords = stage === 'words';
+                const isHighlightedWord = isInWords && currentWordIndex !== -1 && pos.id % 7 === currentWordIndex;
+                
+                let targetX = 0;
+                let targetY = 0;
+                let currentScale = isSpawned ? 1 : 0.6;
+                let currentOpacity = isSpawned ? 1 : 0;
+                let currentFilter = isSpawned ? 'blur(0px) brightness(1) saturate(1)' : 'blur(8px) brightness(1) saturate(1)';
+                let currentBoxShadow = '0 8px 24px rgba(0,0,0,0.5)';
+                let photoZIndex = 1;
+
+                if (isInWords && currentWordIndex !== -1) {
+                    if (isHighlightedWord) {
+                        currentScale = 1.08;
+                        currentOpacity = 1;
+                        currentFilter = 'blur(0px) brightness(1.2) saturate(1.4)';
+                        currentBoxShadow = '0 0 30px rgba(45,212,191,0.6)';
+                        photoZIndex = 5;
+                    } else {
+                        currentScale = 0.88;
+                        currentOpacity = 0.15;
+                        currentFilter = 'blur(0px) brightness(0.4) saturate(0.3)';
+                    }
+                }
+                
+                if (isSpawned) {
+                    targetX = isPushed ? pos.pushedX : 0;
+                    targetY = isPushed ? pos.pushedY : 0;
+                    
+                    // Parallax execution logic mapped directly mapped to frames
+                    if (isMovieActive && !isPushed) {
+                        targetX += mouse.x * 15 * pos.depth;
+                        targetY += mouse.y * 10 * pos.depth;
+                    }
+                }
+
+                return (
+                    <motion.div
+                        key={pos.id}
+                        style={{ position: 'absolute', left: pos.x, top: pos.y, zIndex: photoZIndex }}
+                        initial={{ x: 0, y: 0, scale: 0.6, rotate: pos.rotation, filter: 'blur(8px)', opacity: 0 }}
+                        animate={{ 
+                            x: targetX, 
+                            y: targetY,
+                            scale: currentScale,
+                            rotate: pos.rotation,
+                            filter: currentFilter,
+                            opacity: currentOpacity
+                        }}
+                        transition={{ 
+                            delay: stage === 'photos_spawn' ? pos.id * 0.22 : 0,
+                            duration: isInWords ? 0.2 : (stage === 'return' ? 1 : (stage === 'push_and_name' ? 0.8 : 0.6)),
+                            ease: isInWords ? "backOut" : "easeOut" 
+                        }}
+                    >
+                        <motion.img 
+                            src={`https://picsum.photos/seed/${pos.id + 1}/300/300`}
+                            animate={isSpawned ? { y: [0, 12, 0] } : {}}
+                            transition={{ duration: pos.floatDuration, repeat: Infinity, ease: "easeInOut" }}
+                            style={{ 
+                                width: pos.size, height: pos.size, objectFit: 'cover', 
+                                border: '5px solid white', borderRadius: 3, 
+                                boxShadow: currentBoxShadow,
+                                transition: 'box-shadow 0.2s ease-out'
+                            }}
+                            alt="memory"
+                        />
+                    </motion.div>
+                );
+            })}
+        </motion.div>
+
+        {/* NAME DISPLAY */}
+        <motion.div 
+            style={{ position:'absolute', top:'50%', left:'50%', x:'-50%', y:'-50%', textAlign:'center', zIndex: 10, pointerEvents:'none' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0 }}
+            transition={{ duration: stage === 'fade_out' ? 0.8 : 0.1, delay: stage === 'push_and_name' ? 0.3 : 0 }}
+        >
+            <div style={{ fontFamily:'Space Grotesk, sans-serif', fontWeight:900, fontSize:'clamp(80px,12vw,140px)', color:'var(--teal)', textShadow:'0 0 60px rgba(45,212,191,0.7)', display:'flex', gap:'0.05em', alignItems:'center', whiteSpace:'nowrap' }}>
+                <motion.img 
+                    src="/logo.png" 
+                    alt="VJDQ Logo"
+                    style={{ width: 'clamp(50px, 7vw, 90px)', height: 'clamp(50px, 7vw, 90px)', objectFit: 'contain', marginRight: '0.15em', filter: 'drop-shadow(0 0 20px rgba(45,212,191,0.6))' }}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0, scale: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0.5 }}
+                    transition={{ duration: 0.6, ease: "backOut", delay: stage === 'push_and_name' ? 0.3 : 0 }}
+                />
+                {['V', 'J', 'D', 'Q'].map((char, i) => (
+                    <motion.span
+                        key={i}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0, y: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 0 : 30 }}
+                        transition={{ duration: 0.45, delay: stage === 'push_and_name' ? 0.4 + i*0.08 : 0, ease: "easeOut" }}
+                    >
+                        {char}
+                    </motion.span>
+                ))}
+            </div>
+            <motion.div 
+                style={{ height:2, background:'var(--teal)', margin:'16px auto 0' }}
+                initial={{ width: 0 }}
+                animate={{ width: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 80 : 0 }}
+                transition={{ duration: 0.6, delay: stage === 'push_and_name' ? 0.8 : 0, ease: "easeOut" }}
+            />
+            <motion.div 
+                style={{ fontFamily:'Inter, sans-serif', fontSize:'clamp(10px,1.5vw,14px)', color:'var(--muted)', letterSpacing:'8px', marginTop:12 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0 }}
+                transition={{ duration: 0.6, delay: stage === 'push_and_name' ? 1.0 : 0 }}
+            >
+                2K26 · FAREWELL
+            </motion.div>
+        </motion.div>
+
+        {/* WORD DISPLAY */}
+        <AnimatePresence>
+            {currentWord && (
+                <motion.div 
+                    key={currentWord}
+                    style={{ position:'absolute', top:'50%', left:'50%', x:'-50%', y:'-50%', fontFamily:'Space Grotesk, sans-serif', fontWeight:800, fontSize:'clamp(56px,9vw,110px)', color:'var(--white)', textAlign:'center', zIndex: 10, pointerEvents:'none', whiteSpace:'nowrap' }}
+                    initial={{ opacity: 0, scale: 1.4, filter: 'blur(12px)', y: 20 }}
+                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+                    exit={{ opacity: 0, scale: 0.85, y: -15 }}
+                    transition={{ 
+                        duration: 0.15, ease: "easeOut",
+                        exit: { duration: 0.12, ease: "easeIn" } 
+                    }}
+                >
+                    {currentWord}
+                </motion.div>
+            )}
+        </AnimatePresence>
+
+        {/* SCROLL HINT */}
+        <motion.div 
+            style={{ position:'absolute', bottom:32, left:'50%', x: '-50%', fontSize:13, color:'var(--muted)', letterSpacing:3, zIndex: 10 }}
+            animate={stage === 'page' ? { opacity: [0.4, 1, 0.4] } : { opacity: 0 }}
+            transition={stage === 'page' ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
+        >
+            ↓ scroll to continue
+        </motion.div>
+      </motion.div>
+
+      {/* PHASE 2: PAGE CONTENT */}
+      <motion.div 
+        style={{ marginTop: '100vh', zIndex: 200, position: 'relative' }}
+        initial={{ opacity: 0, pointerEvents: 'none' }}
+        animate={{ opacity: isPostMovie ? 1 : 0, pointerEvents: isPostMovie ? 'auto' : 'none' }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* STORY SECTION */}
+        <section ref={storyRef} className="grid-bg" style={{ minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', padding:'80px 20px', position:'relative' }}>
+          <button onClick={() => chatRef.current?.scrollIntoView({behavior: 'smooth'})} style={{ position:'absolute', top:24, right:24, background:'none', border:'none', color:'var(--muted)', fontSize:12, cursor:'pointer', letterSpacing:2 }}>tap to skip ↓</button>
+
+          <motion.img 
+             src={person.portrait} alt={person.name} 
+             style={{ maxWidth:'min(320px,85vw)', borderRadius:8, border:'1px solid rgba(45,212,191,0.3)', boxShadow:'0 0 30px rgba(45,212,191,0.1)' }}
+             initial={{ clipPath: 'inset(100% 0 0 0)' }}
+             animate={storyInView ? { clipPath: 'inset(0% 0 0 0)' } : {}}
+             transition={{ duration: 0.9, ease: "easeOut" }}
+          />
+          
+          <div style={{ maxWidth:560, width:'100%', textAlign:'center', marginTop:32, position:'relative' }}>
+            <div style={{ fontSize:120, color:'rgba(168,85,247,0.15)', position:'absolute', top:-40, left:-10, fontFamily:'Playfair Display, serif', lineHeight:1, pointerEvents:'none' }}>"</div>
+            <motion.h2 
+                style={{ fontFamily:'Space Grotesk, sans-serif', fontWeight:700, fontSize:'clamp(28px,5vw,48px)', color:'var(--teal)' }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={storyInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.6 }}
+            >
+                {person.name}
+            </motion.h2>
+            <motion.p 
+                style={{ fontSize:13, color:'var(--muted)', letterSpacing:3, textTransform:'uppercase', marginTop:8 }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={storyInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.7 }}
+            >
+                {person.role}
+            </motion.p>
+            <motion.p 
+                style={{ fontFamily:'Playfair Display, serif', fontStyle:'italic', fontSize:'clamp(17px,2.5vw,24px)', lineHeight:1.7, marginTop:32 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={storyInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.8 }}
+            >
+                {person.quote}
+            </motion.p>
+          </div>
+        </section>
+
+        {/* CHAT SECTION */}
+        <section ref={chatRef} className="grid-bg" style={{ minHeight:'100vh', padding:'80px 0' }}>
+          <div style={{ textAlign:'center', padding:'0 20px' }}>
+            <h2 style={{ fontFamily:'Space Grotesk, sans-serif', fontWeight:800, fontSize:'clamp(28px,5vw,48px)', color:'var(--white)', minHeight: '1.2em' }}>
+                {typedHeading}
+                {chatStarted && typedHeading.length < "What the Juniors Say".length && <span style={{ color: 'var(--teal)', animation: 'blink 1s infinite' }}>|</span>}
+            </h2>
+            <motion.p 
+                style={{ fontFamily:'Playfair Display, serif', fontStyle:'italic', color:'var(--muted)', marginTop:12, fontSize:16 }}
+                animate={{ opacity: showSubtitle ? 1 : 0 }}
+                transition={{ duration: 0.8 }}
+            >
+                The words they leave behind
+            </motion.p>
+          </div>
+
+          <div style={{ maxWidth:480, width:'calc(100% - 32px)', margin:'40px auto 0', borderRadius:16, border:'1px solid rgba(45,212,191,0.2)', overflow:'hidden' }}>
+            <div style={{ background:'var(--bg-card)', padding:'12px 16px', display:'flex', alignItems:'center', gap:12, borderBottom:'1px solid rgba(45,212,191,0.15)' }}>
+              <div style={{ width:38, height:38, borderRadius:'50%', background:'linear-gradient(135deg,#9b59b6,#2dd4bf)', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:700, fontSize:14 }}>DQ</div>
+              <div><div style={{ fontWeight:600, fontSize:14 }}>VJDQ Group</div><div style={{ fontSize:12, color:'var(--teal)' }}>● online</div></div>
+            </div>
+            
+            <div ref={chatBodyRef} style={{ background:'var(--bg)', padding:16, display:'flex', flexDirection:'column', gap:12, minHeight:200, maxHeight:400, overflowY:'auto' }}>
+                <AnimatePresence initial={false}>
+                    {visibleMessages.map((msg, i) => (
+                        <motion.div 
+                            key={i}
+                            style={{ display:'flex', alignItems:'flex-end', gap:8 }}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                        >
+                            <div style={{ width:32, height:32, borderRadius:'50%', background:'linear-gradient(135deg,#9b59b6,#2dd4bf)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:700, color:'white', flexShrink:0 }}>{msg.initials}</div>
+                            <div>
+                                <div style={{ fontSize:12, fontWeight:600, color:'var(--teal)', marginBottom:3, marginLeft:4 }}>{msg.name}</div>
+                                <div style={{ background:'var(--bg-card)', border:'1px solid rgba(45,212,191,0.15)', borderRadius:'0 18px 18px 18px', padding:'10px 14px', color:'var(--white)', fontSize:15, lineHeight:1.5 }}>
+                                    {msg.comment}
+                                    <span style={{ display:'block', fontSize:11, color:'var(--muted)', textAlign:'right', marginTop:4 }}>{msg.time} <span style={{ color:'var(--teal)' }}>✓✓</span></span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                    {typingIndicator && (
+                        <motion.div 
+                            key="typing"
+                            style={{ display:'flex', alignItems:'flex-end', gap:8 }}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                             <div style={{ width:32, height:32, borderRadius:'50%', background:'linear-gradient(135deg,#9b59b6,#2dd4bf)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:700, color:'white', flexShrink:0 }}>{typingIndicator.initials}</div>
+                             <div style={{ background:'var(--bg-card)', border:'1px solid rgba(45,212,191,0.12)', borderRadius:'0 18px 18px 18px', padding:'12px 16px', display:'flex', gap:5, alignItems:'center' }}>
+                                 <span className="tdot"></span><span className="tdot"></span><span className="tdot"></span>
+                             </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                    {sysMessage && (
+                        <motion.div 
+                            style={{ textAlign:'center', fontSize:12, color:'var(--muted)', fontStyle:'italic', padding:8 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            🔒 Messages are end-to-end memories
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+          </div>
+        </section>
+
+        {/* GALLERY SECTION */}
+        <section ref={galleryRef} className="grid-bg" style={{ minHeight:'100vh', padding:'80px 0' }}>
+          <div style={{ textAlign:'center', padding:'0 20px 40px' }}>
+            <h2 style={{ fontFamily:'Space Grotesk, sans-serif', fontWeight:800, fontSize:'clamp(32px,5vw,56px)' }}>Club Memories</h2>
+            <motion.div 
+                style={{ height:3, background:'var(--teal)', margin:'12px auto 0', borderRadius:2 }}
+                initial={{ width: 0 }}
+                animate={galleryInView ? { width: 80 } : {}}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            />
+          </div>
+          
+          <div className="custom-scrollbar" style={{ display:'flex', overflowX:'auto', scrollSnapType:'x mandatory', gap:12, padding:'0 40px', scrollbarWidth:'none', WebkitOverflowScrolling:'touch' }}>
+             {person.galleryImages?.map((imgStr, idx) => (
+                <motion.img 
+                   key={idx}
+                   src={imgStr}
+                   style={{ height:'clamp(160px,22vw,260px)', width:'auto', flexShrink:0, scrollSnapAlign:'start', borderRadius:8, cursor:'pointer', objectFit:'cover' }}
+                   whileHover={{ scale: 1.04, filter: 'saturate(1.3) brightness(1.08)' }}
+                   whileTap={{ scale: 0.98 }}
+                   onClick={() => setLightboxIndex(idx)}
+                />
+             ))}
+          </div>
+        </section>
+      </motion.div>
+
+      {/* LIGHTBOX */}
+      <AnimatePresence>
+          {lightboxIndex !== null && (
+              <motion.div 
+                  style={{ position:'fixed', inset:0, background:'rgba(11,42,48,0.96)', backdropFilter:'blur(10px)', zIndex:999, display:'flex', alignItems:'center', justifyContent:'center' }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={(e) => { if(e.target === e.currentTarget) setLightboxIndex(null); }}
+              >
+                  <motion.img 
+                      src={person.galleryImages[lightboxIndex]}
+                      style={{ maxWidth:'90vw', maxHeight:'90vh', borderRadius:8, objectFit: 'contain' }}
+                      initial={{ scale: 0.85, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.85, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                  />
+                  <button onClick={() => setLightboxIndex(null)} style={{ position:'absolute', top:20, right:24, background:'none', border:'none', color:'var(--teal)', fontSize:28, cursor:'pointer' }}>×</button>
+                  <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(prev => (prev - 1 + person.galleryImages.length) % person.galleryImages.length); }} style={{ position:'absolute', left:20, background:'none', border:'none', color:'var(--white)', fontSize:32, cursor:'pointer' }}>‹</button>
+                  <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(prev => (prev + 1) % person.galleryImages.length); }} style={{ position:'absolute', right:20, background:'none', border:'none', color:'var(--white)', fontSize:32, cursor:'pointer' }}>›</button>
+              </motion.div>
+          )}
+      </AnimatePresence>
+
+      <style>{`
+        :root { --bg: #0b2a30; --bg-card: #0f3540; --teal: #2dd4bf; --purple: #a855f7; --white: #f0fdfc; --muted: #7fb3ae; --grid-line: rgba(45,212,191,0.05); }
+        .grid-bg { background-color: var(--bg); background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); background-size: 40px 40px; }
+        @keyframes blink { 0%, 100%{opacity:1} 50%{opacity:0} }
+        .tdot { width:7px; height:7px; border-radius:50%; background:var(--muted); display:inline-block; animation:tdotbounce 1.2s infinite; }
+        .tdot:nth-child(2) { animation-delay:.2s }
+        .tdot:nth-child(3) { animation-delay:.4s }
+        @keyframes tdotbounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+        .custom-scrollbar::-webkit-scrollbar { display: none; }
+      `}</style>
+    </div>
+  );
+}

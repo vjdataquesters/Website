@@ -21,6 +21,7 @@ function FarewellPageTemplate({
   const [introComplete, setIntroComplete] = useState(false);
   const [showProfileFallback, setShowProfileFallback] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
+  const [showContent, setShowContent] = useState(false);
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const section1Ref = useRef(null);
@@ -340,13 +341,14 @@ function FarewellPageTemplate({
       threshold: 0.3,
     });
 
-    if (section1Ref.current) {
-      observer.observe(section1Ref.current);
+    const currentRef = section1Ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (section1Ref.current) {
-        observer.unobserve(section1Ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [introComplete]);
@@ -425,13 +427,14 @@ function FarewellPageTemplate({
       threshold: 0.2,
     });
 
-    if (section2Ref.current && introComplete) {
-      observer.observe(section2Ref.current);
+    const currentRef = section2Ref.current;
+    if (currentRef && introComplete) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (section2Ref.current) {
-        observer.unobserve(section2Ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [introComplete, comments]);
@@ -463,13 +466,14 @@ function FarewellPageTemplate({
       threshold: 0.3,
     });
 
-    if (section4Ref.current) {
-      observer.observe(section4Ref.current);
+    const currentRef = section4Ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (section4Ref.current) {
-        observer.unobserve(section4Ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [introComplete]);
@@ -514,6 +518,11 @@ function FarewellPageTemplate({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+  }, []);
+
+  // ===================== MOUNT & SHOW CONTENT =====================
+  useEffect(() => {
+    setShowContent(true);
   }, []);
 
   // ===================== RENDER =====================
@@ -616,7 +625,7 @@ function FarewellPageTemplate({
 
               {/* Quote */}
               <div className="story-quote-wrapper">
-                <div className="quote-mark-left">"</div>
+                <div className="quote-mark-left">&quot;</div>
                 <p className="story-quote">{subtitle}</p>
               </div>
             </div>
