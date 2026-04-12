@@ -1,18 +1,177 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { farewellData } from "./farewell-data";
 
+const INTRO_MANIFEST_PATH = "/farewell-2k26/intro/manifest.json";
+
+function buildIntroImagePool(slug) {
+    if (!slug) return [];
+
+    const fallbackCommon = [
+        "/farewell-2k26/intro/common/20260109_160012.jpg.jpeg",
+        "/farewell-2k26/intro/common/image copy 2.png",
+        "/farewell-2k26/intro/common/image copy.png",
+        "/farewell-2k26/intro/common/image.png",
+        "/farewell-2k26/intro/common/IMG-20260410-WA0078.jpg.jpeg",
+    ];
+
+    // Fallback if manifest is missing: use known valid shared photos only.
+    return fallbackCommon;
+}
+
+function shuffleArray(items) {
+    const arr = [...items];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function buildIntroImagePoolFromManifest(manifest, slug) {
+    if (!slug || !manifest) return [];
+
+    const common = shuffleArray(Array.isArray(manifest.common) ? manifest.common : []);
+    const individualBySlug = manifest.individual && typeof manifest.individual === "object"
+        ? manifest.individual[slug]
+        : [];
+    const individual = shuffleArray(Array.isArray(individualBySlug) ? individualBySlug : []);
+
+    const commonCount = common.length <= 2
+        ? common.length
+        : 2 + Math.floor(Math.random() * 2); // 2 or 3
+
+    const selectedCommon = common.slice(0, commonCount);
+    const selectedIndividual = individual.slice(0, 12 - selectedCommon.length);
+
+    return [...selectedCommon, ...selectedIndividual];
+}
+
+function preloadImages(urls, timeoutMs = 1200) {
+    if (!urls || urls.length === 0) return Promise.resolve();
+
+    const loadPromises = urls.map((url) => new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = encodeURI(url);
+    }));
+
+    const timeout = new Promise((resolve) => {
+        setTimeout(resolve, timeoutMs);
+    });
+
+    return Promise.race([Promise.allSettled(loadPromises), timeout]);
+}
+
+function buildRandomHighlightBuckets(photoCount, wordCount = 7) {
+    const buckets = Array.from({ length: wordCount }, () => []);
+    if (photoCount <= 0) return buckets;
+
+    const ids = Array.from({ length: photoCount }, (_, i) => i);
+    const shuffled = shuffleArray(ids);
+
+    const ensured = Math.min(wordCount, shuffled.length);
+    for (let i = 0; i < ensured; i++) {
+        buckets[i].push(shuffled[i]);
+    }
+
+    for (let i = ensured; i < shuffled.length; i++) {
+        const w = Math.floor(Math.random() * wordCount);
+        buckets[w].push(shuffled[i]);
+    }
+
+    return buckets;
+}
+
 export default function FarewellPage() {
   const { name } = useParams();
+    const slug = name?.toLowerCase();
   const person = farewellData[name?.toLowerCase()];
+    const [introManifest, setIntroManifest] = useState(null);
+    const baseIntroImages = useMemo(() => {
+        if (!person) return [];
+
+        const slug = name?.toLowerCase();
+        const manifestPool = buildIntroImagePoolFromManifest(introManifest, slug);
+
+        return person.introImages?.length
+            ? person.introImages
+            : (
+                manifestPool.length > 0
+                    ? manifestPool
+                    : buildIntroImagePool(slug)
+            );
+    }, [person, name, introManifest]);
+
+    const introImages = useMemo(() => {
+        if (baseIntroImages.length === 0) return [];
+        return shuffleArray(baseIntroImages);
+    }, [baseIntroImages]);
+
+    const galleryImages = useMemo(() => {
+        const manifestImages = introManifest?.individual?.[slug];
+        if (Array.isArray(manifestImages) && manifestImages.length > 0) {
+            return manifestImages;
+        }
+
+        return [];
+    }, [introManifest, slug]);
+
+    const galleryDeck = useMemo(() => {
+        const shuffled = shuffleArray(galleryImages);
+        return shuffled.map((src, idx) => ({
+            src,
+            tilt: (idx % 2 === 0 ? -1 : 1) * (2 + (idx % 3)),
+            lift: idx % 3 === 0 ? -10 : idx % 3 === 1 ? -4 : -7,
+            delay: 0.08 * (idx % 10),
+            hue: idx % 4,
+        }));
+    }, [galleryImages]);
 
   // Movie Sequence States
   const [stage, setStage] = useState('init');
   const [currentWord, setCurrentWord] = useState(null);
   const [currentWordIndex, setCurrentWordIndex] = useState(-1);
   const [positions, setPositions] = useState([]);
+    const [wordHighlightBuckets, setWordHighlightBuckets] = useState(Array.from({ length: 7 }, () => []));
   const [lightboxIndex, setLightboxIndex] = useState(null);
+        const [activeIntroImages, setActiveIntroImages] = useState([]);
+
+    useEffect(() => {
+        let isCancelled = false;
+
+        const loadIntroManifest = async () => {
+            try {
+                const res = await fetch(`${INTRO_MANIFEST_PATH}?v=${Date.now()}`);
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!isCancelled) {
+                    setIntroManifest(data);
+                }
+            } catch (_) {
+                // Keep silent fallback to legacy naming.
+            }
+        };
+
+        loadIntroManifest();
+
+        return () => {
+            isCancelled = true;
+        };
+    }, []);
+
+    useEffect(() => {
+        if (lightboxIndex === null) return;
+        if (galleryDeck.length === 0) {
+            setLightboxIndex(null);
+            return;
+        }
+        if (lightboxIndex >= galleryDeck.length) {
+            setLightboxIndex(0);
+        }
+    }, [lightboxIndex, galleryDeck]);
 
   // Section Refs for scroll tracking
   const storyRef = useRef(null);
@@ -32,6 +191,9 @@ export default function FarewellPage() {
   const [typingIndicator, setTypingIndicator] = useState(null);
   const [sysMessage, setSysMessage] = useState(false);
   const chatBodyRef = useRef(null);
+    const sequenceStartedFor = useRef(null);
+        const mouseRafRef = useRef(null);
+        const lastMouseRef = useRef({ x: 0, y: 0 });
   
   // Parallax state (basic mouse tracking)
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
@@ -39,8 +201,26 @@ export default function FarewellPage() {
   // Phase 1 - 3x3 Config
   const [isMobile, setIsMobile] = useState(false);
 
+    useEffect(() => {
+        setActiveIntroImages([]);
+    }, [name]);
+
+    useEffect(() => {
+        if (!person) return;
+        if (introImages.length === 0) return;
+        if (stage !== 'init') return;
+
+        // Allow manifest-driven pool to replace initial fallback while still in init.
+        setActiveIntroImages(introImages);
+    }, [person, introImages, stage]);
+
   useEffect(() => {
-    if (!person) return;
+        if (!person) return;
+
+        const readyIntroImages = activeIntroImages.length > 0 ? activeIntroImages : introImages;
+        if (readyIntroImages.length === 0) return;
+        if (sequenceStartedFor.current === name) return;
+        sequenceStartedFor.current = name;
 
     const W = window.innerWidth;
     const mobileMode = W < 768;
@@ -154,17 +334,20 @@ export default function FarewellPage() {
     };
     
     setPositions(generatePhotoPositions());
+    setWordHighlightBuckets(buildRandomHighlightBuckets(mobileMode ? 9 : 12, 7));
 
     document.body.style.overflowY = 'hidden';
 
     const runSequence = async () => {
         const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+        await preloadImages(readyIntroImages.slice(0, 12), 700);
+
         setStage('canvas_in');
         await sleep(1300);
 
         setStage('photos_spawn');
-        await sleep(3500); // 0.6 + ~2.6 delay max
+        await sleep(2500); // tightened for better sync and snappier pacing
 
         setStage('push_and_name');
         await sleep(2600); 
@@ -178,15 +361,15 @@ export default function FarewellPage() {
         for (let idx = 0; idx < words.length; idx++) {
             setCurrentWordIndex(idx);
             setCurrentWord(words[idx]);
-            await sleep(400); // 150ms in + 250ms visible
+            await sleep(620); // slower word hold
             setCurrentWord(null);
-            await sleep(180); // 120ms out + 60ms delay
+            await sleep(260); // slower transition gap
         }
         setCurrentWordIndex(-1);
-        await sleep(500);
+        await sleep(900);
 
         setStage('return');
-        await sleep(2800);
+        await sleep(3400);
 
         setStage('page');
         document.body.style.overflowY = 'auto';
@@ -196,9 +379,15 @@ export default function FarewellPage() {
 
     const handleMouse = (e) => {
         if (window.matchMedia('(pointer:fine)').matches) {
-            setMouse({
+            lastMouseRef.current = {
                 x: (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2),
                 y: (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2)
+            };
+
+            if (mouseRafRef.current !== null) return;
+            mouseRafRef.current = requestAnimationFrame(() => {
+                setMouse(lastMouseRef.current);
+                mouseRafRef.current = null;
             });
         }
     };
@@ -206,8 +395,12 @@ export default function FarewellPage() {
     return () => {
         document.body.style.overflowY = 'auto';
         window.removeEventListener('mousemove', handleMouse);
+        if (mouseRafRef.current !== null) {
+            cancelAnimationFrame(mouseRafRef.current);
+            mouseRafRef.current = null;
+        }
     };
-  }, [person]);
+    }, [person, name, activeIntroImages, introImages]);
 
   // Chat simulation effect
   useEffect(() => {
@@ -270,13 +463,13 @@ export default function FarewellPage() {
                 const isSpawned = stage !== 'init' && stage !== 'canvas_in';
                 const isPushed = stage === 'push_and_name' || stage === 'fade_out';
                 const isInWords = stage === 'words';
-                const isHighlightedWord = isInWords && currentWordIndex !== -1 && pos.id % 7 === currentWordIndex;
+                const isHighlightedWord = isInWords && currentWordIndex !== -1 && wordHighlightBuckets[currentWordIndex]?.includes(pos.id);
                 
                 let targetX = 0;
                 let targetY = 0;
                 let currentScale = isSpawned ? 1 : (isMobile ? 0.85 : 0.6);
                 let currentOpacity = isSpawned ? 1 : 0;
-                let currentFilter = isSpawned ? 'blur(0px) brightness(1) saturate(1)' : (isMobile ? 'blur(0px) brightness(1) saturate(1)' : 'blur(8px) brightness(1) saturate(1)');
+                let currentFilter = isSpawned ? 'blur(0px) brightness(1) saturate(1)' : (isMobile ? 'blur(0px) brightness(1) saturate(1)' : 'blur(3px) brightness(1) saturate(1)');
                 let currentBoxShadow = isMobile ? 'none' : '0 8px 24px rgba(0,0,0,0.5)';
                 let photoZIndex = (isMobile && pos.isCenter) ? 5 : 1;
 
@@ -328,8 +521,8 @@ export default function FarewellPage() {
                     
                     // Parallax execution logic mapped directly mapped to frames
                     if (isMovieActive && !isPushed) {
-                        targetX += mouse.x * 15 * pos.depth;
-                        targetY += mouse.y * 10 * pos.depth;
+                        targetX += mouse.x * 12 * pos.depth;
+                        targetY += mouse.y * 8 * pos.depth;
                     }
                 }
 
@@ -337,7 +530,7 @@ export default function FarewellPage() {
                     <motion.div
                         key={pos.id}
                         style={{ position: 'absolute', left: pos.x, top: pos.y, zIndex: photoZIndex, width: pos.width, height: pos.height }}
-                        initial={{ x: 0, y: 0, scale: isMobile ? 0.85 : 0.6, rotate: pos.rotation, filter: isMobile ? 'blur(0px)' : 'blur(8px)', opacity: 0 }}
+                        initial={{ x: 0, y: 0, scale: isMobile ? 0.85 : 0.6, rotate: pos.rotation, filter: isMobile ? 'blur(0px)' : 'blur(3px)', opacity: 0 }}
                         animate={{ 
                             x: targetX, 
                             y: targetY,
@@ -353,15 +546,22 @@ export default function FarewellPage() {
                         }}
                     >
                         <motion.img 
-                            src={person.galleryImages && person.galleryImages.length > 0 ? person.galleryImages[pos.id % person.galleryImages.length] : `https://picsum.photos/seed/${pos.id + 1}/300/300`}
+                            src={activeIntroImages.length > 0 ? encodeURI(activeIntroImages[pos.id % activeIntroImages.length]) : '/logo.png'}
+                            onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = '/logo.png';
+                            }}
                             animate={isSpawned && !isMobile ? { y: [0, 12, 0] } : {}}
                             transition={{ duration: pos.floatDuration, repeat: Infinity, ease: "easeInOut" }}
                             style={{ 
                                 width: isMobile ? '100%' : pos.size, height: isMobile ? '100%' : pos.size, objectFit: 'cover', 
                                 border: isMobile ? 'none' : '5px solid white', borderRadius: isMobile ? 0 : 3, 
                                 boxShadow: currentBoxShadow,
-                                transition: 'box-shadow 0.2s ease-out'
+                                transition: 'box-shadow 0.2s ease-out',
+                                willChange: 'transform, opacity'
                             }}
+                            loading="eager"
+                            decoding="async"
                             alt="memory"
                         />
                     </motion.div>
@@ -373,7 +573,7 @@ export default function FarewellPage() {
         <motion.div 
             style={{ position:'absolute', top:'50%', left:'50%', x:'-50%', y:'-50%', textAlign:'center', zIndex: 10, pointerEvents:'none' }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0 }}
+            animate={{ opacity: stage === 'push_and_name' ? 1 : 0 }}
             transition={{ duration: stage === 'fade_out' ? 0.8 : 0.1, delay: stage === 'push_and_name' ? 0.3 : 0 }}
         >
             <div style={{ fontFamily:'Space Grotesk, sans-serif', fontWeight:900, fontSize:'clamp(80px,12vw,140px)', color:'var(--teal)', textShadow:'0 0 60px rgba(45,212,191,0.7)', display:'flex', gap:'0.05em', alignItems:'center', whiteSpace:'nowrap' }}>
@@ -382,14 +582,14 @@ export default function FarewellPage() {
                     alt="VJDQ Logo"
                     style={{ width: 'clamp(50px, 7vw, 90px)', height: 'clamp(50px, 7vw, 90px)', objectFit: 'contain', marginRight: '0.15em', filter: 'drop-shadow(0 0 20px rgba(45,212,191,0.6))' }}
                     initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0, scale: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0.5 }}
+                    animate={{ opacity: stage === 'push_and_name' ? 1 : 0, scale: stage === 'push_and_name' ? 1 : 0.5 }}
                     transition={{ duration: 0.6, ease: "backOut", delay: stage === 'push_and_name' ? 0.3 : 0 }}
                 />
                 {['V', 'J', 'D', 'Q'].map((char, i) => (
                     <motion.span
                         key={i}
                         initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0, y: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 0 : 30 }}
+                        animate={{ opacity: stage === 'push_and_name' ? 1 : 0, y: stage === 'push_and_name' ? 0 : 30 }}
                         transition={{ duration: 0.45, delay: stage === 'push_and_name' ? 0.4 + i*0.08 : 0, ease: "easeOut" }}
                     >
                         {char}
@@ -399,17 +599,44 @@ export default function FarewellPage() {
             <motion.div 
                 style={{ height:2, background:'var(--teal)', margin:'16px auto 0' }}
                 initial={{ width: 0 }}
-                animate={{ width: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 80 : 0 }}
+                animate={{ width: stage === 'push_and_name' ? 80 : 0 }}
                 transition={{ duration: 0.6, delay: stage === 'push_and_name' ? 0.8 : 0, ease: "easeOut" }}
             />
             <motion.div 
                 style={{ fontFamily:'Inter, sans-serif', fontSize:'clamp(10px,1.5vw,14px)', color:'var(--muted)', letterSpacing:'8px', marginTop:12 }}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: (stage === 'push_and_name' || stage === 'return' || stage === 'page') ? 1 : 0 }}
+                animate={{ opacity: stage === 'push_and_name' ? 1 : 0 }}
                 transition={{ duration: 0.6, delay: stage === 'push_and_name' ? 1.0 : 0 }}
             >
                 2K26 · FAREWELL
             </motion.div>
+        </motion.div>
+
+        <motion.div
+            style={{
+                position:'absolute',
+                top:'50%',
+                left:'50%',
+                x:'-50%',
+                y:'-50%',
+                textAlign:'center',
+                zIndex: 10,
+                pointerEvents:'none',
+                color:'var(--white)',
+                fontSize:'clamp(12px,1.7vw,17px)',
+                letterSpacing:'0.12em',
+                textTransform:'uppercase',
+                background:'rgba(11,42,48,0.75)',
+                border:'1px solid rgba(45,212,191,0.35)',
+                borderRadius:'999px',
+                padding:'10px 16px',
+                boxShadow:'0 0 20px rgba(45,212,191,0.18)'
+            }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={stage === 'page' ? { opacity: [0.75, 1, 0.75], y: 0 } : { opacity: 0, y: 10 }}
+            transition={stage === 'page' ? { duration: 1.5, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.35, ease: 'easeOut' }}
+        >
+            Scroll down for memories
         </motion.div>
 
         {/* WORD DISPLAY */}
@@ -524,7 +751,7 @@ export default function FarewellPage() {
                             <div style={{ width:32, height:32, borderRadius:'50%', background:'linear-gradient(135deg,#9b59b6,#2dd4bf)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:700, color:'white', flexShrink:0 }}>{msg.initials}</div>
                             <div>
                                 <div style={{ fontSize:12, fontWeight:600, color:'var(--teal)', marginBottom:3, marginLeft:4 }}>{msg.name}</div>
-                                <div style={{ background:'var(--bg-card)', border:'1px solid rgba(45,212,191,0.15)', borderRadius:'0 18px 18px 18px', padding:'10px 14px', color:'var(--white)', fontSize:15, lineHeight:1.5 }}>
+                                <div style={{ background:'var(--bg-card)', border:'1px solid rgba(45,212,191,0.15)', borderRadius:'0 18px 18px 18px', padding:'10px 14px', color:'var(--white)', fontSize:15, lineHeight:1.5, whiteSpace:'pre-line' }}>
                                     {msg.comment}
                                     <span style={{ display:'block', fontSize:11, color:'var(--muted)', textAlign:'right', marginTop:4 }}>{msg.time} <span style={{ color:'var(--teal)' }}>✓✓</span></span>
                                 </div>
@@ -579,17 +806,39 @@ export default function FarewellPage() {
             />
           </div>
           
-          <div className="custom-scrollbar" style={{ display:'flex', overflowX:'auto', scrollSnapType:'x mandatory', gap:12, padding:'0 40px', scrollbarWidth:'none', WebkitOverflowScrolling:'touch' }}>
-             {person.galleryImages?.map((imgStr, idx) => (
-                <motion.img 
-                   key={idx}
-                   src={imgStr}
-                   style={{ height:'clamp(160px,22vw,260px)', width:'auto', flexShrink:0, scrollSnapAlign:'start', borderRadius:8, cursor:'pointer', objectFit:'cover' }}
-                   whileHover={{ scale: 1.04, filter: 'saturate(1.3) brightness(1.08)' }}
-                   whileTap={{ scale: 0.98 }}
-                   onClick={() => setLightboxIndex(idx)}
-                />
-             ))}
+                    <div className="gallery-stage">
+                        <div className="lights-wire"></div>
+                        <div className="lights-row">
+                            {Array.from({ length: 14 }).map((_, i) => (
+                                <span
+                                    key={i}
+                                    className={`light-bulb bulb-${i % 4}`}
+                                    style={{ animationDelay: `${(i % 5) * 0.2}s` }}
+                                />
+                            ))}
+                        </div>
+
+                        <div className="memory-spark memory-spark-left">with love</div>
+                        <div className="memory-spark memory-spark-right">for always</div>
+
+                        <div className="emotional-gallery custom-scrollbar">
+                            {galleryDeck.map((item, idx) => (
+                                <motion.button
+                                    key={`${item.src}-${idx}`}
+                                    type="button"
+                                    className={`memory-card tone-${item.hue}`}
+                                    style={{ transform: `rotate(${item.tilt}deg)`, top: `${item.lift}px` }}
+                                    initial={{ opacity: 0, y: 30, rotate: item.tilt - 3 }}
+                                    animate={galleryInView ? { opacity: 1, y: 0, rotate: item.tilt } : {}}
+                                    transition={{ duration: 0.55, delay: item.delay, ease: "easeOut" }}
+                                    whileHover={{ scale: 1.04, rotate: 0, y: -8 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => setLightboxIndex(idx)}
+                                >
+                                    <img src={encodeURI(item.src)} alt="memory" loading="lazy" />
+                                </motion.button>
+                            ))}
+                        </div>
           </div>
         </section>
       </motion.div>
@@ -605,7 +854,7 @@ export default function FarewellPage() {
                   onClick={(e) => { if(e.target === e.currentTarget) setLightboxIndex(null); }}
               >
                   <motion.img 
-                      src={person.galleryImages[lightboxIndex]}
+                      src={encodeURI(galleryDeck[lightboxIndex]?.src)}
                       style={{ maxWidth:'90vw', maxHeight:'90vh', borderRadius:8, objectFit: 'contain' }}
                       initial={{ scale: 0.85, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -613,8 +862,8 @@ export default function FarewellPage() {
                       transition={{ duration: 0.35, ease: "easeOut" }}
                   />
                   <button onClick={() => setLightboxIndex(null)} style={{ position:'absolute', top:20, right:24, background:'none', border:'none', color:'var(--teal)', fontSize:28, cursor:'pointer' }}>×</button>
-                  <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(prev => (prev - 1 + person.galleryImages.length) % person.galleryImages.length); }} style={{ position:'absolute', left:20, background:'none', border:'none', color:'var(--white)', fontSize:32, cursor:'pointer' }}>‹</button>
-                  <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(prev => (prev + 1) % person.galleryImages.length); }} style={{ position:'absolute', right:20, background:'none', border:'none', color:'var(--white)', fontSize:32, cursor:'pointer' }}>›</button>
+                  <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(prev => (prev - 1 + galleryDeck.length) % galleryDeck.length); }} style={{ position:'absolute', left:20, background:'none', border:'none', color:'var(--white)', fontSize:32, cursor:'pointer' }}>‹</button>
+                  <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(prev => (prev + 1) % galleryDeck.length); }} style={{ position:'absolute', right:20, background:'none', border:'none', color:'var(--white)', fontSize:32, cursor:'pointer' }}>›</button>
               </motion.div>
           )}
       </AnimatePresence>
@@ -628,6 +877,34 @@ export default function FarewellPage() {
         .tdot:nth-child(3) { animation-delay:.4s }
         @keyframes tdotbounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
         .custom-scrollbar::-webkit-scrollbar { display: none; }
+                .gallery-stage { position: relative; max-width: 1240px; margin: 0 auto; padding: 58px 24px 24px; }
+                .lights-wire { position: absolute; left: 4%; right: 4%; top: 26px; border-top: 2px dashed rgba(240,253,252,0.25); }
+                .lights-row { position: absolute; left: 6%; right: 6%; top: 24px; display: flex; justify-content: space-between; pointer-events: none; }
+                .light-bulb { width: 12px; height: 18px; border-radius: 999px; display: inline-block; filter: drop-shadow(0 0 10px rgba(255,255,255,0.35)); animation: bulbPulse 1.8s ease-in-out infinite; }
+                .bulb-0 { background: #ffd166; }
+                .bulb-1 { background: #ff6b6b; }
+                .bulb-2 { background: #80ed99; }
+                .bulb-3 { background: #7cc6fe; }
+                @keyframes bulbPulse { 0%,100% { opacity:.55; transform: translateY(0); } 50% { opacity:1; transform: translateY(2px); } }
+                .memory-spark { position: absolute; font-family: 'Playfair Display, serif'; font-style: italic; color: rgba(240,253,252,0.55); font-size: clamp(12px, 1.8vw, 18px); pointer-events: none; }
+                .memory-spark-left { left: 26px; top: 46px; transform: rotate(-5deg); }
+                .memory-spark-right { right: 26px; top: 46px; transform: rotate(5deg); }
+                .emotional-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; align-items: start; }
+                .memory-card { position: relative; border: 0; background: rgba(255,255,255,0.07); padding: 10px; border-radius: 12px; cursor: pointer; box-shadow: 0 14px 28px rgba(0,0,0,0.35); overflow: hidden; }
+                .memory-card::before { content: ''; position: absolute; inset: 0; border: 1px solid rgba(240,253,252,0.25); border-radius: 12px; pointer-events: none; }
+                .memory-card img { width: 100%; height: 100%; min-height: 180px; max-height: 330px; object-fit: cover; border-radius: 8px; display: block; }
+                .tone-0 img { filter: saturate(1.08) brightness(1.02); }
+                .tone-1 img { filter: saturate(1.14) contrast(1.04); }
+                .tone-2 img { filter: saturate(1.12) sepia(0.06); }
+                .tone-3 img { filter: saturate(1.1) brightness(1.04); }
+                @media (max-width: 760px) {
+                    .gallery-stage { padding-top: 68px; }
+                    .lights-row { top: 22px; }
+                    .memory-spark { display: none; }
+                    .emotional-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+                    .memory-card { padding: 7px; }
+                    .memory-card img { min-height: 150px; max-height: 230px; }
+                }
       `}</style>
     </div>
   );
