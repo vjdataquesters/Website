@@ -26,7 +26,7 @@ export const farewellData = {
   },
   vaishnavi: { name: "Vaishnavi", role: "General Secretary", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/vaishnavi.png", juniorsComments: [], galleryImages: [] },
   srihastha: { name: "Srihastha", role: "Student Coordinator", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/hastha.png", juniorsComments: [], galleryImages: [] },
-  charan: { name: "Charan", role: "Student Coordinator", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/charan.png", juniorsComments: [], galleryImages: [] },
+  charan: { name: "Charan", role: "Student Coordinator", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/charan26.png", juniorsComments: [], galleryImages: [] },
   "bhanu-satish": { name: "Bhanu Satish", role: "Student Coordinator", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/bhanu.png", juniorsComments: [], galleryImages: [] },
   adithya: {
     name: "Adithya",
