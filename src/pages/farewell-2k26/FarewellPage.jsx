@@ -38,12 +38,17 @@ function buildIntroImagePoolFromManifest(manifest, slug) {
         : [];
     const individual = shuffleArray(Array.isArray(individualBySlug) ? individualBySlug : []);
 
-    const commonCount = common.length <= 2
+    let commonCount = common.length <= 2
         ? common.length
         : 2 + Math.floor(Math.random() * 2); // 2 or 3
 
+    const selectedIndividual = individual.slice(0, 12 - commonCount);
+    
+    if (selectedIndividual.length + commonCount < 12) {
+        commonCount = Math.min(common.length, 12 - selectedIndividual.length);
+    }
+
     const selectedCommon = common.slice(0, commonCount);
-    const selectedIndividual = individual.slice(0, 12 - selectedCommon.length);
 
     return [...selectedCommon, ...selectedIndividual];
 }
@@ -111,12 +116,18 @@ export default function FarewellPage() {
     }, [baseIntroImages]);
 
     const galleryImages = useMemo(() => {
-        const manifestImages = introManifest?.individual?.[slug];
-        if (Array.isArray(manifestImages) && manifestImages.length > 0) {
-            return manifestImages;
+        let result = [];
+        const manifestIndividual = introManifest?.individual?.[slug];
+        if (Array.isArray(manifestIndividual) && manifestIndividual.length > 0) {
+            result = [...manifestIndividual];
         }
 
-        return [];
+        const manifestCommon = introManifest?.common;
+        if (Array.isArray(manifestCommon) && manifestCommon.length > 0) {
+            result = [...result, ...manifestCommon];
+        }
+
+        return result;
     }, [introManifest, slug]);
 
     const galleryDeck = useMemo(() => {

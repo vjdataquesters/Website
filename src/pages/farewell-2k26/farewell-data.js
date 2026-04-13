@@ -98,7 +98,15 @@ export const farewellData = {
     ],
     galleryImages: [],
   },
-  karthikeya: { name: "Karthikeya", role: "Technical Head", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/karthik.png", juniorsComments: [], galleryImages: [] },
+  karthikeya: { name: "Karthikeya", role: "Technical Head", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/me.png", juniorsComments: [
+    {
+        initials: "A",
+        name: "Akhil",
+        comment:
+          "We’re truly grateful to Karthikeya for his constant support and guidance. He was always approachable and made even the toughest concepts feel simple. His advice and encouragement have helped us grow with confidence.",
+        time: "11:00 PM",
+      }
+  ], galleryImages: [] },
   "sathvik-karamshetty": { name: "Sathvik Karamshetty", role: "Event Organising Head", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/sathvik.png", juniorsComments: [], galleryImages: [] },
   varun: { name: "Varun", role: "Event Organising Head", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/varunsai.png", juniorsComments: [], galleryImages: [] },
   nipun: {
@@ -251,5 +259,13 @@ export const farewellData = {
     ],
     galleryImages: [],
   },
-  praneesh: { name: "Praneesh", role: "Heart of Tech", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/praneesh.png", juniorsComments: [], galleryImages: [] },
+  praneesh: { name: "Praneesh", role: "Heart of Tech", quote: '"Data Questers brought us together. These memories keep us."', portrait: "/teamImages/praneesh.png", juniorsComments: [
+     {
+        initials: "A",
+        name: "Akhil",
+        comment:
+          "A big thank you to Praneesh for always being there whenever we needed help. No matter how small the doubt or what time it was, he explained everything with patience and clarity. His guidance, both technically and for career decisions, has truly made a difference for us.",
+        time: "11:00 PM",
+      }
+  ], galleryImages: [] },
 };

@@ -1,86 +1,75 @@
-﻿{
-    "common":  [
-                   "/farewell-2k26/intro/common/20260109_160012.jpg.jpeg",
-                   "/farewell-2k26/intro/common/image copy 2.png",
-                   "/farewell-2k26/intro/common/image copy.png",
-                   "/farewell-2k26/intro/common/image.png",
-                   "/farewell-2k26/intro/common/IMG-20260410-WA0078.jpg.jpeg"
-               ],
-    "individual":  {
-                       "yudhi":  [
-
-                                 ],
-                       "sathvik-karamshetty":  [
-
-                                               ],
-                       "bindu":  [
-
-                                 ],
-                       "harshitha":  [
-
-                                     ],
-                       "pranathi":  [
-
-                                    ],
-                       "avinash":  [
-
-                                   ],
-                       "charan":  [
-
-                                  ],
-                       "adithya":  [
-
-                                   ],
-                       "vishweshwar":  [
-
-                                       ],
-                       "praneesh":  [
-
-                                    ],
-                       "vishal":  [
-
-                                  ],
-                       "hitesh":  [
-
-                                  ],
-                       "sathvik-k":  [
-
-                                     ],
-                       "srihastha":  [
-
-                                     ],
-                       "karthikeya":  [
-
-                                      ],
-                       "nipun":  [
-
-                                 ],
-                       "snigdha":  [
-
-                                   ],
-                       "akhileshwar":  [
-
-                                       ],
-                       "vimal":  [
-
-                                 ],
-                       "vaishnavi":  [
-
-                                     ],
-                       "vardhan":  [
-                                       "/farewell-2k26/intro/individual/vardhan/image copy 2.png",
-                                       "/farewell-2k26/intro/individual/vardhan/image copy 3.png",
-                                       "/farewell-2k26/intro/individual/vardhan/image copy.png",
-                                       "/farewell-2k26/intro/individual/vardhan/image.png"
-                                   ],
-                       "bhanu-satish":  [
-
-                                        ],
-                       "ganesh":  [
-
-                                  ],
-                       "varun":  [
-
-                                 ]
-                   }
+{
+  "common": [
+    "/farewell-2k26/intro/common/20260109_160012.jpg.jpeg",
+    "/farewell-2k26/intro/common/54c61a6c-3fb5-48ad-9a57-4a9e279e52d1.jpg",
+    "/farewell-2k26/intro/common/image copy 2.png",
+    "/farewell-2k26/intro/common/image copy.png",
+    "/farewell-2k26/intro/common/image.png",
+    "/farewell-2k26/intro/common/IMG-20240926-WA0028.jpg.jpeg",
+    "/farewell-2k26/intro/common/IMG-20241026-WA0048.jpg",
+    "/farewell-2k26/intro/common/IMG-20241026-WA0050.jpg",
+    "/farewell-2k26/intro/common/IMG-20241107-WA0199.jpg.jpeg",
+    "/farewell-2k26/intro/common/IMG-20241108-WA0033.jpg",
+    "/farewell-2k26/intro/common/IMG-20250208-WA0023.jpg.jpeg",
+    "/farewell-2k26/intro/common/IMG-20260410-WA0078.jpg.jpeg",
+    "/farewell-2k26/intro/common/IMG_20240614_232841.jpg",
+    "/farewell-2k26/intro/common/IMG_7092.jpg",
+    "/farewell-2k26/intro/common/IMG_7095.jpg",
+    "/farewell-2k26/intro/common/Photo TV 2K25 (1).png",
+    "/farewell-2k26/intro/common/Screenshot_20260412-205127.png"
+  ],
+  "individual": {
+    "adithya": [
+      "/farewell-2k26/intro/individual/adithya/image copy 2.png",
+      "/farewell-2k26/intro/individual/adithya/image.png",
+      "/farewell-2k26/intro/individual/adithya/IMG_20250412_135305.jpg",
+      "/farewell-2k26/intro/individual/adithya/IMG_20250923_151507.jpg",
+      "/farewell-2k26/intro/individual/adithya/IMG_20251219_175439.jpg",
+      "/farewell-2k26/intro/individual/adithya/IMG_7123.jpg",
+      "/farewell-2k26/intro/individual/adithya/Screenshot_2025-02-15-20-42-21-139_com.google.android.apps.docs.jpg"
+    ],
+    "akhileshwar": [
+      "/farewell-2k26/intro/individual/akhileshwar/image copy 2.png",
+      "/farewell-2k26/intro/individual/akhileshwar/image.png"
+    ],
+    "avinash": [
+      "/farewell-2k26/intro/individual/avinash/IMG-20241108-WA0033.jpg"
+    ],
+    "charan": [
+      "/farewell-2k26/intro/individual/charan/IMG-20241108-WA0033.jpg"
+    ],
+    "ganesh": [
+      "/farewell-2k26/intro/individual/ganesh/image copy 2.png"
+    ],
+    "hitesh": [
+      "/farewell-2k26/intro/individual/hitesh/image copy 2.png",
+      "/farewell-2k26/intro/individual/hitesh/image.png",
+      "/farewell-2k26/intro/individual/hitesh/IMG_20250412_135337.jpg"
+    ],
+    "nipun": [
+      "/farewell-2k26/intro/individual/nipun/image copy 2.png"
+    ],
+    "sathvik-k": [
+      "/farewell-2k26/intro/individual/sathvik-k/image.png",
+      "/farewell-2k26/intro/individual/sathvik-k/IMG_20250923_151507.jpg",
+      "/farewell-2k26/intro/individual/sathvik-k/IMG_20251219_175439.jpg",
+      "/farewell-2k26/intro/individual/sathvik-k/IMG_7123.jpg"
+    ],
+    "snigdha": [
+      "/farewell-2k26/intro/individual/snigdha/image copy 2.png"
+    ],
+    "vardhan": [
+      "/farewell-2k26/intro/individual/vardhan/image copy 2.png",
+      "/farewell-2k26/intro/individual/vardhan/image copy 3.png",
+      "/farewell-2k26/intro/individual/vardhan/image copy.png",
+      "/farewell-2k26/intro/individual/vardhan/image.png"
+    ],
+    "vishal": [
+      "/farewell-2k26/intro/individual/vishal/image.png",
+      "/farewell-2k26/intro/individual/vishal/IMG-20241112-WA0105.jpg"
+    ],
+    "vishweshwar": [
+      "/farewell-2k26/intro/individual/vishweshwar/IMG_20250412_135305.jpg"
+    ]
+  }
 }
