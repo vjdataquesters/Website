@@ -15,6 +15,7 @@ import Credentials from "./Credentials";
 import Members from "./Members";
 import SSDRegistration from "./SSDRegistration";
 import SSDSubmissions from "./SSDSubmissions";
+import farewell2K26Routes from "./farewell-2k26/routes";
 
 const router = [
   { path: "/", component: Home },
@@ -30,6 +31,7 @@ const router = [
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
   { path: "/register/ssd", component: SSDRegistration },
+  ...farewell2K26Routes,
   // { path: "/register", component: RegistrationForm }, 
   // { path: "/hit", component: Hit },
   // { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
