@@ -7,10 +7,10 @@ import CountUp from "react-countup";
 export default function About() {
   const location = useLocation();
   const counter = {
-    mem: 300,
-    events: 15,
-    core: 60,
-    alumni: 50,
+    mem: 600,
+    events: 20,
+    core: 80,
+    alumni: 100,
   };
 
   const boxVariants = {
