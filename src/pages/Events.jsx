@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../clip-art.css";
 import { useSearchParams } from "react-router-dom";
@@ -71,7 +71,7 @@ export default function Events() {
   const recentYear = Object.keys(events.past)[0];
   const [pastevents, setPastevents] = useState(events.past[recentYear]);
   const [year, setyear] = useState(recentYear.slice(1));
-  
+
   const [searchParams, setSearchParams] = useSearchParams();
   const pastEventsYear = searchParams.get("pastEventsYear");
 
@@ -124,16 +124,16 @@ export default function Events() {
           </div>
 
           <div className="flex flex-col flex-wrap gap-5">
-            <h2 className="text-4xl text-center font-bold">Past Events</h2>
-            <div className="text-center flex flex-row justify-around sm:gap-7 sm:justify-center">
+            <h2 className="text-4xl text-center font-bold">Our Events</h2>
+            <div className="flex flex-row flex-wrap justify-center gap-3">
               {Object.keys(events.past).map((eventyear) => (
                 <button
                   key={eventyear}
-                  className={`text-center w-24 h-9 font-bold text-lg border-2 border-black text-black shadow-[5px_5px_5px_0px] hover:shadow-none  transition-all rounded-md  ${
+                  className={`px-5 py-1.5 font-bold text-base border-2 border-black text-black shadow-[4px_4px_0px_0px] hover:shadow-none transition-all rounded-md ${
                     year.toString() === eventyear.slice(1)
                       ? "bg-[#0f323f] text-white"
                       : "bg-white"
-                  } `}
+                  }`}
                   onClick={() => handleYearChange(eventyear)}
                 >
                   {eventyear.slice(1)}

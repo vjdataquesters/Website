@@ -257,9 +257,16 @@ body::-webkit-scrollbar {
 
 /* Event.jsx */
 
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 20px !important;  
+.event-swiper-button-next,
+.event-swiper-button-prev {
+  width: 3rem !important;
+  height: 3rem !important;
+  padding: 0.75rem;
+}
+
+.event-swiper-button-next::after,
+.event-swiper-button-prev::after {
+  font-size: 20px !important;
   font-weight: bold;
 }
 
