@@ -96,8 +96,12 @@ export default function Team() {
         <div className={`grid gap-6 mb-10 ${isCurrentCore ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3'}`}>
           {leads.map((m, i) => <TeamCard key={i} member={m} isLarge={true} onOpenBio={setSelectedMember} />)}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {others.map((m, i) => <TeamCard key={i} member={m} onOpenBio={setSelectedMember} />)}
+        <div className="flex flex-wrap justify-center gap-6">
+          {others.map((m, i) => (
+            <div key={i} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+              <TeamCard member={m} onOpenBio={setSelectedMember} />
+            </div>
+          ))}
         </div>
       </div>
     );
