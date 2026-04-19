@@ -84,7 +84,8 @@ const TeamCard = ({ member, isLarge = false, onOpenBio }) => (
 
 export default function Team() {
   const [selectedMember, setSelectedMember] = useState(null);
-  const [activeAlumniYear, setActiveAlumniYear] = useState(null);
+  const [activeAlumniYear, setActiveAlumniYear] = useState('2025');
+
   const renderGrid = (teamArray, isCurrentCore = false) => {
     // Top 3 leads for Alumni/2024, 4 for Core Team
     const leadLimit = isCurrentCore ? 4 : 3;
@@ -113,7 +114,7 @@ export default function Team() {
       </section>
 
       {/* FACULTY SECTION */}
-     <section className="mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <section className="mb-40 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
         {faculty.map((m, i) => (
           <div key={i} className="bg-slate-50 border border-slate-200 rounded-[2rem] p-10 flex flex-col items-center text-center font-sans group transition-all duration-300 hover:border-blue-500/30 hover:shadow-lg">
             
@@ -133,46 +134,27 @@ export default function Team() {
         ))}
       </section>
 
-      <section className="mb-12 border-t border-slate-100 pt-8">
+      <section className="mb-40 border-t border-slate-100 pt-24">
         <h1 className="text-4xl font-normal text-black text-center mb-6">Core Team</h1>
         {renderGrid(currentteam, true)}
       </section>
 
-    <section className="mb-16 border-t border-slate-100 pt-10 text-center">
-  <h1 className="text-2xl font-normal text-black mb-6">Alumni</h1>
-
-  <div className="flex justify-center gap-4 mb-20">
-    {['2025', '2024'].map((year) => {
-      return (
-        <button
-          key={year}
-          onClick={() =>
-  setActiveAlumniYear(activeAlumniYear === year ? null : year)
-}
-          className={`px-10 py-3 rounded-xl font-bold text-lg border-2 border-black transition-all ${
-            activeAlumniYear === year
-              ? "bg-black text-white shadow-[6px_6px_0px_0px_black]"
-              : "bg-white text-black shadow-[6px_6px_0px_0px_black] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
-          }`}
-        >
-          {year}
-        </button>
-      );
-    })}
-  </div>
-
-  <AnimatePresence mode="wait">
-    <motion.div
-      key={activeAlumniYear}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      {activeAlumniYear && renderGrid(pastteams[activeAlumniYear], false)}
-    </motion.div>
-  </AnimatePresence>
-</section>
-
+      <section className="mb-32 border-t border-slate-100 pt-24 text-center">
+        <h1 className="text-2xl font-normal text-black mb-6">Alumni</h1>
+        <div className="flex justify-center gap-4 mb-20">
+          {['2025', '2024'].map(year => (
+            <button key={year} onClick={() => setActiveAlumniYear(year)}
+              className={`px-10 py-3 rounded-xl font-bold transition-all border ${activeAlumniYear === year ? "bg-slate-900 text-white shadow-xl" : "bg-white text-slate-500 border-slate-200"}`}>
+              {year}
+            </button>
+          ))}
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div key={activeAlumniYear} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            {renderGrid(pastteams[activeAlumniYear] || [], false)}
+          </motion.div>
+        </AnimatePresence>
+      </section>
     </div>
   );
 }
