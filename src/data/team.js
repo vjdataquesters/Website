@@ -30,7 +30,7 @@ export const currentteam = [
     role: "Chair Person",
     image: "Rohit(2026).png", 
     linkedin: "https://www.linkedin.com/in/sethu-rohith/", 
-    bio: "As the chairperson of our departmental club, I feel truly privileged to lead a team of passionate and driven individuals..."
+    bio: "As the chairperson of our departmental club, I feel truly privileged to lead a team of passionate and driven individuals. This role has allowed me to not only grow as a leader but also contribute to a culture of learning, collaboration, and innovation. Our club is more than just a platform—it’s a space where ideas come to life, skills are sharpened, and friendships are forged. I am committed to creating an inclusive environment where every member feels valued and inspired to explore their potential. Together, we aim to make a lasting impact through our initiatives and collective efforts."
   },
   {
     name: "Sai Teja Salvaji",
