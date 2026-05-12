@@ -447,9 +447,12 @@ export default function SubmissionsPanel({ initialRoll = "" }) {
                 e.preventDefault();
                 setIsDragging(false);
                 const file = e.dataTransfer.files[0];
-                if (file && file.type.startsWith("image/")) {
+                const allowed = ["image/png", "image/jpeg", "image/webp", "image/heic", "image/heif"];
+                if (file && allowed.includes(file.type)) {
                   setImageFile(file);
                   setUploadStatus({ type: "idle", message: "" });
+                } else if (file) {
+                  setUploadStatus({ type: "error", message: "Unsupported file type. Please upload a PNG, JPG, WEBP, HEIC, or HEIF image." });
                 }
               }}
               className={`flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed px-6 py-10 cursor-pointer transition-colors duration-200 ${
@@ -470,7 +473,7 @@ export default function SubmissionsPanel({ initialRoll = "" }) {
                       Click or drag & drop an image
                     </p>
                     <p className="text-xs text-slate-400 mt-1">
-                      PNG, JPG, JPEG, WEBP
+                      PNG, JPG, WEBP, HEIC, HEIF
                     </p>
                   </>
                 )}
@@ -479,10 +482,17 @@ export default function SubmissionsPanel({ initialRoll = "" }) {
                 id="solution-image"
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept="image/png,image/jpeg,image/webp,image/heic,image/heif"
                 className="hidden"
                 onChange={(e) => {
-                  setImageFile(e.target.files[0] || null);
+                  const file = e.target.files[0] || null;
+                  const allowed = ["image/png", "image/jpeg", "image/webp", "image/heic", "image/heif"];
+                  if (file && !allowed.includes(file.type)) {
+                    setUploadStatus({ type: "error", message: "Unsupported file type. Please upload a PNG, JPG, WEBP, HEIC, or HEIF image." });
+                    e.target.value = "";
+                    return;
+                  }
+                  setImageFile(file);
                   setUploadStatus({ type: "idle", message: "" });
                 }}
               />
