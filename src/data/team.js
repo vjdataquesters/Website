@@ -42,7 +42,7 @@ export const currentteam = [
   {
     name: "Akhil Varsh",
     role: "Joint Secretary",
-    image: "AkhilVarsh.png",
+    image: "AkhilVarsh.jpg",
     linkedin: "https://www.linkedin.com/in/pettem-akhil-varsh-4ba049285/",
     bio: "As the Joint Secretary of our club, I take pride in supporting the coordination and communication that ensure our initiatives run seamlessly. Working closely with the General Secretary and the team, I focus on assisting in planning, organizing, and executing events while making sure information flows effectively among members. This role has helped me develop adaptability, collaboration, and problem-solving skills, especially in dynamic situations. I strive to contribute to a well-structured and efficient environment where every idea is valued and every task is carried out with clarity. Being part of this vibrant community has been a truly enriching experience, motivating me to actively support the team and contribute towards achieving our collective goals with dedication and enthusiasm."
   },
