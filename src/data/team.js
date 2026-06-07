@@ -40,7 +40,7 @@ export const currentteam = [
     bio: "As the president of our club, I am proud to be at the forefront of a community that thrives on creativity, collaboration, and continuous learning. This role has given me the opportunity to work with an exceptional team, turning ideas into impactful events and projects. I believe in leading with purpose and ensuring that every voice in the club is heard and valued. Our goal is to foster a space where innovation meets execution, and members are encouraged to challenge themselves. I'm committed to driving initiatives that empower students and leave a meaningful mark on our department and beyond."
   },
   {
-    name: "Akhil Varsh",
+    name: "Akhilvarsh",
     role: "Joint Secretary",
     image: "AkhilVarsh.jpg",
     linkedin: "https://www.linkedin.com/in/pettem-akhil-varsh-4ba049285/",
