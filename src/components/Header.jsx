@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Sun, Moon } from "lucide-react";
 import Bars from "../assets/bars.svg";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
   const handleBarsClick = () => setMenu(!menu);
+
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+  );
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    localStorage.setItem("theme", nextTheme);
+  };
 
   const DropVariants = {
     hover: {
@@ -178,6 +198,19 @@ const Header = () => {
             </Link>
           </li>
         </ul>
+
+        {/* Theme Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className="mx-4 p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none text-white flex items-center justify-center cursor-pointer"
+          aria-label="Toggle Dark Mode"
+        >
+          {theme === "dark" ? (
+            <Sun size={20} className="text-yellow-400 fill-yellow-400" />
+          ) : (
+            <Moon size={20} className="text-slate-300 fill-slate-300" />
+          )}
+        </button>
 
         <div
           className="flex w-[35px] cursor-pointer md:hidden"
