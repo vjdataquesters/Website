@@ -1,9 +1,10 @@
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../clip-art.css";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Trophy, Code2, Sparkles } from "lucide-react";
 import events from "../data/events.js";
 import Reveal from "../components/Reveal.jsx";
+import { motion } from "framer-motion";
 
 if (typeof document !== "undefined") {
   const injectStyle = () => {
@@ -207,7 +208,7 @@ export default function Events() {
   return (
     <>
       {/*Event highlights*/}
-      <section className="clip-art-1 relative bg-gradient-to-b from-[#0f323f] via-[#0f323f] to-[#0f323f]/85 min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh] flex items-center justify-center px-4 sm:px-6 md:px-8">
+      <section className="clip-art-1 relative bg-gradient-to-b from-[#0f323f] via-[#0f323f] to-[#0f323f]/85 min-h-[60vh] sm:min-h-[70vh] md:min-h-[80vh] flex items-center justify-center px-4 sm:px-6 md:px-8 pt-24 pb-16 lg:pb-24">
         {/* Back Button */}
         <button
           onClick={() => navigate("/")}
@@ -216,14 +217,75 @@ export default function Events() {
           <ArrowLeft size={16} className="transform group-hover:-translate-x-1 transition-transform" />
           Back to Home
         </button>
-        <div className="w-full pt-10 md:pt-0 md:w-2/3 pb-5">
-          <h1 className="text-4xl sm:text-5xl pb-4 sm:pb-4 md:text-6xl md:pb-3 font-bold text-white">
-            Discover Amazing Events we Organized
-          </h1>
-          <p className="text-sm text-white sm:block sm:text-lg md:pb-none pr-3">
-            Explore the diverse range of events we've hosted, designed to
-            inspire, educate, and bring our community together
-          </p>
+        <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-8 md:pt-4">
+          <div className="lg:col-span-7 text-left pb-5">
+            <h1 className="text-4xl sm:text-5xl pb-4 sm:pb-4 md:text-6xl md:pb-3 font-bold text-white leading-tight">
+              Discover Amazing Events we Organized
+            </h1>
+            <p className="text-sm text-white/95 sm:text-lg md:pb-none pr-3 max-w-2xl leading-relaxed">
+              Explore the diverse range of events we've hosted, designed to
+              inspire, educate, and bring our community together
+            </p>
+          </div>
+          
+          <div className="lg:col-span-5 relative h-[380px] sm:h-[420px] w-full flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+              whileHover={{ scale: 1.03, zIndex: 30 }}
+              className="absolute left-[5%] top-[8%] sm:left-[10%] w-[80%] sm:w-[260px] p-5 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-xl shadow-cyan-500/5 z-10 transition-all hover:border-cyan-500/40 hover:shadow-cyan-500/20 group cursor-default text-left"
+              style={{ boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15)" }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-md group-hover:scale-110 transition-transform">
+                  <Trophy size={18} />
+                </div>
+                <h3 className="font-semibold text-white font-[Poppins] text-base">Hackathons</h3>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-white/75">
+                24-hour coding marathons solving real-world challenges with cash prizes.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              whileHover={{ scale: 1.03, zIndex: 30 }}
+              className="absolute right-[5%] top-[35%] sm:right-[10%] w-[80%] sm:w-[260px] p-5 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-xl shadow-emerald-500/5 z-20 transition-all hover:border-emerald-500/40 hover:shadow-emerald-500/20 group cursor-default text-left"
+              style={{ boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15)" }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md group-hover:scale-110 transition-transform">
+                  <Code2 size={18} />
+                </div>
+                <h3 className="font-semibold text-white font-[Poppins] text-base">Workshops</h3>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-white/75">
+                Hands-on systems development, Cloud, Machine Learning, and GenAI.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+              whileHover={{ scale: 1.03, zIndex: 30 }}
+              className="absolute left-[15%] bottom-[15%] sm:left-[20%] w-[80%] sm:w-[260px] p-5 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-xl shadow-amber-500/5 z-10 transition-all hover:border-amber-500/40 hover:shadow-amber-500/20 group cursor-default text-left"
+              style={{ boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15)" }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md group-hover:scale-110 transition-transform">
+                  <Sparkles size={18} />
+                </div>
+                <h3 className="font-semibold text-white font-[Poppins] text-base">Fun Pursuits</h3>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-white/75">
+                Thrilling treasure hunts, aptitude chases, quizzes, and memes.
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
