@@ -36,7 +36,50 @@
 //   | 'Guest Lecture';
 
 const events = {
-  upcoming: [],
+  upcoming: [
+    {
+      name: "Morning Tech Talk",
+      eventId: "dummy-event-1",
+      image: "/logo.png",
+      date: "December 31st 2026",
+      venue: "VNR VJIET",
+      timings: "10:00 AM",
+      pics: ["/logo.png"],
+      countdownDate: "2026-12-31T10:00:00",
+      isGFormEmbeddable: false,
+      event_tags: ["Test", "Dummy"],
+      description: "This is a dummy event at 10 AM.",
+      link: "/events/dummy-event-1",
+    },
+    {
+      name: "Afternoon Workshop",
+      eventId: "dummy-event-2",
+      image: "/logo.png",
+      date: "December 31st 2026",
+      venue: "VNR VJIET",
+      timings: "1:00 PM",
+      pics: ["/logo.png"],
+      countdownDate: "2026-12-31T13:00:00",
+      isGFormEmbeddable: false,
+      event_tags: ["Test", "Dummy"],
+      description: "This is a dummy event at 1 PM.",
+      link: "/events/dummy-event-2",
+    },
+    {
+      name: "Evening Hackathon",
+      eventId: "dummy-event-3",
+      image: "/logo.png",
+      date: "December 31st 2026",
+      venue: "VNR VJIET",
+      timings: "3:00 PM",
+      pics: ["/logo.png"],
+      countdownDate: "2026-12-31T15:00:00",
+      isGFormEmbeddable: false,
+      event_tags: ["Test", "Dummy"],
+      description: "This is a dummy event at 3 PM.",
+      link: "/events/dummy-event-3",
+    }
+  ],
   past: {
     e2026: [
       {

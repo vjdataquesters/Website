@@ -239,6 +239,20 @@ body::-webkit-scrollbar {
   }
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+  display: flex;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 .small-scrollbar::-webkit-scrollbar {
   width: 5px;
 }
