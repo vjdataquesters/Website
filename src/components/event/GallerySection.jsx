@@ -43,9 +43,7 @@ export default function GallerySection({ pics, eventName }) {
   return (
     <section id="gallery" className="scroll-mt-28">
       <div className="mb-12 text-center">
-        <span className="rounded-full bg-cyan-500/10 px-3 py-1 text-[11px] font-extrabold uppercase tracking-widest text-cyan-400 border border-cyan-400/20">
-          Moments
-        </span>
+        
         <h2 className="mt-3 font-[Poppins] text-3xl font-black text-white sm:text-4xl tracking-tight">
           Captured Memories
         </h2>

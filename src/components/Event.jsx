@@ -55,16 +55,9 @@ const iconMap = {
 
 function SectionDivider() {
   return (
-    <div className="relative my-24 flex justify-center">
+    <div className="relative h-10 my-24 flex justify-center">
       {/* Central vertical glowing line */}
       <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] bg-gradient-to-b from-transparent via-[#0f323f]/20 to-transparent" />
-      
-      {/* Glow dot matrix */}
-      <div className="relative z-10 flex items-center justify-center">
-        <div className="h-10 w-10 rounded-full border border-cyan-500/20 bg-[#0a2530] flex items-center justify-center shadow-lg shadow-cyan-500/10">
-          <div className="h-2.5 w-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 animate-pulse" />
-        </div>
-      </div>
     </div>
   );
 }
@@ -177,9 +170,7 @@ export default function Event() {
               transition={{ duration: 0.5 }}
             >
               <div className="mb-6">
-                <span className="rounded-full bg-cyan-500/10 px-3 py-1 text-[11px] font-extrabold uppercase tracking-widest text-cyan-400 border border-cyan-400/20">
-                  Overview
-                </span>
+                
                 <h2 className="mt-3 font-[Poppins] text-3xl font-black text-white sm:text-4xl tracking-tight">
                   About the Event
                 </h2>
@@ -288,9 +279,7 @@ export default function Event() {
             <SectionDivider />
             <section id="highlights" className="scroll-mt-28 relative">
               <div className="mb-16 text-center">
-                <span className="rounded-full bg-cyan-500/10 px-3 py-1 text-[11px] font-extrabold uppercase tracking-widest text-cyan-400 border border-cyan-400/20">
-                  Focus Areas
-                </span>
+                
                 <h2 className="mt-3 font-[Poppins] text-3xl font-black text-white sm:text-4xl tracking-tight">
                   Event Highlights
                 </h2>
@@ -379,9 +368,7 @@ export default function Event() {
             <SectionDivider />
             <section id="outcomes" className="scroll-mt-28">
               <div className="mb-10 text-center">
-                <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-extrabold uppercase tracking-widest text-emerald-400 border border-emerald-400/20">
-                  Takeaways
-                </span>
+                
                 <h2 className="mt-3 font-[Poppins] text-3xl font-black text-white sm:text-4xl tracking-tight">
                   What You'll Gain
                 </h2>
@@ -419,9 +406,7 @@ export default function Event() {
             <SectionDivider />
             <section id="winners" className="scroll-mt-28">
               <div className="mb-10 text-center">
-                <span className="rounded-full bg-amber-500/10 px-3 py-1 text-[11px] font-extrabold uppercase tracking-widest text-amber-400 border border-amber-400/20">
-                  Honors
-                </span>
+                
                 <h2 className="mt-3 font-[Poppins] text-3xl font-black text-white sm:text-4xl tracking-tight">
                   {winnerDisplayMode === "category-grid"
                     ? "Category Winners"
@@ -445,9 +430,6 @@ export default function Event() {
             <SectionDivider />
             <section id="stats" className="scroll-mt-28">
               <div className="mb-10 text-center">
-                <span className="rounded-full bg-teal-500/10 px-3 py-1 text-[11px] font-extrabold uppercase tracking-widest text-teal-400 border border-teal-400/20">
-                  Analytics
-                </span>
                 <h2 className="mt-3 font-[Poppins] text-3xl font-black text-white sm:text-4xl tracking-tight">
                   Scale & Impact
                 </h2>
