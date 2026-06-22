@@ -6,7 +6,7 @@ const RegistrationForm = () => {
   return (
     <>
       <div className="flex md:hidden pt-20">
-        <Foered drm />
+        <Form />
       </div>
       <div className="hidden md:flex justify-center items-center py-20 min-h-screen">
         {/* Main Container */}

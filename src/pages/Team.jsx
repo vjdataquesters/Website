@@ -1,182 +1,264 @@
 import { faculty, currentteam, pastteams } from '../data/team';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Reveal from '../components/Reveal';
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight } from 'lucide-react';
 
+// Helper function to get image path from filename
 const getImageSrc = (filename) => {
-  return filename ? `/teamImages/${filename}` : "https://via.placeholder.com/400x500?text=Photo+Pending";
+  return filename ? `/teamImages/${filename}` : "https://picsum.photos/200";
 };
 
-// --- CENTERED BIO MODAL ---
+const Image = ({
+  name,
+  role,
+  creativeRole,
+  image,
+  linkedin,
+  bio,
+  onImageClick,
+  notClickable = false
+}) => {
+  return (
+    <div className="flex flex-col justify-around px-6 py-8 rounded-2xl bg-[#fafafa] hover:bg-[#eaeaea] transition-all duration-300">
+      <div className="text-left w-full mb-1">
+        <p className="text-xl font-medium">{role}</p>
+        <p className="text-sm text-gray-500 italic">{creativeRole}</p>
+      </div>
+      <img
+        className={`w-52 h-52 md:w-64 md:h-64 rounded-3xl mx-auto transition-all duration-300 object-cover ${
+          onImageClick ? 'cursor-pointer' : 'cursor-default'
+        }`}
+        src={getImageSrc(image)}
+        alt={name + " image"}
+        draggable={false}
+        loading="lazy"
+        onClick={onImageClick}
+      />
+      <a
+        href={linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-lg text-right w-full mt-1 text-black no-underline hover:underline"
+      >
+        <p>{name}</p>
+      </a>
+    </div>
+  );
+};
+
+// Framer Motion variants for impressive modal animation
+const backdropVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+  exit:   { opacity: 0 }
+};
+
+const modalVariants = {
+  hidden: { opacity: 0, y: -80, scale: 0.92 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 250, damping: 22 } },
+  exit:   { opacity: 0, y: 80, scale: 0.92, transition: { type: "spring", stiffness: 300, damping: 25 } }
+};
+
 const BioModal = ({ member, onClose }) => {
   if (!member) return null;
+
   return (
-    <motion.div 
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <motion.div 
-        initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
-        className="bg-white rounded-[2rem] max-w-lg w-full p-10 relative shadow-2xl flex flex-col items-center text-center font-sans"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button onClick={onClose} className="absolute top-6 right-6 text-slate-400 hover:text-slate-700 transition-colors">
-          <X size={20} />
-        </button>
-
-        <div className="flex flex-col items-center mb-8">
-          <img src={getImageSrc(member.image)} className="w-32 h-32 rounded-full object-cover shadow-lg border-4 border-white" alt={member.name} />
-          
-          <div className="flex items-center gap-3 mt-6">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-              {member.name}
-            </h2>
-            {member.linkedin && member.linkedin !== "" && (
-              <a
-                href={member.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-all duration-300 transform hover:scale-110 active:scale-95 flex items-center"
-              >
-                <img 
-                  src="https://cdn-icons-png.flaticon.com/512/174/174857.png" 
-                  alt="LinkedIn" 
-                  className="w-6 h-6 rounded-sm shadow-sm"
+    <motion.div
+          className="fixed inset-0 z-50 flex justify-center items-start md:items-center p-4"
+          variants={backdropVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          {/* Backdrop */}
+          <motion.div
+            className="absolute inset-0 bg-black bg-opacity-50"
+            variants={backdropVariants}
+            onClick={onClose}
+            aria-label="Close Modal"
+          />
+          {/* Modal Content */}
+          <motion.div
+            key={member.name}
+            className="relative bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto px-6 py-8 mt-16 md:mt-0 shadow-2xl"
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <div className="flex flex-col md:flex-row md:gap-8 gap-6 items-center justify-center">
+              {/* Image: centered on mobile, left on desktop */}
+              <div className="flex-shrink-0 flex w-full justify-center md:w-auto md:justify-start">
+                <img
+                  className="w-52 h-52 md:w-64 md:h-64 rounded-3xl object-cover mx-auto"
+                  src={getImageSrc(member.image)}
+                  alt={member.name + " image"}
                 />
-              </a>
-            )}
-          </div>
-
-          <p className="text-blue-600 font-bold uppercase text-[10px] tracking-[0.2em] mt-2">{member.role}</p>
-        </div>
-
-        {/* This displays the bio from your team.js */}
-        <div className="text-slate-600 leading-relaxed text-sm italic">
-          {member.bio ? `"${member.bio}"` : "Contributing to the technical excellence of VJ DataQuesters."}
-        </div>
-      </motion.div>
+              </div>
+              {/* Text content */}
+              <div className="flex-1 text-left flex flex-col max-w-2xl">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex flex-col">
+                    {/* Name and LinkedIn icon row */}
+                    <div className="flex items-center gap-3 mb-1">
+                      <h2 className="text-2xl font-bold">{member.name}</h2>
+                      {member.linkedin && (
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-8 h-8 flex items-center justify-center rounded-full bg-blue-50 hover:bg-blue-100 transition-colors"
+                          title="View LinkedIn Profile"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#0A66C2" className="w-5 h-5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                    <p className="text-lg text-gray-600">{member.role}</p>
+                    {member.creativeRole && (
+                      <p className="text-sm text-gray-500 italic">{member.creativeRole}</p>
+                    )}
+                  </div>
+                  <button 
+                    onClick={onClose}
+                    className="text-gray-500 hover:text-gray-700 text-2xl ml-4 self-start"
+                  >
+                    &times;
+                  </button>
+                </div>
+                <p className="text-gray-700 whitespace-pre-line flex-1 text-justify">{member.bio}</p>
+              </div>
+            </div>
+          </motion.div>
     </motion.div>
   );
 };
 
-// --- TEAM CARD COMPONENT ---
-const TeamCard = ({ member, isLarge = false, onOpenBio }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-    className={`relative overflow-hidden rounded-2xl group shadow-sm transition-all duration-500 bg-slate-50 font-sans
-      ${isLarge ? 'h-[380px] w-full' : 'h-[300px] w-full'}
-      border border-slate-200 hover:border-blue-500/30`}
-  >
-    <img src={getImageSrc(member.image)} alt={member.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-    <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/95 via-black/20 to-transparent transition-opacity duration-300">
-      <h3 className={`font-bold text-white leading-tight tracking-tight ${isLarge ? 'text-xl' : 'text-lg'}`}>{member.name}</h3>
-      <p className="text-blue-400 font-semibold text-[10px] uppercase tracking-wider mt-1.5 mb-5">{member.role}</p>
-      
-      <div className="flex items-center justify-end opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-        <button onClick={() => onOpenBio(member)} className="text-white/60 hover:text-white text-[9px] font-bold uppercase tracking-[0.2em] italic flex items-center gap-1.5">
-          Explore Bio <ArrowRight size={12} />
-        </button>
-      </div>
-    </div>
-  </motion.div>
-);
-
 export default function Team() {
+  const [pastMembers, setPastMembers] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMember, setSelectedMember] = useState(null);
-  const [activeAlumniYear, setActiveAlumniYear] = useState(null);
-  const renderGrid = (teamArray, isCurrentCore = false) => {
-    // Top 3 leads for Alumni/2024, 4 for Core Team
-    const leadLimit = isCurrentCore ? 4 : 3;
-    const leads = teamArray.slice(0, leadLimit);
-    const others = teamArray.slice(leadLimit);
 
-    return (
-      <div className="w-full max-w-7xl mx-auto px-4">
-        <div className={`grid gap-6 mb-10 ${isCurrentCore ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3'}`}>
-          {leads.map((m, i) => <TeamCard key={i} member={m} isLarge={true} onOpenBio={setSelectedMember} />)}
-        </div>
-        <div className="flex flex-wrap justify-center gap-6">
-          {others.map((m, i) => (
-            <div key={i} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
-              <TeamCard member={m} onOpenBio={setSelectedMember} />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedMember(null);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
+  const handleYearChange = (year) => {
+    if(selectedYear === year){
+      setPastMembers([]);
+      setSelectedYear(null);
+      return;
+    }
+    setPastMembers(pastteams[year]);
+    setSelectedYear(year);
+  };
+
+  const handleImageClick = (member) => {
+    setSelectedMember(member);
+  };
+
+  const closeModal = () => {
+    setSelectedMember(null);
   };
 
   return (
-    <div className="w-full py-24 px-4 bg-white min-h-screen font-sans">
-      <AnimatePresence>{selectedMember && <BioModal member={selectedMember} onClose={() => setSelectedMember(null)} />}</AnimatePresence>
-
-      <section className="mb-24 text-center pt-10">
-        <h1 className="text-4xl font-normal text-black mb-2">Who are we?</h1>
-        <p className="text-sm text-gray-600">The people behind VJDQ</p>
+    <div className="w-full py-20 px-4 text-center">
+      <AnimatePresence>
+        {selectedMember && (
+          <BioModal member={selectedMember} onClose={closeModal} />
+        )}
+      </AnimatePresence>
+      
+      <section className="mb-16">
+        <h1 className="font-semibold text-3xl mb-2">Who are we?</h1>
+        <p className="text-lg text-gray-600 mb-8">The people behind VJDQ</p>
+        <div className="mx-auto flex flex-wrap justify-center gap-5 max-w-7xl">
+          {faculty.map((member, index) => (
+            <Image
+              key={index}
+              name={member.name}
+              role={member.role}
+              creativeRole={member.creativeRole}
+              image={member.image}
+              linkedin={member.linkedin}
+              bio={member.bio}
+              onImageClick={() => handleImageClick(member)}
+            />
+          ))}
+        </div>
       </section>
 
-      {/* FACULTY SECTION */}
-     <section className="mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
-        {faculty.map((m, i) => (
-          <div key={i} className="bg-slate-50 border border-slate-200 rounded-[2rem] p-10 flex flex-col items-center text-center font-sans group transition-all duration-300 hover:border-blue-500/30 hover:shadow-lg">
-            
-            <div className="w-36 h-36 rounded-full overflow-hidden mb-6 border-4 border-white shadow-md">
-              <img src={getImageSrc(m.image)} className="w-full h-full object-cover" alt={m.name} />
-            </div>
+      <section className="mb-10">
+        <h1 className="font-semibold text-3xl mb-8" id="coreteam">
+          Core Team
+        </h1>
+        <div className="mx-auto flex flex-wrap justify-center gap-3 max-w-7xl">
+          {currentteam.map((member, index) => (
+            <Reveal key={index} className="w-full flex justify-center p-4">
+              <Image
+                name={member.name}
+                role={member.role || "Team Member"}
+                creativeRole={member.creativeRole}
+                image={member.image}
+                linkedin={member.linkedin}
+                bio={member.bio}
+                onImageClick={() => handleImageClick(member)}
+              />
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
-            <h3 className="text-xl font-bold text-slate-900 mb-2">{m.name}</h3>
-            <p className="text-blue-600 font-semibold uppercase text-[10px] tracking-[0.15em] mb-12">{m.role}</p>
-
-            <div className="w-full flex items-center justify-end mt-auto">
-              <button onClick={() => setSelectedMember(m)} className="text-slate-400 hover:text-blue-600 text-[9px] font-bold uppercase tracking-[0.2em] italic flex items-center gap-1.5 transition-colors">
-                Explore Bio <ArrowRight size={12} />
-              </button>
+      <section className='mb-16'>
+        <h1 className='mt-5 mb-4'>View Past Teams</h1>
+        <div className='mb-4'>
+          {Object.keys(pastteams).map((year) => (
+            <button
+              key={year}
+              className={`text-center mx-4 w-24 h-11 font-bold text-lg border-2 border-black text-black shadow-[5px_5px_5px_0px] hover:shadow-none  transition-all rounded-md  ${selectedYear === year
+                  ? "bg-[#0f323f] text-white"
+                  : "bg-white"
+                }`}
+              onClick={() => {
+                handleYearChange(year)
+              }}
+            >
+              {year}
+            </button>
+          ))}
+        </div>
+        {selectedYear &&
+          <div>
+            <h1 className="font-semibold text-3xl mb-8" id="coreteam">
+              Core Team
+            </h1>
+            <div className="mx-auto flex flex-wrap justify-center gap-3 max-w-7xl">
+              {pastMembers.map((member, index) => (
+                <Reveal key={index} className="w-full flex justify-center p-4">
+                  <Image
+                    name={member.name}
+                    role={member.role || "Team Member"}
+                    creativeRole={member.creativeRole}
+                    image={member.image}
+                    linkedin={member.linkedin}
+                    bio={member.bio}
+                    onImageClick={undefined} // Modal disabled for past members
+                    notClickable
+                  />
+                </Reveal>
+              ))}
             </div>
           </div>
-        ))}
+        }
       </section>
-
-      <section className="mb-12 border-t border-slate-100 pt-8">
-        <h1 className="text-4xl font-normal text-black text-center mb-6">Core Team</h1>
-        {renderGrid(currentteam, true)}
-      </section>
-
-    <section className="mb-16 border-t border-slate-100 pt-10 text-center">
-  <h1 className="text-2xl font-normal text-black mb-6">Alumni</h1>
-
-  <div className="flex justify-center gap-4 mb-20">
-    {['2025', '2024'].map((year) => {
-      return (
-        <button
-          key={year}
-          onClick={() =>
-  setActiveAlumniYear(activeAlumniYear === year ? null : year)
-}
-          className={`px-10 py-3 rounded-xl font-bold text-lg border-2 border-black transition-all ${
-            activeAlumniYear === year
-              ? "bg-black text-white shadow-[6px_6px_0px_0px_black]"
-              : "bg-white text-black shadow-[6px_6px_0px_0px_black] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
-          }`}
-        >
-          {year}
-        </button>
-      );
-    })}
-  </div>
-
-  <AnimatePresence mode="wait">
-    <motion.div
-      key={activeAlumniYear}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      {activeAlumniYear && renderGrid(pastteams[activeAlumniYear], false)}
-    </motion.div>
-  </AnimatePresence>
-</section>
-
     </div>
   );
 }
