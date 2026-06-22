@@ -28,7 +28,7 @@ function App() {
   }, []);
 
   const loadingAnimationBlacklist = ["/hit", "/hit-gen-qr-ultrasecretendpoint", "/register", "/register/ssd","/events/SSD/submissions"];
-  const headerBlacklist = ["/hit", "/register", "/register/ssd","/farewell-2k26"];
+  const headerBlacklist = ["/hit", "/register", "/register/ssd"];
   const promoBlacklist = ["/hit", "/hit-gen-qr-ultrasecretendpoint", "/register", "/register/ssd"];
 
   function PromoSection() {
