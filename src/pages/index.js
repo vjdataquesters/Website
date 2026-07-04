@@ -6,6 +6,7 @@ import Testimonials from "./Testimonials";
 import Event from "../components/Event";
 import Technovista from "../components/Technovista";
 import NewsLetter from "./NewsLetter";
+import Reads from "./Reads";
 import Gallery from "./Gallery";
 // import RegistrationForm from "./RegistrationForm";
 // import Carousel3D from "../components/TechnoVistaComponents/Carousel";
@@ -28,6 +29,7 @@ const router = [
   { path: "/team", component: Team },
   { path: "/members", component: Members },
   { path: "/newsletter", component: NewsLetter },
+  { path: "/reads", component: Reads },
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
   { path: "/register/ssd", component: SSDRegistration },
