@@ -767,7 +767,8 @@ function buildPages(edition, articles, isDesktop) {
   let chapterNum = 0;
   const chapters = orderedCats.map((category) => {
     chapterNum += 1;
-    return { number: chapterNum, category, reads: groups.get(category) };
+    const reads = groups.get(category).slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || (b.score ?? 0) - (a.score ?? 0));
+    return { number: chapterNum, category, reads };
   });
 
   const quote = QUOTES[pickIndex(edition.id, QUOTES.length)];
