@@ -10,6 +10,7 @@ import "swiper/css/autoplay";
 import events from "../data/events.js";
 import EventSessionQuery from "./EventSessionQuery";
 import EventSubmissions from "./EventSubmissions";
+import CountdownTimer from "./CountdownTimer";
 
 export default function Event() {
   function handleRegister(url) {
@@ -82,6 +83,13 @@ export default function Event() {
             <h3 className="text-lg font-semibold mb-2">About the Event</h3>
             <p className="text-gray-700 leading-relaxed">{event.description}</p>
           </div>
+
+          {event.countdownDate && (
+            <div className="my-6 bg-[#f8f9fa] border border-[#e9ecef] rounded-xl p-6 shadow-sm">
+              <h3 className="text-center font-semibold text-xl mb-4 text-[#0f323f]">Time Remaining</h3>
+              <CountdownTimer targetDate={event.countdownDate} />
+            </div>
+          )}
 
           {event.register && !event.isGFormEmbeddable && (
             <div className="self-end">
