@@ -2,17 +2,17 @@
 
 export const faculty = [
   {
-    name: "Dr. T. Sunil Kumar",
+    name: "Dr. Pasupuleti Venkata Siva Kumar",
     role: "Head Of Department",
     image: "hod.png",
-    linkedin: "https://www.linkedin.com/in/sunil-kumar-517a8715/",
-    bio: "As the Head of the Department, I take immense pride in guiding our students towards academic excellence and innovation. Our department fosters a culture of curiosity, collaboration, and continuous learning. I believe in empowering students to take initiative, lead with responsibility, and explore their potential beyond textbooks. Through clubs and technical forums, we aim to bridge the gap between classroom knowledge and real-world application. It’s truly rewarding to see students thrive through teamwork and creativity. I am committed to supporting every initiative that enhances their learning journey and prepares them to become future-ready professionals.",
+    linkedin: "https://www.linkedin.com/in/dr-venkata-siva-kumar-pasupuleti-915a5035/",
+    bio: "With the increasing importance of data, security, and intelligent systems, this department focuses on Cyber Security, Data Science, and Artificial Intelligence. Students learn to analyze data, secure systems, and develop intelligent applications for modern digital environments across both undergraduate and postgraduate programmes.",
   },
   {
     name: "Dr. N. Sunanda",
     role: "Coordinator",
-    image: "sunanda.png",
-    linkedin: "https://www.linkedin.com/in/sunandapratap/",
+    image: "sathar.png",
+    linkedin: "https://www.linkedin.com/in/sathar-gullapalli-40255a276/",
     bio: "As the faculty coordinator, I am honored to mentor and work alongside such a dynamic and talented group of students. This club provides a platform for young minds to explore new ideas, develop technical and leadership skills, and collaborate on meaningful projects. My role is to guide, support, and ensure that each initiative aligns with our department's vision of holistic development. I firmly believe that co-curricular activities are essential for shaping well-rounded individuals. It brings me great satisfaction to witness the enthusiasm and growth of our students as they turn their ideas into impactful realities",
   },
   {
