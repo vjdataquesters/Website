@@ -9,7 +9,7 @@ export const faculty = [
     bio: "With the increasing importance of data, security, and intelligent systems, this department focuses on Cyber Security, Data Science, and Artificial Intelligence. Students learn to analyze data, secure systems, and develop intelligent applications for modern digital environments across both undergraduate and postgraduate programmes.",
   },
   {
-    name: "Dr. N. Sunanda",
+    name: "G. Sathar",
     role: "Coordinator",
     image: "sathar.png",
     linkedin: "https://www.linkedin.com/in/sathar-gullapalli-40255a276/",
