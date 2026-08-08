@@ -3,7 +3,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { farewellData } from "./farewell-data";
 
-const INTRO_MANIFEST_PATH = "/farewell-2k26/intro/manifest.json";
+const INTRO_MANIFEST_PATH = "/farewell-2k426/intro/manifest.json";
 
 function buildIntroImagePool(slug) {
     if (!slug) return [];
@@ -15,7 +15,7 @@ function buildIntroImagePool(slug) {
         "/farewell-2k26/intro/common/image.png",
         "/farewell-2k26/intro/common/IMG-20260410-WA0078.jpg.jpeg",
     ];
-
+    
     // Fallback if manifest is missing: use known valid shared photos only.
     return fallbackCommon;
 }
