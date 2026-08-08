@@ -68,7 +68,7 @@ function App() {
       />
       <DynamicComponent Component={Header} blacklist={headerBlacklist} />
       <ScrollToTop />
-      <div className="flex flex-col min-h-screen bg-blue-50/70">
+      <div className="flex flex-col min-h-screen bg-blue-50/70 dark:bg-[#091b20] transition-colors duration-300">
         <Routes>
           {router.map((route, index) => (
             <Route
