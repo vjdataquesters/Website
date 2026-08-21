@@ -1,5 +1,17 @@
 export const galleryImages = [
     {
+        title: "Decoding BTech 2026",
+        src: "/events/DecodingBtech-2026/img3.jpg",
+    },
+    {
+        title: "Decoding BTech 2026",
+        src: "/events/DecodingBtech-2026/img2.jpg",
+    },
+    {
+        title: "Decoding BTech 2026",
+        src: "/events/DecodingBtech-2026/img4.jpg",
+    },
+    {
         title: "Hit Reloaded 2025 ",
         src: "/events/HitReloaded2025Nov/img2.png",
     },

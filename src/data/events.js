@@ -40,6 +40,45 @@ const events = {
   past: {
     e2026: [
       {
+        name: "Decoding BTech",
+        eventId: "decoding-btech",
+        image: "/events/DecodingBtech-2026/img1.jpg",
+        date: "20th August 2026",
+        venue: "E-436 (Seminar Hall)",
+        timings: "9:00 AM – 3:30 PM",
+        pics: [
+          "/events/DecodingBtech-2026/img1.jpg",
+          "/events/DecodingBtech-2026/img4.jpg",
+          "/events/DecodingBtech-2026/img2.jpg",
+          "/events/DecodingBtech-2026/img3.jpg",
+        ],
+        outcome:
+          "The session helped students gain a clearer understanding of the technical fundamentals they should focus on throughout their BTech journey. Participants were introduced to programming and problem-solving, DSA, competitive programming, web development, Git and GitHub, deployment, Artificial Intelligence and AI agents.\n\nThe lecture also helped students understand how these areas connect to practical learning, projects, coding practice and future technical careers.\n\nBy the end of the session, students had a clearer roadmap of what to learn, how to practice, and how to gradually build their technical skills and projects.",
+        isGFormEmbeddable: false,
+        event_tags: ["Technical Introduction", "Fundamentals Session"],
+        description:
+          " Decoding BTech is a fundamentals-focused session by VJ Data Questers covering programming, DSA, web development, Git, AI, and AI agents. It helps students understand what to learn, why it matters, and how these skills shape their BTech and career journey.",
+        link: "/events/decoding-btech",
+        resources: [
+          {
+            title: "Decoding BTech — Lecture Notes",
+            description:
+              "Lecture notes and learning material from the Decoding BTech session",
+            type: "pdf",
+            link: "/events/DecodingBtech-2026/ppt.pdf",
+            buttonText: "Open PDF",
+          },
+          {
+            title: "BTech Roadmap",
+            description:
+              "A structured roadmap covering the key technical areas and learning path discussed during the session.",
+            type: "roadmap",
+            link: "https://app.notion.com/p/Roadmap-3c1f98c4a3a380efa821c3a2af25b4dd?utm_source=chatgpt.com",
+            buttonText: "View Roadmap",
+          },
+        ],
+      },
+      {
         name: "Summer System Design",
         eventId: "SSD",
         image: "/events/2026/SummerSystemDesign/img1.png",
