@@ -381,6 +381,21 @@ export default function Event() {
           </div>
         )}
 
+        {event.sessionQuery && <EventSessionQuery eventname={eventname} />}
+
+        {event.sessionSubmissions && <EventSubmissions />}
+
+        {event.winners && (
+          <div className="my-10">
+            <h3 className="font-semibold text-2xl">Winners:</h3>
+            <p
+              className="text-base sm:text-lg overflow-x-scroll sm:overflow-x-hidden"
+              style={{ whiteSpace: "pre-wrap" }}
+              dangerouslySetInnerHTML={{ __html: event.winners }}
+            ></p>
+          </div>
+        )}
+
         {event.register && (
           <div className="my-8 text-center">
             {event?.isGFormEmbeddable ? (
