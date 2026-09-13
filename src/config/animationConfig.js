@@ -1,0 +1,9 @@
+export const introFadeStart = 2.0;
+export const introFadeDuration = 1.0;
+export const introRevealDelay = introFadeStart + 0.1;
+export const headerRevealDelay = introFadeStart + 0.15;
+export const pageRevealDelay = introFadeStart + 0.1;
+export const homeLogoRevealDelay = introFadeStart + 0.25;
+export const homeBoxRevealDelay = introFadeStart + 0.35;
+export const landingEntranceDuration = 0.85;
+export const introFallbackMs = 4500;

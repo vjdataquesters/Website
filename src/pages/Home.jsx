@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import GlowBackground from "../components/GlowBackground";
 import Carousel from "../components/Carousel";
@@ -6,6 +7,11 @@ import { whatwedo } from "../data/whatwedo";
 import { ArrowRight } from "lucide-react";
 import { faculty } from "../data/team";
 import Reveal from "../components/Reveal";
+import {
+  homeLogoRevealDelay,
+  homeBoxRevealDelay,
+  landingEntranceDuration,
+} from "../config/animationConfig";
 import "../clip-art.css";
 
 const TeamCard = ({ person }) => {
@@ -40,12 +46,30 @@ const TeamCard = ({ person }) => {
 
 export default function Home() {
   const topTeam = faculty || [];
+  const isInitialRef = useRef(
+    typeof window !== "undefined" && window.isInitialLoad,
+  );
+  const isInitial = isInitialRef.current;
+
   return (
     <div>
       {/* Landing section */}
-      <div className="h-screen w-full">
+      <div className="h-screen w-full relative">
         <div className="z-10 w-full absolute h-full flex flex-row justify-evenly items-center">
-          <motion.div className="hidden lg:block ">
+          <motion.div
+            className="hidden lg:block"
+            initial={
+              isInitial
+                ? { opacity: 0, y: -18, scale: 0.96 }
+                : { opacity: 1, y: 0, scale: 1 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              duration: landingEntranceDuration,
+              delay: isInitial ? homeLogoRevealDelay : 0,
+              ease: "easeOut",
+            }}
+          >
             <img
               src="/logo.png"
               alt="Data Questers logo"
@@ -54,7 +78,20 @@ export default function Home() {
             />
           </motion.div>
 
-          <div className="box max-w-[90%] sm:w-auto flex flex-col justify-center items-center opacity-80 select-none text-white">
+          <motion.div
+            initial={
+              isInitial
+                ? { opacity: 0, y: -18, scale: 0.96 }
+                : { opacity: 1, y: 0, scale: 1 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              duration: landingEntranceDuration,
+              delay: isInitial ? homeBoxRevealDelay : 0,
+              ease: "easeOut",
+            }}
+            className="box max-w-[90%] sm:w-auto flex flex-col justify-center items-center opacity-80 select-none text-white"
+          >
             <h1 className="font-semibold text-center text-3xl sm:text-5xl my-3 md:my-6">
               VJ DATA QUESTERS
             </h1>
@@ -64,7 +101,7 @@ export default function Home() {
             <p className="mt-1 text-xs font-thin sm:text-sm text-center">
               Differentiated by inputs / Integrated by outputs
             </p>
-          </div>
+          </motion.div>
         </div>
         <GlowBackground />
         <div className="absolute inset-0 opacity-10 bg-[url('/grid.png')]"></div>

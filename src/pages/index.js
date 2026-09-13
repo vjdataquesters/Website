@@ -10,8 +10,8 @@ import Gallery from "./Gallery";
 // import RegistrationForm from "./RegistrationForm";
 // import Carousel3D from "../components/TechnoVistaComponents/Carousel";
 import Credentials from "./Credentials";
-// import Hit from "./Hit";
-// import GenerateAllQrs from "./GenerateAllQrs";
+import Hit from "./Hit";
+import GenerateAllQrs from "./GenerateAllQrs";
 import Members from "./Members";
 import SSDRegistration from "./SSDRegistration";
 import SSDSubmissions from "./SSDSubmissions";
@@ -32,9 +32,9 @@ const router = [
   { path: "/cred", component: Credentials },
   { path: "/register/ssd", component: SSDRegistration },
   ...farewell2K26Routes,
-  // { path: "/register", component: RegistrationForm }, 
-  // { path: "/hit", component: Hit },
-  // { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
+  // { path: "/register", component: RegistrationForm },
+  { path: "/hit", component: Hit },
+  { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
   { path: "*", component: Home },
 ];
 

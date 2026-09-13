@@ -19,31 +19,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-#loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 999999;
-  background: rgb(15, 50, 63);
-  background: linear-gradient(
-    124deg,
-    rgba(15, 50, 63, 1) 29%,
-    rgba(21, 94, 121, 1) 81%,
-    rgba(12, 154, 207, 1) 100%
-  );
-  background-repeat: no-repeat;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fade-out 1s 2s forwards 1 normal;
-}
 
-#loading-none {
-  display: none;
-}
 
 :root {
   --color-bg1: rgb(18, 7, 142);
@@ -228,16 +204,6 @@ body::-webkit-scrollbar {
   initial-value: 0turn;
 }
 
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
 
 .small-scrollbar::-webkit-scrollbar {
   width: 5px;
