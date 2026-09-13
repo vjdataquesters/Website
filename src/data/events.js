@@ -36,7 +36,109 @@
 //   | 'Guest Lecture';
 
 const events = {
-  upcoming: [],
+  upcoming: [
+    {
+      name: "DATA HACK",
+      eventId: "datahack-2k26",
+      image: "/events/DataHack-2k26/DataHack-Poster.jpeg",
+      date: "September 19th 2026",
+      venue: "E Block - 527, VNRVJIET",
+      timings: "10:00 AM to 1:00 PM",
+      pics: ["/events/DataHack-2k26/DataHack-Poster.jpeg"],
+      isGFormEmbeddable: false,
+      event_tags: ["Hackathon", "Data Science", "Convergence 2k26"],
+      description:
+        "DATA HACK is a data-focused competition where participants work with a given dataset to discover patterns, generate insights, and develop meaningful data-driven solutions. Participants will apply data analysis, visualization, problem-solving, and analytical thinking skills before presenting their approach and findings.",
+      link: "/events/datahack-2k26",
+      register: "https://aspireup.ai/organization/vj-data-questers/event/100137",
+      teamSize: "2-3 Members",
+      prizePool: "₹ 4,500",
+      passNotice: "Convergence Pass is Mandatory",
+      facultyCoordinators: [
+        { name: "Mr. G. Sathar", phone: "9000451770" },
+        { name: "Mrs. D. Jothsna", phone: "9885198257" },
+      ],
+      studentCoordinators: [
+        { name: "Sai Vidith", phone: "8328258721" },
+        { name: "Kavya", phone: "9346882667" },
+      ],
+    },
+    {
+      name: "HIT 5.0",
+      eventId: "hit-5-2k26",
+      image: "/events/HIT-5.0-2K26/HIT-Poster.jpeg",
+      date: "September 18th 2026",
+      venue: "Sinti Stage, VNRVJIET",
+      timings: "10:00 AM - 04:40 PM",
+      pics: ["/events/HIT-5.0-2K26/HIT-Poster.jpeg"],
+      isGFormEmbeddable: false,
+      event_tags: ["Treasure Hunt", "Fun Event", "Convergence 2k26"],
+      description:
+        "HIT 5.0 is a high-energy, campus-wide treasure hunt where teams of 2–3 participants solve clues, complete challenges, and navigate through different locations. The event combines logical reasoning, observation, communication, creativity, teamwork, and quick decision-making in an exciting race against time.",
+      link: "/events/hit-5-2k26",
+      register: "https://aspireup.ai/organization/vj-data-questers/event/100134",
+      teamSize: "3-4 Members",
+      prizePool: "Upto ₹ 10,000",
+      passNotice: "Convergence Pass is Mandatory",
+      facultyCoordinators: [
+        { name: "Mr. G. Sathar", phone: "9000451770" },
+        { name: "Mrs. D. Jothsna", phone: "9885198257" },
+      ],
+      studentCoordinators: [
+        { name: "Rohith", phone: "7799882377" },
+        { name: "Akhilvarsh", phone: "9493312768" },
+      ],
+    },
+    {
+      name: "PROFOLIO",
+      eventId: "profolio-2k26",
+      image: "/events/Profolio-2k26/Profoilio-Poster.png",
+      date: "September 18th 2026",
+      venue: "E 206, VNRVJIET",
+      timings: "10:00 AM to 1:00 PM",
+      pics: ["/events/Profolio-2k26/Profoilio-Poster.png"],
+      isGFormEmbeddable: false,
+      event_tags: ["Web Design", "Portfolio", "Convergence 2k26"],
+      description:
+        "PROFOLIO is a practical portfolio-building event where participants create and present a professional portfolio showcasing their skills, projects, achievements, and interests. The event focuses on web design, creativity, usability, technical implementation, and presenting their work effectively to recruiters and professional audiences.",
+      link: "/events/profolio-2k26",
+      register: "https://aspireup.ai/organization/vj-data-questers/event/100136",
+      prizePool: "₹ 3,500",
+      passNotice: "Convergence Pass is Mandatory",
+      facultyCoordinators: [
+        { name: "Mr. G. Sathar", phone: "9000451770" },
+        { name: "Mrs. D. Jothsna", phone: "9885198257" },
+      ],
+      studentCoordinators: [
+        { name: "Siddhartha", phone: "9182491855" },
+        { name: "Ramkumar", phone: "8074979382" },
+      ],
+    },
+    {
+      name: "SHIP IT!",
+      eventId: "shipit-2k26",
+      image: "/events/SHIPIT-2k26/SHIPIT-Poster.jpeg",
+      date: "September 19th 2026",
+      venue: "E-436, VNRVJIET",
+      timings: "10:00 AM to 1:00 PM",
+      pics: ["/events/SHIPIT-2k26/SHIPIT-Poster.jpeg"],
+      isGFormEmbeddable: false,
+      event_tags: ["DevOps", "Docker & Kubernetes", "Convergence 2k26"],
+      description:
+        "SHIP IT is a practical, hands-on deployment workshop focused on taking applications from development to a working production environment. Participants will explore real-world concepts including Docker, Kubernetes, CI/CD, containerization, and GitHub workflows through demonstrations and practical activities.",
+      link: "/events/shipit-2k26",
+      register: "https://aspireup.ai/organization/vj-data-questers/event/100135",
+      passNotice: "Convergence Pass is Mandatory",
+      facultyCoordinators: [
+        { name: "Mr. G. Sathar", phone: "+91 90004 51770" },
+        { name: "Mrs. D. Jothsna", phone: "+91 98851 98257" },
+      ],
+      studentCoordinators: [
+        { name: "D. Saharsh", phone: "+91 90394 67575" },
+        { name: "S. Manish", phone: "+91 91004 70834" },
+      ],
+    },
+  ],
   past: {
     e2026: [
       {
@@ -57,7 +159,7 @@ const events = {
         isGFormEmbeddable: false,
         event_tags: ["Technical Introduction", "Fundamentals Session"],
         description:
-          " Decoding BTech is a fundamentals-focused session by VJ Data Questers covering programming, DSA, web development, Git, AI, and AI agents. It helps students understand what to learn, why it matters, and how these skills shape their BTech and career journey.",
+          "Decoding BTech is a fundamentals-focused session by VJ Data Questers covering programming, DSA, web development, Git, AI, and AI agents. It helps students understand what to learn, why it matters, and how these skills shape their BTech and career journey.",
         link: "/events/decoding-btech",
         resources: [
           {

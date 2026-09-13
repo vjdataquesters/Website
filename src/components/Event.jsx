@@ -2,6 +2,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
   Download,
+  Users,
+  Trophy,
+  AlertCircle,
+  Phone,
   FileText,
   ExternalLink,
   Map,
@@ -18,14 +22,17 @@ import EventSessionQuery from "./EventSessionQuery";
 import EventSubmissions from "./EventSubmissions";
 
 export default function Event() {
-  function handleRegister(url) {
-    // const element = document.getElementById("embedded-form");
-    // element.scrollIntoView({ behavior: "smooth", block: "start" });
-    // window.location.href = event.register;
-    navigate(`../../${url}`);
-  }
-
+  const navigate = useNavigate();
   const { eventname } = useParams();
+
+  function handleRegister(url) {
+    if (!url) return;
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      navigate(url.startsWith("/") ? url : `../../${url}`);
+    }
+  }
 
   const findEvent = () => {
     let event = events.upcoming.find((e) => e.eventId === eventname);
@@ -39,7 +46,6 @@ export default function Event() {
   };
 
   const event = findEvent();
-  const navigate = useNavigate();
 
   if (!event) {
     return (
@@ -56,11 +62,11 @@ export default function Event() {
   }
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 pb-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-6">
-          <div className="space-y-1">
-            <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl">
+        <div className="flex justify-between items-start mb-6">
+          <div className="space-y-2">
+            <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl text-gray-900">
               {event.name}
             </h2>
             {event.event_tags && event.event_tags.length > 0 && (
@@ -78,38 +84,155 @@ export default function Event() {
           </div>
           <Link
             to="/events"
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors self-center"
+            className="p-2 hover:bg-gray-200/80 rounded-full transition-colors self-start mt-1"
+            title="Back to Events"
           >
             <ArrowLeft size={24} className="text-gray-700" />
           </Link>
         </div>
-        <div className="rounded-2xl p-4 shadow-sm space-y-4 flex flex-col pb-6">
-          <div className="grid gap-2 sm:grid-cols-3 sm:gap-4">
+
+        <div className="rounded-2xl p-4 sm:p-6 bg-white/70 backdrop-blur-sm shadow-sm space-y-4 flex flex-col pb-6 border border-gray-100">
+          <div className="grid gap-3 sm:grid-cols-3">
             <div className="p-4 rounded-xl bg-[#dadce176]">
-              <p className="text-lg font-semibold  mb-1">Date</p>
-              <p className="font-medium text-gray-700">{event.date}</p>
+              <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
+                Date
+              </p>
+              <p className="font-semibold text-gray-900 text-base">{event.date}</p>
             </div>
             <div className="p-4 rounded-xl bg-[#dadce176]">
-              <p className="text-lg font-semibold  mb-1">Time</p>
-              <p className="font-medium text-gray-700">{event.timings}</p>
+              <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
+                Time
+              </p>
+              <p className="font-semibold text-gray-900 text-base">{event.timings}</p>
             </div>
             <div className="p-4 rounded-xl bg-[#dadce176]">
-              <p className="text-lg font-semibold  mb-1">Venue</p>
-              <p className="font-medium text-gray-700">{event.venue}</p>
+              <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
+                Venue
+              </p>
+              <p className="font-semibold text-gray-900 text-base">{event.venue}</p>
             </div>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-2">About the Event</h3>
-            <p className="text-gray-700 leading-relaxed">{event.description}</p>
           </div>
 
+          {(event.teamSize || event.prizePool) && (
+            <div className="grid gap-3 sm:grid-cols-2">
+              {event.teamSize && (
+                <div className="p-4 rounded-xl bg-[#dadce176] flex items-center gap-3">
+                  <div className="p-2.5 rounded-lg bg-[#0f323f] text-white shrink-0">
+                    <Users size={20} />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-gray-500 font-medium">
+                      Team Size
+                    </p>
+                    <p className="font-semibold text-gray-900 text-base">
+                      {event.teamSize}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {event.prizePool && (
+                <div className="p-4 rounded-xl bg-[#dadce176] flex items-center gap-3">
+                  <div className="p-2.5 rounded-lg bg-[#0f323f] text-white shrink-0">
+                    <Trophy size={20} />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-gray-500 font-medium">
+                      Prize Pool
+                    </p>
+                    <p className="font-semibold text-gray-900 text-base">
+                      {event.prizePool}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {event.passNotice && (
+            <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl text-sm font-medium">
+              <AlertCircle size={18} className="text-amber-700 shrink-0" />
+              <span>{event.passNotice}</span>
+            </div>
+          )}
+
+          <div className="pt-2">
+            <h3 className="text-xl font-semibold mb-2 text-gray-900">
+              About the Event
+            </h3>
+            <p className="text-gray-700 leading-relaxed text-base">
+              {event.description}
+            </p>
+          </div>
+
+          {(event.facultyCoordinators?.length > 0 ||
+            event.studentCoordinators?.length > 0) && (
+            <div className="pt-3 border-t border-gray-200/60">
+              <h3 className="text-lg font-semibold mb-3 text-gray-900">
+                Event Coordinators
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {event.facultyCoordinators?.length > 0 && (
+                  <div className="p-4 rounded-xl bg-[#dadce176]">
+                    <h4 className="font-semibold text-gray-900 text-sm mb-2">
+                      Faculty Coordinators
+                    </h4>
+                    <div className="space-y-1.5">
+                      {event.facultyCoordinators.map((coordinator, i) => (
+                        <div
+                          key={i}
+                          className="flex justify-between items-center text-sm text-gray-700"
+                        >
+                          <span className="font-medium">{coordinator.name}</span>
+                          {coordinator.phone && (
+                            <a
+                              href={`tel:${coordinator.phone}`}
+                              className="inline-flex items-center gap-1 text-[#0f323f] hover:underline font-mono text-xs sm:text-sm"
+                            >
+                              <Phone size={13} /> {coordinator.phone}
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {event.studentCoordinators?.length > 0 && (
+                  <div className="p-4 rounded-xl bg-[#dadce176]">
+                    <h4 className="font-semibold text-gray-900 text-sm mb-2">
+                      Student Coordinators
+                    </h4>
+                    <div className="space-y-1.5">
+                      {event.studentCoordinators.map((coordinator, i) => (
+                        <div
+                          key={i}
+                          className="flex justify-between items-center text-sm text-gray-700"
+                        >
+                          <span className="font-medium">{coordinator.name}</span>
+                          {coordinator.phone && (
+                            <a
+                              href={`tel:${coordinator.phone}`}
+                              className="inline-flex items-center gap-1 text-[#0f323f] hover:underline font-mono text-xs sm:text-sm"
+                            >
+                              <Phone size={13} /> {coordinator.phone}
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {event.register && !event.isGFormEmbeddable && (
-            <div className="self-end">
+            <div className="pt-2">
               <button
                 onClick={() => handleRegister(event.register)}
-                className="inline-block text-white bg-[#0f323fee] hover:bg-[#135168] px-2 py-3 rounded-lg w-full mx-auto text-center"
+                className="inline-flex items-center justify-center gap-2 text-white bg-[#0f323fee] hover:bg-[#135168] px-6 py-3 rounded-lg text-center font-semibold text-base shadow-md transition-all duration-200"
               >
                 Register Now
+                <SquareArrowUpRight size={18} />
               </button>
             </div>
           )}
@@ -122,23 +245,27 @@ export default function Event() {
               pagination={{ clickable: true }}
               spaceBetween={20}
               slidesPerView={1}
-              loop={true}
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-              }}
+              loop={event.pics.length > 1}
+              autoplay={
+                event.pics.length > 1
+                  ? {
+                      delay: 2500,
+                      disableOnInteraction: false,
+                    }
+                  : false
+              }
               navigation={{
                 nextEl: ".event-swiper-button-next",
                 prevEl: ".event-swiper-button-prev",
               }}
-              className="event-swiper w-full md:h-[42rem] mx-auto rounded-lg overflow-hidden py-8 flex justify-center"
+              className="event-swiper w-full max-w-3xl mx-auto rounded-xl overflow-hidden py-4 flex justify-center shadow-lg bg-white/40"
             >
               {event.pics.map((pic, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide key={index} className="flex justify-center items-center">
                   <img
                     src={pic}
                     alt={`${event.name} - Image ${index + 1}`}
-                    className="h-full mx-auto"
+                    className="max-h-[38rem] w-auto mx-auto rounded-lg object-contain shadow-md"
                     draggable={false}
                   />
                 </SwiperSlide>
@@ -228,9 +355,24 @@ export default function Event() {
           </div>
         )}
 
+        {event.sessionQuery && <EventSessionQuery eventname={eventname} />}
+
+        {event.sessionSubmissions && <EventSubmissions />}
+
+        {event.winners && (
+          <div className="my-10">
+            <h3 className="font-semibold text-2xl">Winners:</h3>
+            <p
+              className="text-base sm:text-lg overflow-x-scroll sm:overflow-x-hidden"
+              style={{ whiteSpace: "pre-wrap" }}
+              dangerouslySetInnerHTML={{ __html: event.winners }}
+            ></p>
+          </div>
+        )}
+
         {event.outcome && (
           <div className="my-10">
-            <h3 className="font-semibold text-2xl"> Outcome:</h3>
+            <h3 className="font-semibold text-2xl">Outcome:</h3>
             <p
               className="text-base sm:text-lg "
               style={{ whiteSpace: "pre-wrap" }}
@@ -261,7 +403,7 @@ export default function Event() {
                 <h3 className="text-3xl font-semibold">
                   Fill out the form
                   <span>
-                    <a href={event.register} target="_blank">
+                    <a href={event.register} target="_blank" rel="noopener noreferrer">
                       <SquareArrowUpRight className="inline-block mx-3" />
                     </a>
                   </span>

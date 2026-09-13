@@ -1,5 +1,6 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import "../clip-art.css";
 import { useSearchParams } from "react-router-dom";
 import events from "../data/events.js";
@@ -27,7 +28,7 @@ const EventCard = ({ event }) => {
   ];
   return (
     <div
-      className="max-w-[400px] rounded-lg h-full shadow-2xl bg-gray-100 hover:shadow-[0px_25px_50px_-12px] transition-all duration-500 hover:backdrop-blur-sm hover:bg-gray-200 cursor-pointer"
+      className="max-w-[400px] rounded-lg h-full shadow-2xl bg-gray-100 hover:shadow-[0px_25px_50px_-12px] transition-all duration-500 hover:backdrop-blur-sm hover:bg-gray-200 cursor-pointer flex flex-col justify-between"
       onClick={() => {
         if (event.link.startsWith("http")) {
           window.open(event.link, "_blank"); // or use window.location.href
@@ -36,35 +37,67 @@ const EventCard = ({ event }) => {
         }
       }}
     >
-      <img
-        src={event.image}
-        style={{ maxWidth: "100%" }}
-        alt={event.name}
-        draggable={false}
-        className="w-full rounded-t-lg h-64"
-      />
+      <div>
+        <img
+          src={event.image}
+          style={{ maxWidth: "100%" }}
+          alt={event.name}
+          draggable={false}
+          className="w-full rounded-t-lg h-64 object-cover"
+        />
 
-      <div className="p-1 md:p-2 pt-0">
-        <div className="w-full flex flex-row gap-2 my-2 overflow-x-auto small-scrollbar-y">
-          {event.event_tags.map((obj, index) => (
-            <div
-              key={index}
-              className={`inline-block  ${
-                obj === "Limited Registrations"
-                  ? "bg-red-800"
-                  : colors[Math.floor(Math.random() * colors.length)]
-              }  text-white text-sm rounded-xl text-nowrap text-center content-center py-[2px] px-2 mb-2`}
-            >
-              <p className="text-sm">{obj}</p>
-            </div>
-          ))}
+        <div className="p-3 md:p-4 pb-2">
+          <div className="w-full flex flex-row gap-2 my-2 overflow-x-auto small-scrollbar-y">
+            {event.event_tags?.map((obj, index) => (
+              <div
+                key={index}
+                className={`inline-block ${
+                  obj === "Limited Registrations"
+                    ? "bg-red-800"
+                    : colors[index % colors.length]
+                } text-white text-xs rounded-xl text-nowrap text-center content-center py-[2px] px-2 mb-1`}
+              >
+                <p className="text-xs">{obj}</p>
+              </div>
+            ))}
+          </div>
+          <h2 className="text-2xl font-semibold mb-1">{event.name}</h2>
+          <p className="text-gray-700 font-light text-sm">{event.date}</p>
+          <p className="text-base mt-2 line-clamp-3 text-gray-800">{event.description}</p>
         </div>
-        <h2 className="text-2xl font-semibold mb-2 ">{event.name}</h2>
-        <p className="text-gray-700 font-light">{event.date}</p>
-        <p className="text-lg mt-2">{event.description}</p>
       </div>
+
+      {event.register && (
+        <div className="p-3 md:p-4 pt-0">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (event.register.startsWith("http")) {
+                window.open(event.register, "_blank", "noopener,noreferrer");
+              } else {
+                navigate(event.register);
+              }
+            }}
+            className="w-full bg-[#0f323f] text-white py-2.5 px-4 rounded-lg font-semibold hover:bg-[#135168] transition-colors text-center text-sm shadow-md"
+          >
+            Register Now
+          </button>
+        </div>
+      )}
     </div>
   );
+};
+
+EventCard.propTypes = {
+  event: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    date: PropTypes.string,
+    description: PropTypes.string,
+    event_tags: PropTypes.arrayOf(PropTypes.string),
+    register: PropTypes.string,
+  }).isRequired,
 };
 
 export default function Events() {
@@ -97,7 +130,7 @@ export default function Events() {
             Discover Amazing Events we Organized
           </h1>
           <p className="text-sm text-white sm:block sm:text-lg md:pb-none pr-3">
-            Explore the diverse range of events we've hosted, designed to
+            Explore the diverse range of events we&apos;ve hosted, designed to
             inspire, educate, and bring our community together
           </p>
         </div>
