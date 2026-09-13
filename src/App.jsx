@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { motion, useReducedMotion } from "framer-motion";
+import PropTypes from "prop-types";
 
 import router from "./pages";
 
 import Header from "./components/Header";
+import ConvergenceMarquee from "./components/ConvergenceMarquee";
 import ScrollToTop from "./components/ScrollToTop";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
@@ -47,6 +49,27 @@ const promoBlacklist = [
 
 if (typeof window !== "undefined" && window.isInitialLoad === undefined) {
   window.isInitialLoad = true;
+}
+
+function DynamicComponent({ Component, blacklist = [], ...props }) {
+  const { pathname: currentPath } = useLocation();
+
+  return (
+    <>
+      {!blacklist.some((path) => path === currentPath) && (
+        <Component {...props} />
+      )}
+    </>
+  );
+}
+
+DynamicComponent.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  blacklist: PropTypes.arrayOf(PropTypes.string),
+};
+
+function MarqueeSpacer() {
+  return <div aria-hidden="true" className="h-[38px]" />;
 }
 
 function MainContentLayout({ children }) {
@@ -173,18 +196,6 @@ function App() {
     );
   }
 
-  function DynamicComponent({ Component, blacklist, ...props }) {
-    const { pathname: currentPath } = useLocation();
-
-    return (
-      <>
-        {!blacklist.some((path) => path === currentPath) && (
-          <Component {...props} />
-        )}
-      </>
-    );
-  }
-
   return (
     <Router>
       <Analytics />
@@ -196,6 +207,14 @@ function App() {
       />
       <HeaderWrapper>
         <DynamicComponent Component={Header} blacklist={headerBlacklist} />
+        <DynamicComponent
+          Component={ConvergenceMarquee}
+          blacklist={headerBlacklist}
+        />
+        <DynamicComponent
+          Component={MarqueeSpacer}
+          blacklist={headerBlacklist}
+        />
       </HeaderWrapper>
       <ScrollToTop />
       <MainContentLayout>

@@ -177,6 +177,16 @@ const Header = () => {
               </p>
             </Link>
           </li>
+          <li
+            className="mx-6 py-5 px-2 border-b border-white/50 w-full
+            md:py-0 md:px-0 md:border-0 md:w-auto"
+          >
+            <Link to="/reads" onClick={handleBarsClick} className="no-underline">
+              <p className="text-white hover:text-[#9d9d9d] cursor-pointer">
+                Reads
+              </p>
+            </Link>
+          </li>
         </ul>
 
         <div
