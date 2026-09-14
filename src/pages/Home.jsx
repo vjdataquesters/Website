@@ -20,11 +20,14 @@ const TeamCard = ({ person }) => {
       <a
         href={person.linkedin || null}
         target="_blank"
+        rel="noopener noreferrer"
         aria-label={`View ${person.name}'s LinkedIn profile`}
+        className="block h-full"
       >
-        <div className="py-6 w-full max-w-[280px] mx-auto flex flex-col justify-center items-center bg-[#EEEEEE] hover:scale-[103%] hover:shadow-lg transition-all duration-[300ms] rounded-lg cursor-pointer">
+        <div className="p-6 w-full h-[350px] mx-auto flex flex-col justify-between items-center bg-[#EEEEEE] hover:scale-[103%] hover:shadow-lg transition-all duration-[300ms] rounded-xl cursor-pointer">
           <img
-            className="w-[200px] h-[200px] object-cover rounded-full"
+            className="w-[180px] h-[180px] object-cover rounded-full shadow-md shrink-0"
+            style={person.objectPosition ? { objectPosition: person.objectPosition } : undefined}
             src={
               person.image
                 ? `/teamImages/${person.image}`
@@ -32,12 +35,14 @@ const TeamCard = ({ person }) => {
             }
             alt={person.name + " image"}
           />
-          <p className="text-center text-black text-xl font-semibold tracking-wide">
-            {person.name}
-          </p>
-          <p className="text-center text-base text-gray-600 font-light">
-            {person.role}
-          </p>
+          <div className="flex flex-col items-center justify-center flex-grow mt-3">
+            <p className="text-center text-black text-lg font-semibold tracking-wide leading-snug">
+              {person.name}
+            </p>
+            <p className="text-center text-sm text-gray-600 font-light mt-1">
+              {person.role}
+            </p>
+          </div>
         </div>
       </a>
     </Reveal>
@@ -202,10 +207,10 @@ export default function Home() {
             Our Coordinators
           </h1>
           <div className="flex justify-center">
-            <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto px-4 items-stretch justify-items-center w-full">
               {topTeam &&
                 topTeam.map((person, index) => (
-                  <div key={index} className="w-[280px]">
+                  <div key={index} className="w-full max-w-[280px]">
                     <TeamCard person={person} />
                   </div>
                 ))}

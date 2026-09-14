@@ -1,8 +1,4 @@
-import redPath from './redPath.json';
-import yellowPath from './yellowPath.json';
-import bluePath from './bluePath.json';
-import greenPath from './greenPath.json';
+import hitData2k26 from '../hitData 2k26/index.js';
 
-const hitData = [...redPath, ...yellowPath, ...bluePath, ...greenPath];
+export default hitData2k26;
 
-export default hitData;

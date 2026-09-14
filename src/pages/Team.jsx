@@ -26,7 +26,7 @@ const BioModal = ({ member, onClose }) => {
         </button>
 
         <div className="flex flex-col items-center mb-8">
-          <img src={getImageSrc(member.image)} className="w-32 h-32 rounded-full object-cover shadow-lg border-4 border-white" alt={member.name} />
+          <img src={getImageSrc(member.image)} style={member.objectPosition ? { objectPosition: member.objectPosition } : undefined} className="w-32 h-32 rounded-full object-cover shadow-lg border-4 border-white" alt={member.name} />
           
           <div className="flex items-center gap-3 mt-6">
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
@@ -68,7 +68,7 @@ const TeamCard = ({ member, isLarge = false, onOpenBio }) => (
       ${isLarge ? 'h-[380px] w-full' : 'h-[300px] w-full'}
       border border-slate-200 hover:border-blue-500/30`}
   >
-    <img src={getImageSrc(member.image)} alt={member.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+    <img src={getImageSrc(member.image)} alt={member.name} style={member.objectPosition ? { objectPosition: member.objectPosition } : undefined} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
     <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/95 via-black/20 to-transparent transition-opacity duration-300">
       <h3 className={`font-bold text-white leading-tight tracking-tight ${isLarge ? 'text-xl' : 'text-lg'}`}>{member.name}</h3>
       <p className="text-blue-400 font-semibold text-[10px] uppercase tracking-wider mt-1.5 mb-5">{member.role}</p>
@@ -117,18 +117,19 @@ export default function Team() {
       </section>
 
       {/* FACULTY SECTION */}
-     <section className="mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <section className="mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-6xl mx-auto items-stretch">
         {faculty.map((m, i) => (
-          <div key={i} className="bg-slate-50 border border-slate-200 rounded-[2rem] p-10 flex flex-col items-center text-center font-sans group transition-all duration-300 hover:border-blue-500/30 hover:shadow-lg">
-            
-            <div className="w-36 h-36 rounded-full overflow-hidden mb-6 border-4 border-white shadow-md">
-              <img src={getImageSrc(m.image)} className="w-full h-full object-cover" alt={m.name} />
+          <div key={i} className="bg-slate-50 border border-slate-200 rounded-[2rem] p-8 sm:p-10 h-[380px] flex flex-col items-center justify-between text-center font-sans group transition-all duration-300 hover:border-blue-500/30 hover:shadow-lg">
+            <div className="flex flex-col items-center w-full">
+              <div className="w-36 h-36 rounded-full overflow-hidden mb-6 border-4 border-white shadow-md shrink-0">
+                <img src={getImageSrc(m.image)} style={m.objectPosition ? { objectPosition: m.objectPosition } : undefined} className="w-full h-full object-cover" alt={m.name} />
+              </div>
+
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-1 leading-snug">{m.name}</h3>
+              <p className="text-blue-600 font-semibold uppercase text-[10px] tracking-[0.15em]">{m.role}</p>
             </div>
 
-            <h3 className="text-xl font-bold text-slate-900 mb-2">{m.name}</h3>
-            <p className="text-blue-600 font-semibold uppercase text-[10px] tracking-[0.15em] mb-12">{m.role}</p>
-
-            <div className="w-full flex items-center justify-end mt-auto">
+            <div className="w-full flex items-center justify-end mt-4">
               <button onClick={() => setSelectedMember(m)} className="text-slate-400 hover:text-blue-600 text-[9px] font-bold uppercase tracking-[0.2em] italic flex items-center gap-1.5 transition-colors">
                 Explore Bio <ArrowRight size={12} />
               </button>

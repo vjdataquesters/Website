@@ -8,10 +8,12 @@ const GenerateAllQrs = () => {
   const [generatingDoc, setGeneratingDoc] = useState(null);
 
   const colorMap = {
-    red: "#ff6600",
+    red: "#ef4444",
+    orange: "#ff6600",
     yellow: "#ffcc00",
     blue: "#3399ff",
     green: "#22c55e",
+    violet: "#8b5cf6",
   };
 
   const getEyeColor = (color) => {
@@ -248,9 +250,11 @@ const GenerateAllQrs = () => {
                             </span>
                             <a
                               href={obj.image || obj.audio || obj.video}
-                              className="underline text-blue-500"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline text-blue-500 font-semibold text-sm"
                             >
-                              View
+                              View Media
                             </a>
                           </div>
                         ) : (
@@ -261,7 +265,14 @@ const GenerateAllQrs = () => {
                             {obj.question}
                           </p>
                         )}
-                        <div className="text-center my-3">code: {obj.qr}</div>
+                        <div className="text-center my-3 flex items-center justify-center gap-2">
+                          <span>code: {obj.qr}</span>
+                          {obj.stage && (
+                            <span className="text-xs font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-700">
+                              Stage {obj.stage}
+                            </span>
+                          )}
+                        </div>
                         <div
                           onClick={() => {
                             window.open(`/hit?q=${obj.qr}`);
