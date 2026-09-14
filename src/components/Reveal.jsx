@@ -4,16 +4,15 @@ import { motion, useInView, useAnimation } from "framer-motion";
 const Reveal = ({ children }) => {
   const ref = useRef(null);
 
-  const isInView = useInView(ref, { once: true });
-  const mainControls = useAnimation();
-  const slideControls = useAnimation();
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const controls = useAnimation();
 
   useEffect(() => {
     if (isInView) {
-      mainControls.start("visible");
-      slideControls.start("visible");
+      controls.start("visible");
     }
   }, [isInView]);
+
   return (
     <motion.div
       ref={ref}
@@ -22,8 +21,8 @@ const Reveal = ({ children }) => {
         visible: { opacity: 1, y: 0 },
       }}
       initial="hidden"
-      animate={mainControls}
-      transition={{ duration: 0.5, delay: 0.1 }}
+      animate={controls}
+      transition={{ duration: 0.55, ease: "easeOut", delay: 0.1 }}
     >
       {children}
     </motion.div>

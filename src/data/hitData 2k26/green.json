@@ -1,0 +1,289 @@
+[
+  {
+    "color": "green",
+    "path": "1",
+    "stage": 1,
+    "qr": "wurtf",
+    "question": "The ones who explain, don't wait here.\n\nThe ones who learn, don't wait here either.\n\nYet something belonging to the first group\n\nwaits here for its next move.\n\nIt asks not for fuel, but for a little time connected to power.\n\nFind where it waits.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "stage": 2,
+    "qr": "wmwvr",
+    "question": "Metal, machines and minds meet here.\n\nI am not a classroom, yet learning happens.\n\nI am not the arena, yet I stand beside one.\n\nFind the place where engineers make things,\n\nwhere once memories were made but now rarely visited by the same people who made those memories.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "stage": 3,
+    "qr": "mpkch",
+    "question": "#include <stdio.h>\n\nint main() {\n\n    int a[] = {2, 7, 4, 1, 3};\n    char b[] = {'C', 'A', 'E', 'D', 'B'};\n\n    int floor = a[1] - a[3] - a[0] + 1;\n    char block = b[a[4]-1];\n\n    printf(\"%c-%d\\n\", block, floor);\n\n    return 0;\n}\n\n\nCoordinates are decoded.\nBut coordinates aren't the destination.\nFind the place where intelligence is given a workspace,\nexperiments become ideas,\nand machines become the students.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "stage": 4,
+    "qr": "tkrqy",
+    "question": null,
+    "image": null,
+    "audio": null,
+    "video": "https://drive.google.com/file/d/1nnRQtdNRkFKhrtQ528Mp5D2bl3GLleV2/view?usp=sharing"
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "stage": 5,
+    "qr": "rprol",
+    "question": "I was not here for long,\n\nyet many will soon know me well.\n\nI don't speak, but I can give you\n\nexactly what you ask for.\n\nNo person stands behind me,\n\nyet something warm comes from within.\n\nFind the newest member of the campus.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "stage": 6,
+    "qr": "pnpiw",
+    "question": "Your next clue is with someone nearby.\nFind the volunteer and complete a small fun challenge to receive it!\n\nChallenge may be a quick task, a dialogue, a fun question, or a simple dare. 😄",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "1",
+    "stage": 7,
+    "qr": "pazyh",
+    "question": "D has a successor. Find it.\n\nOnce you do, don't face it.\n\nWhat you seek is hidden from the usual view.\n\nLeave the familiar side behind,\n\ntake the longer way around,\n\nand discover what waits where the building\n\nkeeps its secrets.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "stage": 1,
+    "qr": "bpdsq",
+    "question": "A: “Is your machine working?”\nB: “Yes.”\nA: “Who switches it on?”\nB: “Nobody.”\nA: “Then who powers it?”\nB: “Look up.”\nA: “Where do I start?”\nB: “525.”\nA: “525?”\nB: “Find the one vehicle that comes when people need help.”",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "stage": 2,
+    "qr": "tehlj",
+    "question": null,
+    "image": null,
+    "audio": null,
+    "video": "https://drive.google.com/file/d/1hIPxYN6yqnDYezABZB_mn2dm2dMx4g70/view?usp=drivesdk"
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "stage": 3,
+    "qr": "rmdoi",
+    "question": "Look for the wall where\npoverty meets education,\nhealth meets climate,\nand peace meets partnership.\nThere are many colours,\nbut only one number matters.\nCount carefully they are 17",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "stage": 4,
+    "qr": "sxbab",
+    "question": null,
+    "image": "https://drive.google.com/file/d/11DexjyxS36uwI6AJ602I1mywau2a0Qr7/view?usp=drivesdk",
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "stage": 5,
+    "qr": "plngi",
+    "question": null,
+    "image": "https://drive.google.com/file/d/1y6qEIjpDnWXKZdogM2ELATPp5VhGBIZO/view?usp=drivesdk",
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "stage": 6,
+    "qr": "yxjkh",
+    "question": "INCIDENT #27\n08: 22 — Nothing happened.\n08: 10 — Nothing happened.\n08: 09 — Nothing happened.\n08: 13 — Nothing happened.\nYet someone was watching.\nNo conversation was recorded.\nNo photograph was taken.\nNo name was written.\nBut every arrival was accounted for.\nTHE QUESTION\nIf nothing happened,\nwhy was someone watching?",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "stage": 7,
+    "qr": "xwwja",
+    "question": "🌳 I stand among the trees.\n🪨 I rest among the rocks.\n🚀 My thoughts reached beyond the sky.\n🎵 My words ask you to hear what others miss.\nWho am I?",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "stage": 1,
+    "qr": "dqmqz",
+    "question": null,
+    "image": null,
+    "audio": "https://drive.google.com/file/d/1cbBhKRXMgxS_Tu_VIlFDKdju7w-Rz3y7/view?usp=drivesdk",
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "stage": 2,
+    "qr": "lfjtu",
+    "question": null,
+    "image": "https://drive.google.com/file/d/1DFZdGtP1CskZkbBLB5rH1_wpeVZHdfHU/view?usp=drivesdk",
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "stage": 3,
+    "qr": "gvkbq",
+    "question": "When everything goes wrong,\nthere is a special way marked for you to leave safely.\nThink of the two words used on that sign.\nThe first word describes the situation.\nThe second word tells you what you should do.\nNow:\nTake the first letter of the first word.\nCount the letters in the second word.\nFirst letter → Where\nNumber → Which floor\nPut them together to find your next destination.\nWhere are you going?",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "stage": 4,
+    "qr": "uobqm",
+    "question": null,
+    "image": "https://drive.google.com/file/d/1wvkQ5a6byJMFe9TGnXy_NjjcfBFvELyt/view?usp=drivesdk",
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "stage": 5,
+    "qr": "gqaat",
+    "question": "I speak without a voice.\nI teach without a classroom.\nI can inspire without knowing your name.\nMany words stand together,\nbut none of them belong to a conversation.\nLook for the place where someone's words are waiting to be read.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "stage": 6,
+    "qr": "dzjue",
+    "question": null,
+    "image": null,
+    "audio": null,
+    "video": "https://drive.google.com/file/d/1jKpe43PyCpKzIjSj0hl9BS3dzFU73iUI/view?usp=drivesdk"
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "stage": 7,
+    "qr": "tvxml",
+    "question": null,
+    "image": "https://drive.google.com/file/d/1bEwklqWKQNh0c_b6WlBsxDTZctQ_G_4w/view?usp=drivesdk",
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "final",
+    "qr": "fqxmv",
+    "question": "Congrats you solved all 8 questions 🥳... \nNow get back to Registration desk to stop the Timer ",
+    "video": "hitAssests/videos/final.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "kwhzn",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-11.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "wqbmk",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-12.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "nxpls",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-13.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "jtdzr",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-14.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "fvkhw",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-15.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "gycxq",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-16.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "prmjt",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-17.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "sblzv",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-18.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "hxwnf",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-19.mp4"
+  },
+  {
+    "color": "green",
+    "path": "fooled",
+    "qr": "qkdgy",
+    "question": "Ha Ha Misguided 😂",
+    "video": "/hitAssests/videos/fooledgifs/fooled-20.mp4"
+  }
+]
