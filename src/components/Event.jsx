@@ -49,7 +49,7 @@ export default function Event() {
 
   if (!event) {
     return (
-      <div className="pt-20 text-center">
+      <div className="pt-10 text-center">
         <h2 className="text-2xl font-semibold">Event not found</h2>
         <Link
           to="/events"
@@ -62,7 +62,7 @@ export default function Event() {
   }
 
   return (
-    <div className="pt-20 pb-16">
+    <div className="pt-6 sm:pt-8 pb-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-start mb-6">
           <div className="space-y-2">

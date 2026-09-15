@@ -68,9 +68,6 @@ DynamicComponent.propTypes = {
   blacklist: PropTypes.arrayOf(PropTypes.string),
 };
 
-function MarqueeSpacer() {
-  return <div aria-hidden="true" className="h-[38px]" />;
-}
 
 function MainContentLayout({ children }) {
   const { pathname: currentPath } = useLocation();
@@ -138,19 +135,19 @@ function HeaderWrapper({ children }) {
         delay: isBlacklisted || !isInitial ? 0 : headerRevealDelay,
         ease: "easeOut",
       }}
-      className="fixed top-0 left-0 w-full z-[102] pointer-events-none"
+      className="sticky top-0 left-0 w-full z-[102] pointer-events-none"
       onAnimationComplete={() => setAnimationDone(true)}
       style={
         animationDone
           ? {
               opacity: 1,
-              transform: "translate3d(0,0,0)",
+              transform: "none",
               transformOrigin: "center top",
             }
           : { transformOrigin: "center top" }
       }
     >
-      <div className="pointer-events-auto">{children}</div>
+      <div className="pointer-events-auto flex flex-col w-full">{children}</div>
     </motion.div>
   );
 }
@@ -209,10 +206,6 @@ function App() {
         <DynamicComponent Component={Header} blacklist={headerBlacklist} />
         <DynamicComponent
           Component={ConvergenceMarquee}
-          blacklist={headerBlacklist}
-        />
-        <DynamicComponent
-          Component={MarqueeSpacer}
           blacklist={headerBlacklist}
         />
       </HeaderWrapper>

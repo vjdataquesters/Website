@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Bars from "../assets/bars.svg";
@@ -20,14 +20,14 @@ const Header = () => {
     setIsAboutOpen(val);
   };
   return (
-    <nav className="w-full h-16 fixed bg-[#0f323f] z-[102]">
+    <nav className="w-full h-16 bg-[#0f323f] z-[102] relative">
       <div className="flex justify-end items-center h-full mx-8">
         <ul
           className={`
           flex items-center text-lg px-4 md:px-0
           md:static
           fixed flex-col justify-start top-16 w-[40%] h-screen bg-[#0f323f] 
-          transition-all duration-300 ease-out z-10 border-l border-t border-black/50
+          transition-all duration-300 ease-out z-[105] border-l border-t border-black/50
           ${menu ? "right-0" : "right-[-100%]"}
           md:flex-row md:w-auto md:h-auto md:bg-transparent md:border-0
         `}
