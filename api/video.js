@@ -1,22 +1,39 @@
 import https from 'https';
 
 export default function handler(req, res) {
-  const urlParts = req.url.split('?');
   let driveId = req.query?.driveId || req.query?.id;
-  
-  if (!driveId) {
-    driveId = urlParts[0].replace(/^\/api\/video\/?/, '');
+  if (!driveId && req.url) {
+    const cleanUrl = req.url.split('?')[0];
+    const match = cleanUrl.match(/\/api\/video\/(.+)/);
+    if (match) {
+      driveId = match[1];
+    }
   }
 
   if (!driveId) {
-    res.status(400).send('Missing driveId');
+    res.statusCode = 400;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Missing or invalid driveId');
     return;
   }
 
-  const fetchFromDrive = (url, headers, redirectCount = 0) => {
+  const rangeHeader = req.headers.range;
+
+  const fetchFromDrive = (url, redirectCount = 0) => {
     if (redirectCount > 5) {
-      res.status(502).send('Too many redirects');
+      res.statusCode = 502;
+      res.setHeader('Content-Type', 'text/plain');
+      res.end('Too many redirects from Google Drive');
       return;
+    }
+
+    const headers = {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    };
+
+    if (rangeHeader) {
+      headers['Range'] = rangeHeader;
     }
 
     const request = https.get(url, { headers }, (driveRes) => {
@@ -25,13 +42,35 @@ export default function handler(req, res) {
         driveRes.statusCode < 400 &&
         driveRes.headers.location
       ) {
-        fetchFromDrive(driveRes.headers.location, headers, redirectCount + 1);
+        fetchFromDrive(driveRes.headers.location, redirectCount + 1);
         return;
       }
 
-      res.status(driveRes.statusCode || 200);
+      if (driveRes.statusCode === 403 || driveRes.statusCode >= 400) {
+        console.error('Google Drive error:', {
+          driveId,
+          range: rangeHeader,
+          status: driveRes.statusCode,
+          contentType: driveRes.headers['content-type'],
+          contentLength: driveRes.headers['content-length'],
+          url,
+        });
 
-      const headersToForward = [
+        res.statusCode = driveRes.statusCode;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(
+          JSON.stringify({
+            error: 'Google Drive returned ' + driveRes.statusCode,
+            driveId,
+            details: 'Unable to stream file. Verify sharing permissions.',
+          })
+        );
+        return;
+      }
+
+      res.statusCode = driveRes.statusCode || 200;
+
+      const forwardHeaders = [
         'content-type',
         'content-length',
         'content-range',
@@ -41,7 +80,7 @@ export default function handler(req, res) {
         'cache-control',
       ];
 
-      headersToForward.forEach((h) => {
+      forwardHeaders.forEach((h) => {
         if (driveRes.headers[h]) {
           res.setHeader(h, driveRes.headers[h]);
         }
@@ -56,17 +95,15 @@ export default function handler(req, res) {
     });
 
     request.on('error', (err) => {
+      console.error('Drive fetch error:', err.message);
       if (!res.headersSent) {
-        res.status(502).send('Video stream error: ' + err.message);
+        res.statusCode = 502;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Video stream error: ' + err.message);
       }
     });
   };
 
   const initialUrl = `https://drive.usercontent.google.com/download?id=${driveId}&export=download`;
-  const headers = {};
-  if (req.headers.range) {
-    headers['Range'] = req.headers.range;
-  }
-
-  fetchFromDrive(initialUrl, headers);
+  fetchFromDrive(initialUrl);
 }

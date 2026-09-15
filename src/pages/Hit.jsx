@@ -284,17 +284,7 @@ function Hit() {
                   }}
                 >
                   {driveId ? (
-                    <>
-                      <source src={`/api/video/${driveId}`} type="video/mp4" />
-                      <source
-                        src={`https://drive.usercontent.google.com/download?id=${driveId}&export=download`}
-                        type="video/mp4"
-                      />
-                      <source
-                        src={`https://drive.google.com/uc?export=download&id=${driveId}`}
-                        type="video/mp4"
-                      />
-                    </>
+                    <source src={`/api/video/${driveId}`} type="video/mp4" />
                   ) : (
                     <source src={queryRes.video} type="video/mp4" />
                   )}
