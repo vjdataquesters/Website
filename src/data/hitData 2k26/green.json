@@ -71,6 +71,16 @@
   },
   {
     "color": "green",
+    "path": "1",
+    "stage": 8,
+    "qr": "g8p1q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
     "path": "2",
     "stage": 1,
     "qr": "bpdsq",
@@ -124,7 +134,7 @@
     "path": "2",
     "stage": 6,
     "qr": "yxjkh",
-    "question": "INCIDENT #27\n08: 22 — Nothing happened.\n08: 10 — Nothing happened.\n08: 09 — Nothing happened.\n08: 13 — Nothing happened.\nYet someone was watching.\nNo conversation was recorded.\nNo photograph was taken.\nNo name was written.\nBut every arrival was accounted for.\nTHE QUESTION\nIf nothing happened,\nwhy was someone watching?",
+    "question": "INCIDENT #27\n08: <b style=\"font-size: 1.35em; font-weight: 800;\">22</b> — Nothing happened.\n08: <b style=\"font-size: 1.35em; font-weight: 800;\">10</b> — Nothing happened.\n08: <b style=\"font-size: 1.35em; font-weight: 800;\">09</b> — Nothing happened.\n08: <b style=\"font-size: 1.35em; font-weight: 800;\">13</b> — Nothing happened.\nYet someone was watching.\nNo conversation was recorded.\nNo photograph was taken.\nNo name was written.\nBut every arrival was accounted for.\nTHE QUESTION\nIf nothing happened,\nwhy was someone watching?",
     "image": null,
     "audio": null,
     "video": null
@@ -135,6 +145,16 @@
     "stage": 7,
     "qr": "xwwja",
     "question": "🌳 I stand among the trees.\n🪨 I rest among the rocks.\n🚀 My thoughts reached beyond the sky.\n🎵 My words ask you to hear what others miss.\nWho am I?",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "2",
+    "stage": 8,
+    "qr": "g8p2q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
     "image": null,
     "audio": null,
     "video": null
@@ -175,7 +195,7 @@
     "stage": 4,
     "qr": "uobqm",
     "question": null,
-    "image": "https://drive.google.com/file/d/1wvkQ5a6byJMFe9TGnXy_NjjcfBFvELyt/view?usp=drivesdk",
+    "image": "https://drive.google.com/file/d/1czJ1g3N9zUbk5o4o9_DlgUC0QGEGhRTf/view?usp=drivesdk",
     "audio": null,
     "video": null
   },
@@ -206,6 +226,16 @@
     "qr": "tvxml",
     "question": null,
     "image": "https://drive.google.com/file/d/1bEwklqWKQNh0c_b6WlBsxDTZctQ_G_4w/view?usp=drivesdk",
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "green",
+    "path": "3",
+    "stage": 8,
+    "qr": "g8p3q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
+    "image": null,
     "audio": null,
     "video": null
   },

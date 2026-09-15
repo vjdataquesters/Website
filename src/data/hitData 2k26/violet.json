@@ -71,6 +71,16 @@
   },
   {
     "color": "violet",
+    "path": "1",
+    "stage": 8,
+    "qr": "v8p1q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "violet",
     "path": "2",
     "stage": 1,
     "qr": "hmyop",
@@ -141,6 +151,16 @@
   },
   {
     "color": "violet",
+    "path": "2",
+    "stage": 8,
+    "qr": "v8p2q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "violet",
     "path": "3",
     "stage": 1,
     "qr": "glyio",
@@ -205,6 +225,16 @@
     "stage": 7,
     "qr": "yetgl",
     "question": "Not every attack leaves a scar.\nSome begin with a login,\npass through a network,\nand end with an unauthorized access.\n\nFirewalls stand guard,\npasswords act as keys,\nand hackers search for a way in.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "violet",
+    "path": "3",
+    "stage": 8,
+    "qr": "v8p3q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
     "image": null,
     "audio": null,
     "video": null
