@@ -71,6 +71,16 @@
   },
   {
     "color": "blue",
+    "path": "1",
+    "stage": 8,
+    "qr": "b8p1q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "blue",
     "path": "2",
     "stage": 1,
     "qr": "vrdle",
@@ -136,7 +146,17 @@
     "qr": "qvlin",
     "question": null,
     "image": null,
-    "audio": "/hitAssests/audio/YTDown.com_YouTube_Basketball-Game-Crowd-Sound-Effect-HD_Media_dyqpdqGk8EM_006_128k.mp3",
+    "audio": "https://drive.google.com/file/d/1S9coESBcc-foiUEjvpwKxQdXZC84j8IK/view?usp=drivesdk",
+    "video": null
+  },
+  {
+    "color": "blue",
+    "path": "2",
+    "stage": 8,
+    "qr": "b8p2q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
+    "image": null,
+    "audio": null,
     "video": null
   },
   {
@@ -205,6 +225,16 @@
     "stage": 7,
     "qr": "wagyi",
     "question": "No pen wrote me,\nNo printer made me,\nYet three familiar letters..\nMy letters spell the name of your college.\nLook beside where financial hopes are granted...\n--\nYour next secret awaits where I am planted.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "blue",
+    "path": "3",
+    "stage": 8,
+    "qr": "b8p3q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
     "image": null,
     "audio": null,
     "video": null

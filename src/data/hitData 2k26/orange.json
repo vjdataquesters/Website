@@ -55,7 +55,7 @@
     "stage": 6,
     "qr": "nxfjo",
     "question": null,
-    "image": "https://drive.google.com/file/d/1OVulAeunuOxw1__3GUOtObJ1g0_XtUgS/view?usp=sharing",
+    "image": "https://drive.google.com/file/d/1bXh7GqXtBccG0BhQjbywmOeqak_xhb8h/view?usp=sharing",
     "audio": null,
     "video": null
   },
@@ -68,6 +68,16 @@
     "image": null,
     "audio": null,
     "video": "https://drive.google.com/file/d/1BbMym0UAOIFrxMANnkW7QDTsKPr3I83m/view?usp=sharing"
+  },
+  {
+    "color": "orange",
+    "path": "1",
+    "stage": 8,
+    "qr": "o8p1q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
+    "image": null,
+    "audio": null,
+    "video": null
   },
   {
     "color": "orange",
@@ -141,6 +151,16 @@
   },
   {
     "color": "orange",
+    "path": "2",
+    "stage": 8,
+    "qr": "o8p2q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "orange",
     "path": "3",
     "stage": 1,
     "qr": "oaeyg",
@@ -164,10 +184,10 @@
     "path": "3",
     "stage": 3,
     "qr": "zchwj",
-    "question": null,
+    "question": "Two destinations. One connecting path.🪜\nOne place feeds you.\nAnother takes you away.\nSomewhere between the two,\na few steps will lead you closer.🔍",
     "image": null,
     "audio": null,
-    "video": "https://drive.google.com/file/d/1mOp-ft-HLzbcOKqgexyqv1s80LSpW4OM/view?usp=sharing"
+    "video": null
   },
   {
     "color": "orange",
@@ -205,6 +225,16 @@
     "stage": 7,
     "qr": "izwaj",
     "question": "Your next destination hides where letters meet numbers. Seek the second step in the alphabet, then rise beyond the floors you have already passed. At the level that follows four, look for the place where tiny glass balls once raced across the ground.",
+    "image": null,
+    "audio": null,
+    "video": null
+  },
+  {
+    "color": "orange",
+    "path": "3",
+    "stage": 8,
+    "qr": "o8p3q",
+    "question": "Every circle has a point where it begins.\nYou have travelled far enough to complete yours.\nFind the point that has seen you before—\nonly then is your journey whole. 🔍",
     "image": null,
     "audio": null,
     "video": null
