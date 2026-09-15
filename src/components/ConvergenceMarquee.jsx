@@ -6,7 +6,7 @@ export const ConvergenceMarquee = () => {
   return (
     <Link
       to="/events"
-      className="group block w-full fixed top-16 left-0 right-0 bg-gradient-to-r from-[#0b242e] via-[#0f323f] to-[#0b242e] border-y border-[#1a556a]/70 hover:bg-[#13495c] transition-colors duration-200 overflow-hidden select-none z-[101] cursor-pointer"
+      className="group block w-full relative bg-gradient-to-r from-[#0b242e] via-[#0f323f] to-[#0b242e] border-y border-[#1a556a]/70 hover:bg-[#13495c] transition-colors duration-200 overflow-hidden select-none z-[101] cursor-pointer"
       aria-label="Convergence 2K26 Events Are LIVE Now — Check It Out!"
     >
       <div className="relative flex items-center py-2 sm:py-2.5 overflow-hidden">
