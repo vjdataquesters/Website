@@ -83,6 +83,10 @@ function Hit() {
   // Question Display
   const renderQuestion = () => {
     const pathColor = queryRes.color || "indigo";
+    const driveId =
+      queryRes.video && queryRes.video.includes("drive.google.com")
+        ? queryRes.video.match(/drive\.google\.com\/file\/d\/([^\/\?]+)/)?.[1] || ""
+        : "";
     const colorMap = {
       red: {
         border: "border-red-500",
@@ -147,12 +151,12 @@ function Hit() {
 
     return (
       <div
-        className={`max-w-xl mt-12 sm:mt-20 md:mt-28 mb-auto w-full mx-auto text-center transition-opacity duration-500 ${
+        className={`w-full max-w-xl min-w-0 mt-12 sm:mt-20 md:mt-28 mb-auto mx-auto text-center transition-opacity duration-500 ${
           animation ? "opacity-100" : "opacity-0"
         }`}
       >
         <div
-          className={`bg-white/95 backdrop-blur-md rounded-2xl p-6 sm:p-8 border-t-4 transition-all duration-300 ${currentTheme.border} ${currentTheme.glow}`}
+          className={`bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-8 w-full min-w-0 max-w-full overflow-hidden border-t-4 transition-all duration-300 ${currentTheme.border} ${currentTheme.glow}`}
         >
           {/* Team Tag Badge */}
           <div className="flex justify-center mb-4">
@@ -250,35 +254,53 @@ function Hit() {
 
           {/* Video */}
           {queryRes.video && (
-            <div className="mb-6">
+            <div className="mb-6 w-full min-w-0 max-w-full">
               {queryRes.path !== "final" && queryRes.path !== "fooled" && (
                 <h3 className="text-base font-bold text-slate-800 mb-2 flex items-center justify-center gap-2">
                   <span>Watch this clip</span> 🎬
                 </h3>
               )}
-              {queryRes.video.includes("drive.google.com") ? (
-                <iframe
-                  src={`https://drive.google.com/file/d/${
-                    queryRes.video.match(/drive\.google\.com\/file\/d\/([^\/\?]+)/)?.[1] || ""
-                  }/preview`}
-                  className="w-full rounded-xl shadow-lg h-64 sm:h-80 border border-slate-200"
-                  allow="autoplay"
-                  title="Video Clue"
-                />
-              ) : (
+
+              <div
+                className="relative w-full max-w-full overflow-hidden rounded-xl shadow-lg border border-slate-200 bg-black"
+                style={{
+                  aspectRatio: "16 / 9",
+                  width: "100%",
+                }}
+              >
                 <video
-                  src={queryRes.video}
-                  controls={
-                    queryRes.path !== "final" && queryRes.path !== "fooled"
-                  }
-                  autoPlay={
-                    queryRes.path === "final" || queryRes.path === "fooled"
-                  }
+                  key={queryRes.video}
+                  controls={queryRes.path !== "final" && queryRes.path !== "fooled"}
+                  autoPlay={queryRes.path === "final" || queryRes.path === "fooled"}
                   loop={queryRes.path === "final" || queryRes.path === "fooled"}
                   muted={queryRes.path === "final" || queryRes.path === "fooled"}
-                  className="w-full rounded-xl shadow-lg min-h-80 max-h-[90vh] border border-slate-200"
-                />
-              )}
+                  playsInline
+                  preload="metadata"
+                  className="absolute inset-0 w-full h-full object-contain"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "block",
+                  }}
+                >
+                  {driveId ? (
+                    <>
+                      <source src={`/api/video/${driveId}`} type="video/mp4" />
+                      <source
+                        src={`https://drive.usercontent.google.com/download?id=${driveId}&export=download`}
+                        type="video/mp4"
+                      />
+                      <source
+                        src={`https://drive.google.com/uc?export=download&id=${driveId}`}
+                        type="video/mp4"
+                      />
+                    </>
+                  ) : (
+                    <source src={queryRes.video} type="video/mp4" />
+                  )}
+                  Your browser does not support HTML5 video playback.
+                </video>
+              </div>
             </div>
           )}
 
