@@ -28,21 +28,25 @@ import { sheetsApi } from './services/sheetsApi.js';
 import { generateRequestId } from './utils/requestId.js';
 import { readVolunteerIdentity, saveVolunteerIdentity, clearVolunteerIdentity } from './utils/volunteerIdentity.js';
 import { readPendingAction, savePendingAction, clearPendingAction } from './utils/pendingAction.js';
+import { readPendingPenalties, savePendingPenalties, clearPendingPenalties } from './utils/pendingPenalties.js';
 import { deriveRunViewState } from './services/runLogic.js';
 import { COLOUR_THEME } from '../../data/hit_vol_2k26/config.js';
 import { identityShape } from './propTypes.js';
 
+/** Top-level entry: resolves identity first, then hands off to VolunteerRunView. */
 export default function VolunteerPage() {
   const [identity, setIdentity] = useState(() => readVolunteerIdentity());
 
   if (!identity) {
     return (
-      <VolunteerIdGate
-        onConfirmed={(candidate) => {
-          saveVolunteerIdentity(candidate);
-          setIdentity(candidate);
-        }}
-      />
+      <FeatureErrorBoundary>
+        <VolunteerIdGate
+          onConfirmed={(vol) => {
+            saveVolunteerIdentity(vol);
+            setIdentity(vol);
+          }}
+        />
+      </FeatureErrorBoundary>
     );
   }
 
@@ -68,6 +72,32 @@ function VolunteerRunView({ identity, onSwitchVolunteer }) {
   const [penaltyBusy, setPenaltyBusy] = useState(false);
   const [actionError, setActionError] = useState(null);
   const resumedRef = useRef(false);
+
+  const activeRunId = run ? run.runId : null;
+  const [penalties, setPenalties] = useState(() => readPendingPenalties(activeRunId));
+  const lastRunIdRef = useRef(activeRunId);
+  useEffect(() => {
+    if (activeRunId !== lastRunIdRef.current) {
+      lastRunIdRef.current = activeRunId;
+      setPenalties(readPendingPenalties(activeRunId));
+    }
+  }, [activeRunId]);
+
+  function handleAddPenalty() {
+    setPenalties((prev) => {
+      const next = prev + 1;
+      savePendingPenalties(activeRunId, next);
+      return next;
+    });
+  }
+
+  function handleRemovePenalty() {
+    setPenalties((prev) => {
+      const next = Math.max(0, prev - 1);
+      savePendingPenalties(activeRunId, next);
+      return next;
+    });
+  }
 
   const busySetterFor = (action) => ({ startRun: setStartBusy, endRun: setEndBusy, addPenalty: setPenaltyBusy }[action]);
 
@@ -100,19 +130,23 @@ function VolunteerRunView({ identity, onSwitchVolunteer }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function runMutation(action) {
+  async function runMutation(action, extraOptions = {}) {
     const busySetter = busySetterFor(action);
     if (!sheetsApi) {
       setActionError('This page is not configured (missing VITE_HIT_VOL_2K26_API_URL).');
       return;
     }
-    busySetter(true);
+    if (busySetter) busySetter(true);
     setActionError(null);
     const requestId = generateRequestId();
-    savePendingAction(action, { volunteerId: identity.volunteerId }, requestId);
+    const extra = action === 'endRun' ? { penalties, ...extraOptions } : extraOptions;
+    savePendingAction(action, { volunteerId: identity.volunteerId, ...extra }, requestId);
     try {
-      const result = await sheetsApi[action](identity.volunteerId, requestId);
+      const result = await sheetsApi[action](identity.volunteerId, requestId, extra);
       if (result.ok) {
+        if (action === 'endRun') {
+          clearPendingPenalties(activeRunId);
+        }
         setRunDirectly(result.run);
       } else if (result.reason === 'NO_ACTIVE_RUN') {
         // Something else already changed this run (operator, or another device/tab for the same
@@ -126,7 +160,7 @@ function VolunteerRunView({ identity, onSwitchVolunteer }) {
       setActionError((err && err.message) || 'Connection issue — please try again.');
     } finally {
       clearPendingAction();
-      busySetter(false);
+      if (busySetter) busySetter(false);
     }
   }
 
@@ -191,11 +225,16 @@ function VolunteerRunView({ identity, onSwitchVolunteer }) {
               endBusy={endBusy}
               onStart={() => runMutation('startRun')}
               onEnd={() => runMutation('endRun')}
+              onGiveUp={() => runMutation('endRun', { giveUp: true })}
             />
           ) : null}
 
           {viewState === 'RUNNING' ? (
-            <PenaltyControls run={run} busy={penaltyBusy} onAddPenalty={() => runMutation('addPenalty')} />
+            <PenaltyControls
+              penalties={penalties}
+              onAddPenalty={handleAddPenalty}
+              onRemovePenalty={handleRemovePenalty}
+            />
           ) : null}
 
           {actionError ? <p className="text-sm text-red-600">{actionError}</p> : null}

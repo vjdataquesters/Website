@@ -195,10 +195,11 @@ export function createSheetsApiClient({
 // transport/clock should use createSheetsApiClient() directly.
 
 const DEFAULT_API_URL =
-  'https://script.google.com/macros/s/AKfycbwY6HHhsj_EL7OiWR43FMi9w-AHA8xOQhsyqOt8Zk9uElgPVL_TpBFKWgcA_x1VLW-_Sw/exec';
+  'https://script.google.com/macros/s/AKfycbyftWoErG2juyL38Q_-OmSENJ5Qi9DeQHaP5YO0Wh3IbCzChsT7HW7_NCHNkM6DfjJbIg/exec';
 
 const ENCRYPTED_API_URL =
-  'LCUrODpucB04UUQtIStmLjswVSdXGCc+MmckNTxAJEEZN34eAy8tPFA8awAMGTc7Iwsafnx9XxMDa3sPGTYLPB93DBBnMAYFN0EyQ3kwaQUjcCEaXixiYAgOCzgLEhRlLFF3GyluHgUDcm0YRRkhKTor';
+  'LCUrODpucB04UUQtIStmLjswVSdXGCc+MmckNTxAJEEZN34eAy8tPFAyVEITPho6DmY1RzJ+BXwAAGUGOQx3BXgDFThmDCwFF1MbB28LYQggeh09cTFxXjcFaAAeYwB8CHp4LxxpDC8+FVACVRkhKTor';
+
 
 function getDecryptedApiUrl(encoded, key = 'DQ_HIT_2K26') {
   if (typeof atob === 'undefined') return '';
