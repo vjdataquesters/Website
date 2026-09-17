@@ -579,7 +579,11 @@ function endRun_(payload) {
     const cooldownEnd = computeCooldownEnd_(effectiveEndedAt, CONFIG.COOLDOWN_MINUTES);
 
     const penalties = Math.max(0, Math.min(CONFIG.MAX_PENALTIES, Math.floor(Number(payload.penalties) || 0)));
-    const effectiveDurationSeconds = durationSeconds === '' ? '' : durationSeconds + penalties * CONFIG.PENALTY_EFFECTIVE_MINUTES * 60;
+    let effectiveDurationSeconds = durationSeconds === '' ? '' : durationSeconds + penalties * CONFIG.PENALTY_EFFECTIVE_MINUTES * 60;
+    if (payload.giveUp === true || payload.giveUp === 'true' || payload.giveUp === 1) {
+      effectiveDurationSeconds = 0;
+    }
+
 
     writeFields_(SHEET_NAMES.RUNS, RUN_HEADERS, run.__rowNumber, {
       endedAt: effectiveEndedAt, durationSeconds: durationSeconds, status: 'COMPLETED',

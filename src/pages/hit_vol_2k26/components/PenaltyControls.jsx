@@ -26,24 +26,37 @@ import { MAX_PENALTIES } from '../../../data/hit_vol_2k26/config.js';
 /**
  * @param {number} penalties the local, not-yet-sent penalty count for this run
  * @param {() => void} onAddPenalty synchronous — just increments local state, no network call
+ * @param {() => void} [onRemovePenalty] synchronous — decrements local state, no network call
  */
-export default function PenaltyControls({ penalties, onAddPenalty }) {
+export default function PenaltyControls({ penalties, onAddPenalty, onRemovePenalty }) {
   const atPenaltyCap = penalties >= MAX_PENALTIES;
+  const atPenaltyMin = penalties <= 0;
 
   return (
     <div className="flex items-center gap-1.5 rounded-md border border-amber-200 bg-amber-50 py-1 pl-2.5 pr-1">
       <span className="text-xs font-semibold tabular-nums text-amber-800" title="Penalties — +3 min added to the scored result when the run ends">
         {penalties}/{MAX_PENALTIES} penalty
       </span>
-      <button
-        type="button"
-        onClick={onAddPenalty}
-        disabled={atPenaltyCap}
-        className="flex h-6 w-6 items-center justify-center rounded bg-amber-500 text-sm font-bold leading-none text-white transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
-        aria-label="Log a penalty"
-      >
-        +
-      </button>
+      <div className="flex items-center gap-1">
+        <button
+          type="button"
+          onClick={onRemovePenalty}
+          disabled={atPenaltyMin}
+          className="flex h-6 w-6 items-center justify-center rounded bg-amber-500 text-sm font-bold leading-none text-white transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
+          aria-label="Reduce penalty"
+        >
+          -
+        </button>
+        <button
+          type="button"
+          onClick={onAddPenalty}
+          disabled={atPenaltyCap}
+          className="flex h-6 w-6 items-center justify-center rounded bg-amber-500 text-sm font-bold leading-none text-white transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
+          aria-label="Log a penalty"
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 }
@@ -51,8 +64,11 @@ export default function PenaltyControls({ penalties, onAddPenalty }) {
 PenaltyControls.propTypes = {
   penalties: PropTypes.number,
   onAddPenalty: PropTypes.func.isRequired,
+  onRemovePenalty: PropTypes.func,
 };
 
 PenaltyControls.defaultProps = {
   penalties: 0,
+  onRemovePenalty: () => {},
 };
+

@@ -22,8 +22,9 @@ import { runShape } from '../propTypes.js';
  * @param {boolean} endBusy
  * @param {() => void} onStart
  * @param {() => void} onEnd
+ * @param {() => void} onGiveUp
  */
-export default function RunControls({ run, startBusy, endBusy, onStart, onEnd }) {
+export default function RunControls({ run, startBusy, endBusy, onStart, onEnd, onGiveUp }) {
   if (canStartRun(run)) {
     return (
       <button
@@ -41,14 +42,24 @@ export default function RunControls({ run, startBusy, endBusy, onStart, onEnd })
     return (
       <div className="flex flex-col items-center gap-4">
         <TimerDisplay startedAt={run.startedAt} allowedMinutes={run.allowedMinutes} size="lg" />
-        <button
-          type="button"
-          onClick={onEnd}
-          disabled={endBusy}
-          className="w-full rounded-lg bg-red-600 px-4 py-4 text-lg font-bold text-white disabled:opacity-50"
-        >
-          {endBusy ? 'Ending…' : 'END RUN'}
-        </button>
+        <div className="flex w-full gap-3">
+          <button
+            type="button"
+            onClick={onEnd}
+            disabled={endBusy}
+            className="flex-1 rounded-lg bg-emerald-600 px-3 py-3 text-base font-bold text-white transition hover:bg-emerald-500 disabled:opacity-50"
+          >
+            {endBusy ? 'Ending…' : 'COMPLETE'}
+          </button>
+          <button
+            type="button"
+            onClick={onGiveUp}
+            disabled={endBusy}
+            className="flex-1 rounded-lg bg-slate-600 px-3 py-3 text-base font-bold text-white transition hover:bg-slate-500 disabled:opacity-50"
+          >
+            {endBusy ? 'Ending…' : 'GIVE UP'}
+          </button>
+        </div>
       </div>
     );
   }
@@ -62,4 +73,6 @@ RunControls.propTypes = {
   endBusy: PropTypes.bool,
   onStart: PropTypes.func.isRequired,
   onEnd: PropTypes.func.isRequired,
+  onGiveUp: PropTypes.func.isRequired,
 };
+

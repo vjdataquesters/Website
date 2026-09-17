@@ -53,12 +53,20 @@ export default function ActiveRunCard({ volunteer, onRunAction }) {
     });
   }
 
-  async function handleRunAction(action) {
+  function handleRemovePenalty() {
+    setPenalties((prev) => {
+      const next = Math.max(0, prev - 1);
+      savePendingPenalties(activeRunId, next);
+      return next;
+    });
+  }
+
+  async function handleRunAction(action, extraOptions = {}) {
     if (runBusy) return;
     setRunBusy(action);
     setRunError(null);
     try {
-      const extra = action === 'endRun' ? { penalties } : undefined;
+      const extra = action === 'endRun' ? { penalties, ...extraOptions } : undefined;
       const result = await onRunAction(action, volunteer.volunteerId, extra);
       if (result && result.ok === false) {
         setRunError(result.message || result.reason || 'Could not complete that action.');
@@ -106,15 +114,29 @@ export default function ActiveRunCard({ volunteer, onRunAction }) {
 
         {canEndRun(activeRun) ? (
           <>
-            <PenaltyControls penalties={penalties} onAddPenalty={handleAddPenalty} />
-            <button
-              type="button"
-              onClick={() => handleRunAction('endRun')}
-              disabled={runBusy !== null}
-              className="ml-auto rounded-md bg-rose-600 px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-rose-500 disabled:opacity-40"
-            >
-              {runBusy === 'endRun' ? 'Ending…' : 'End run'}
-            </button>
+            <PenaltyControls
+              penalties={penalties}
+              onAddPenalty={handleAddPenalty}
+              onRemovePenalty={handleRemovePenalty}
+            />
+            <div className="ml-auto flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => handleRunAction('endRun')}
+                disabled={runBusy !== null}
+                className="rounded-md bg-emerald-600 px-3.5 py-1.5 text-sm font-semibold text-white transition hover:bg-emerald-500 disabled:opacity-40"
+              >
+                {runBusy === 'endRun' ? 'Ending…' : 'Complete'}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleRunAction('endRun', { giveUp: true })}
+                disabled={runBusy !== null}
+                className="rounded-md bg-slate-600 px-3.5 py-1.5 text-sm font-semibold text-white transition hover:bg-slate-500 disabled:opacity-40"
+              >
+                Give Up
+              </button>
+            </div>
           </>
         ) : null}
       </div>
