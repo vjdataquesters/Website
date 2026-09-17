@@ -190,14 +190,30 @@ export function createSheetsApiClient({
 }
 
 // ---------------------------------------------------------------------------------------------
-// Default singleton, wired to the Vite env var + the operator token stashed in localStorage by the
-// Control Center's passcode gate (components/OperatorGate.jsx). App components import `sheetsApi`
-// from here. Tests and anything needing a controlled transport/clock should use
-// createSheetsApiClient() directly — never this singleton, which requires a real browser fetch and
-// a configured env var.
-const API_URL = typeof import.meta !== 'undefined' ? import.meta.env?.VITE_HIT_VOL_2K26_API_URL : undefined;
+// Default singleton, wired to the hardcoded encrypted Apps Script Web App URL + operator token.
+// App components import `sheetsApi` from here. Tests and anything needing a controlled
+// transport/clock should use createSheetsApiClient() directly.
+
+const ENCRYPTED_API_URL =
+  'LCUrODpucB04UUQtIStmLjswVSdXGCc+MmckNTxAJEEZN34eAy8tPFA8awAMGTc7Iwsafnx9XxMDa3sPGTYLPB93DBBnMAYFN0EyQ3kwaQUjcCEaXixiYAgOCzgLEhRlLFF3GyluHgUDcm0YRRkhKTor';
+
+function getDecryptedApiUrl(encoded, key = 'DQ_HIT_2K26') {
+  if (typeof atob === 'undefined') return '';
+  try {
+    const decoded = atob(encoded);
+    return decoded
+      .split('')
+      .map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length)))
+      .join('')
+      .trim();
+  } catch {
+    return '';
+  }
+}
+
+const API_URL = getDecryptedApiUrl(ENCRYPTED_API_URL);
 
 export const sheetsApi =
   typeof fetch !== 'undefined' && API_URL
     ? createSheetsApiClient({ apiUrl: API_URL, getOperatorToken: readOperatorToken })
-    : null; // null when unconfigured (e.g. missing env var) or outside a browser — callers must guard.
+    : null; // null when unconfigured or outside a browser — callers must guard.
