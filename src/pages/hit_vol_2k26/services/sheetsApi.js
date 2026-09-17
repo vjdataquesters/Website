@@ -190,14 +190,25 @@ export function createSheetsApiClient({
 }
 
 // ---------------------------------------------------------------------------------------------
-// Default singleton, wired to the Vite env var + the operator token stashed in localStorage by the
-// Control Center's passcode gate (components/OperatorGate.jsx). App components import `sheetsApi`
-// from here. Tests and anything needing a controlled transport/clock should use
-// createSheetsApiClient() directly — never this singleton, which requires a real browser fetch and
-// a configured env var.
-const API_URL = typeof import.meta !== 'undefined' ? import.meta.env?.VITE_HIT_VOL_2K26_API_URL : undefined;
+// Fallback so a deploy still works even if VITE_HIT_VOL_2K26_API_URL was never set in the hosting
+// platform's project settings (e.g. Vercel) — Vite only bakes in an env var that exists at BUILD
+// time, so a missing one there produces exactly the "not configured" state every call site below
+// guards for, with no local sign anything's wrong. This is the same Apps Script Web App URL that
+// would otherwise have to be set as VITE_HIT_VOL_2K26_API_URL; it's not a secret — a VITE_-prefixed
+// env var is always inlined into the shipped JS bundle either way, visible to anyone in devtools —
+// so hardcoding it here is no less private than the env var was. The env var still takes
+// precedence when it IS set, so the URL can still be rotated by updating it there instead of
+// editing code and redeploying.
+const DEFAULT_API_URL = 'https://script.google.com/macros/s/AKfycbwY6HHhsj_EL7OiWR43FMi9w-AHA8xOQhsyqOt8Zk9uElgPVL_TpBFKWgcA_x1VLW-_Sw/exec';
+
+// Default singleton, wired to the Vite env var (or DEFAULT_API_URL above) + the operator token
+// stashed in localStorage by the Control Center's passcode gate (components/OperatorGate.jsx). App
+// components import `sheetsApi` from here. Tests and anything needing a controlled transport/clock
+// should use createSheetsApiClient() directly — never this singleton, which requires a real browser
+// fetch.
+const API_URL = (typeof import.meta !== 'undefined' ? import.meta.env?.VITE_HIT_VOL_2K26_API_URL : undefined) || DEFAULT_API_URL;
 
 export const sheetsApi =
   typeof fetch !== 'undefined' && API_URL
     ? createSheetsApiClient({ apiUrl: API_URL, getOperatorToken: readOperatorToken })
-    : null; // null when unconfigured (e.g. missing env var) or outside a browser — callers must guard.
+    : null; // null only outside a browser (no fetch) — DEFAULT_API_URL means a missing env var alone can't cause this anymore.
