@@ -17,6 +17,7 @@ import Members from "./Members";
 import SSDRegistration from "./SSDRegistration";
 import SSDSubmissions from "./SSDSubmissions";
 import farewell2K26Routes from "./farewell-2k26/routes";
+import HitVolControlCenter from "./hit_vol_2k26/ControlCenter";
 
 const router = [
   { path: "/", component: Home },
@@ -37,6 +38,7 @@ const router = [
   // { path: "/register", component: RegistrationForm },
   { path: "/hit", component: Hit },
   { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
+  { path: "/hit-vol-2k26/control", component: HitVolControlCenter },
   { path: "*", component: Home },
 ];
 
