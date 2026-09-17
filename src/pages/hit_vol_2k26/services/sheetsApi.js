@@ -194,6 +194,9 @@ export function createSheetsApiClient({
 // App components import `sheetsApi` from here. Tests and anything needing a controlled
 // transport/clock should use createSheetsApiClient() directly.
 
+const DEFAULT_API_URL =
+  'https://script.google.com/macros/s/AKfycbwY6HHhsj_EL7OiWR43FMi9w-AHA8xOQhsyqOt8Zk9uElgPVL_TpBFKWgcA_x1VLW-_Sw/exec';
+
 const ENCRYPTED_API_URL =
   'LCUrODpucB04UUQtIStmLjswVSdXGCc+MmckNTxAJEEZN34eAy8tPFA8awAMGTc7Iwsafnx9XxMDa3sPGTYLPB93DBBnMAYFN0EyQ3kwaQUjcCEaXixiYAgOCzgLEhRlLFF3GyluHgUDcm0YRRkhKTor';
 
@@ -211,9 +214,15 @@ function getDecryptedApiUrl(encoded, key = 'DQ_HIT_2K26') {
   }
 }
 
-const API_URL = getDecryptedApiUrl(ENCRYPTED_API_URL);
+const envUrl = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_HIT_VOL_2K26_API_URL : undefined;
+
+const API_URL =
+  (typeof envUrl === 'string' && envUrl.trim()) ||
+  getDecryptedApiUrl(ENCRYPTED_API_URL) ||
+  DEFAULT_API_URL;
 
 export const sheetsApi =
   typeof fetch !== 'undefined' && API_URL
     ? createSheetsApiClient({ apiUrl: API_URL, getOperatorToken: readOperatorToken })
     : null; // null when unconfigured or outside a browser — callers must guard.
+
