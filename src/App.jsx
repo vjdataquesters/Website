@@ -33,18 +33,21 @@ const loadingAnimationBlacklist = [
   "/register",
   "/register/ssd",
   "/events/SSD/submissions",
+  "/hit-vol-2k26/control",
 ];
 const headerBlacklist = [
   "/hit",
   "/register",
   "/register/ssd",
   "/farewell-2k26",
+  "/hit-vol-2k26/control",
 ];
 const promoBlacklist = [
   "/hit",
   "/hit-gen-qr-ultrasecretendpoint",
   "/register",
   "/register/ssd",
+  "/hit-vol-2k26/control",
 ];
 
 if (typeof window !== "undefined" && window.isInitialLoad === undefined) {
