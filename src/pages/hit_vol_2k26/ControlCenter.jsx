@@ -22,6 +22,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useVolunteers } from './hooks/useVolunteers.js';
 import { useUnloadGuard } from './hooks/useUnloadGuard.js';
+import { useRunExpiry } from './hooks/useRunExpiry.js';
 import { sheetsApi } from './services/sheetsApi.js';
 import VolunteerRoster from './components/VolunteerRoster.jsx';
 import AssignmentWheel from './components/AssignmentWheel.jsx';
@@ -86,6 +87,12 @@ function ControlCenterInner({ onChangePasscode }) {
     if (result.ok) refresh();
     return result;
   }
+
+  // ── Auto-expiry: when a volunteer's 30-minute run reaches zero, automatically call endRun so
+  // they move to RESTING without any operator action. Uses the same handleRunAction path as the
+  // manual "Complete" button, so the same idempotency + refresh() cascade applies automatically.
+  // See hooks/useRunExpiry.js for the full rationale and duplicate-transition guard.
+  useRunExpiry(volunteers, handleRunAction);
 
   return (
     <div className="min-h-screen bg-slate-50">
