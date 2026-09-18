@@ -45,10 +45,11 @@ import { readPendingPenalties, savePendingPenalties, clearPendingPenalties } fro
  * @param {(volunteerId:string, nextAvailable:boolean) => Promise<{ok:boolean, reason?:string, message?:string}>} onToggleAvailability
  * @param {(action:'startRun'|'endRun', volunteerId:string, extra?:object) => Promise<{ok:boolean, reason?:string, message?:string}>} onRunAction
  */
-export default function VolunteerCard({ volunteer, onToggleAvailability, onRunAction }) {
+export default function VolunteerCard({ volunteer, onToggleAvailability, onRunAction, onClearCooldown }) {
   const now = useTick(1000);
   const [busy, setBusy] = useState(false);
   const [toggleError, setToggleError] = useState(null);
+  const [clearBusy, setClearBusy] = useState(false);
   // Which run action is currently in flight ('startRun' | 'endRun'), or null — a single flag is
   // enough because only one of this card's run buttons is ever shown at a time.
   const [runBusy, setRunBusy] = useState(null);
@@ -126,6 +127,26 @@ export default function VolunteerCard({ volunteer, onToggleAvailability, onRunAc
     }
   }
 
+  async function handleClearRest() {
+    if (clearBusy || !onClearCooldown) return;
+    setClearBusy(true);
+    setToggleError(null);
+    try {
+      const result = await onClearCooldown(volunteer.volunteerId);
+      if (result && result.ok === false) {
+        setToggleError(
+          result.reason === 'UNAUTHORIZED'
+            ? 'Operator passcode required.'
+            : result.message || result.reason || 'Could not end rest.'
+        );
+      }
+    } catch (err) {
+      setToggleError((err && err.message) || 'Could not end rest.');
+    } finally {
+      setClearBusy(false);
+    }
+  }
+
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
       <div className="flex items-start justify-between gap-2">
@@ -193,8 +214,18 @@ export default function VolunteerCard({ volunteer, onToggleAvailability, onRunAc
       ) : null}
 
       {status === 'RESTING' ? (
-        <div className="mt-2">
+        <div className="mt-2 flex items-center justify-between gap-2">
           <CooldownCountdown cooldownEnd={volunteer.cooldownEnd} />
+          {onClearCooldown ? (
+            <button
+              type="button"
+              onClick={handleClearRest}
+              disabled={clearBusy}
+              className="rounded bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700 transition hover:bg-teal-100 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {clearBusy ? 'Saving…' : 'Bring Back'}
+            </button>
+          ) : null}
         </div>
       ) : null}
 
@@ -219,4 +250,5 @@ VolunteerCard.propTypes = {
   volunteer: volunteerShape.isRequired,
   onToggleAvailability: PropTypes.func.isRequired,
   onRunAction: PropTypes.func.isRequired,
+  onClearCooldown: PropTypes.func,
 };
