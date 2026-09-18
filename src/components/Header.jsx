@@ -26,10 +26,10 @@ const Header = () => {
           className={`
           flex items-center text-lg px-4 md:px-0
           md:static
-          fixed flex-col justify-start top-16 w-[40%] h-screen bg-[#0f323f] 
-          transition-all duration-300 ease-out z-[105] border-l border-t border-black/50
-          ${menu ? "right-0" : "right-[-100%]"}
-          md:flex-row md:w-auto md:h-auto md:bg-transparent md:border-0
+          fixed right-0 flex-col justify-start top-16 w-[40%] h-screen bg-[#0f323f] 
+          transition-transform duration-300 ease-out z-[105] border-l border-t border-black/50
+          ${menu ? "translate-x-0" : "translate-x-full"}
+          md:translate-x-0 md:flex-row md:w-auto md:h-auto md:bg-transparent md:border-0
         `}
         >
           <li
