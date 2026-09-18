@@ -167,6 +167,8 @@ export function createSheetsApiClient({
       callWithRetry('assignTeam', withOperatorToken({ teamName, volunteerId, requestId })),
     setManualAvailability: (volunteerId, available, requestId = generateRequestId()) =>
       callWithRetry('setManualAvailability', withOperatorToken({ volunteerId, available, requestId })),
+    clearCooldown: (volunteerId, requestId = generateRequestId()) =>
+      callWithRetry('clearCooldown', withOperatorToken({ volunteerId, requestId })),
 
     // ---- operator passcode check — read-only, no requestId needed (never mutates, always safe to
     // retry as-is). Lets OperatorGate confirm a passcode immediately instead of waiting for the
@@ -195,10 +197,10 @@ export function createSheetsApiClient({
 // transport/clock should use createSheetsApiClient() directly.
 
 const DEFAULT_API_URL =
-  'https://script.google.com/macros/s/AKfycbyftWoErG2juyL38Q_-OmSENJ5Qi9DeQHaP5YO0Wh3IbCzChsT7HW7_NCHNkM6DfjJbIg/exec';
+  'https://script.google.com/macros/s/AKfycbzMeq4E3uFuxm8AD9QUdJ84V-kI2NsHZASnHjDPR9zVnG18JrV5Nzwin_PzluyqmATimg/exec';
 
 const ENCRYPTED_API_URL =
-  'LCUrODpucB04UUQtIStmLjswVSdXGCc+MmckNTxAJEEZN34eAy8tPFAyVEITPho6DmY1RzJ+BXwAAGUGOQx3BXgDFThmDCwFF1MbB28LYQggeh09cTFxXjcFaAAeYwB8CHp4LxxpDC8+FVACVRkhKTor';
+  'LCUrODpucB04UUQtIStmLjswVSdXGCc+MmckNTxAJEEZN34eAy8tPFAxf1M1ZRp7PBIqSiYKdwBoDh0tHmcGHR9dDWMROwEOHmElelwAAQ1xMwIxdXoKfDYHagYzIzZcFGJMKCQmOSQVC1smVRkhKTor';
 
 
 function getDecryptedApiUrl(encoded, key = 'DQ_HIT_2K26') {

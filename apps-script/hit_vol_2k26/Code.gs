@@ -327,6 +327,7 @@ function routeAction_(action, payload) {
     case 'getRun': return getRun_(payload);
     case 'identifyVolunteer': return identifyVolunteer_(payload);
     case 'setManualAvailability': return withOperatorAuth_(payload, function () { return withLock_(function () { return setManualAvailability_(payload); }); });
+    case 'clearCooldown': return withOperatorAuth_(payload, function () { return withLock_(function () { return clearCooldown_(payload); }); });
     case 'assignTeam': return withOperatorAuth_(payload, function () { return withLock_(function () { return assignTeam_(payload); }); });
     case 'startRun': return withLock_(function () { return startRun_(payload); });
     case 'addPenalty': return withLock_(function () { return addPenalty_(payload); });
@@ -620,4 +621,20 @@ function setManualAvailability_(payload) {
   writeFields_(SHEET_NAMES.VOLUNTEERS, VOLUNTEER_HEADERS, volunteer.__rowNumber, { manuallyAvailable: value });
 
   return storeIdempotentResult_(requestId, { ok: true, volunteerId: volunteer.volunteerId, manuallyAvailable: value });
+}
+
+function clearCooldown_(payload) {
+  const requestId = payload.requestId;
+  const cached = getIdempotentResult_(requestId);
+  if (cached) return cached;
+
+  const volunteer = findVolunteerRow_(payload.volunteerId);
+  if (!volunteer) return storeIdempotentResult_(requestId, { ok: false, reason: 'NOT_FOUND' });
+
+  writeFields_(SHEET_NAMES.VOLUNTEERS, VOLUNTEER_HEADERS, volunteer.__rowNumber, {
+    cooldownEnd: '',
+    manuallyAvailable: true,
+  });
+
+  return storeIdempotentResult_(requestId, { ok: true, volunteerId: volunteer.volunteerId, manuallyAvailable: true });
 }

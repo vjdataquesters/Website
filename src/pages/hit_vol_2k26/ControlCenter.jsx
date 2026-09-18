@@ -78,6 +78,15 @@ function ControlCenterInner({ onChangePasscode }) {
     return result;
   }
 
+  async function handleClearCooldown(volunteerId) {
+    if (!sheetsApi) {
+      return { ok: false, reason: 'NOT_CONFIGURED', message: 'VITE_HIT_VOL_2K26_API_URL is not set.' };
+    }
+    const result = await sheetsApi.clearCooldown(volunteerId);
+    if (result.ok) refresh();
+    return result;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white">
@@ -113,6 +122,7 @@ function ControlCenterInner({ onChangePasscode }) {
               volunteers={volunteers}
               onToggleAvailability={handleToggleAvailability}
               onRunAction={handleRunAction}
+              onClearCooldown={handleClearCooldown}
             />
 
             <aside className="mt-6 flex flex-col gap-4 lg:sticky lg:top-[70px] lg:mt-0">
@@ -120,7 +130,7 @@ function ControlCenterInner({ onChangePasscode }) {
                 <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">Assign a team</h2>
                 <AssignmentWheel volunteers={volunteers} usedTeamNames={usedTeamNames} onCommitted={refresh} />
               </div>
-              <RestingPanel volunteers={volunteers} />
+              <RestingPanel volunteers={volunteers} onClearCooldown={handleClearCooldown} />
             </aside>
           </div>
         )}

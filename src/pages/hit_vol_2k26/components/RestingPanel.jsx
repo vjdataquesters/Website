@@ -12,7 +12,7 @@ import { splitRosterByPriority } from '../services/rosterLogic.js';
 import { useTick } from '../hooks/useTick.js';
 import RestingRow from './RestingRow.jsx';
 
-export default function RestingPanel({ volunteers }) {
+export default function RestingPanel({ volunteers, onClearCooldown }) {
   const now = useTick(1000);
   const { resting } = splitRosterByPriority(volunteers, now);
 
@@ -26,7 +26,7 @@ export default function RestingPanel({ volunteers }) {
       ) : (
         <div>
           {resting.map((v) => (
-            <RestingRow key={v.volunteerId} volunteer={v} />
+            <RestingRow key={v.volunteerId} volunteer={v} onClearCooldown={onClearCooldown} />
           ))}
         </div>
       )}
@@ -36,4 +36,5 @@ export default function RestingPanel({ volunteers }) {
 
 RestingPanel.propTypes = {
   volunteers: PropTypes.array,
+  onClearCooldown: PropTypes.func,
 };

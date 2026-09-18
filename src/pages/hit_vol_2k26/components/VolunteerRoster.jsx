@@ -41,7 +41,7 @@ StatTile.propTypes = { label: PropTypes.string.isRequired, value: PropTypes.numb
  * @param {(volunteerId:string, nextAvailable:boolean) => Promise<object>} onToggleAvailability
  * @param {(action:'startRun'|'endRun', volunteerId:string, extra?:object) => Promise<object>} onRunAction
  */
-export default function VolunteerRoster({ volunteers, onToggleAvailability, onRunAction }) {
+export default function VolunteerRoster({ volunteers, onToggleAvailability, onRunAction, onClearCooldown }) {
   const now = useTick(1000);
   const [query, setQuery] = useState('');
   const [selectedColours, setSelectedColours] = useState(() => new Set());
@@ -138,4 +138,5 @@ VolunteerRoster.propTypes = {
   volunteers: PropTypes.array,
   onToggleAvailability: PropTypes.func.isRequired,
   onRunAction: PropTypes.func.isRequired,
+  onClearCooldown: PropTypes.func,
 };
