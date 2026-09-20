@@ -33,18 +33,21 @@ const loadingAnimationBlacklist = [
   "/register",
   "/register/ssd",
   "/events/SSD/submissions",
+  "/hit-vol-2k26/control",
 ];
 const headerBlacklist = [
   "/hit",
   "/register",
   "/register/ssd",
   "/farewell-2k26",
+  "/hit-vol-2k26/control",
 ];
 const promoBlacklist = [
   "/hit",
   "/hit-gen-qr-ultrasecretendpoint",
   "/register",
   "/register/ssd",
+  "/hit-vol-2k26/control",
 ];
 
 if (typeof window !== "undefined" && window.isInitialLoad === undefined) {
@@ -123,13 +126,16 @@ function HeaderWrapper({ children }) {
   const [animationDone, setAnimationDone] = useState(false);
 
   return (
+    // Deliberately animating opacity only here, never `transform` (no y/scale).
+    // This div is `position: sticky` and wraps Header's off-canvas mobile nav
+    // menu (`position: fixed`). Per the CSS spec, any ancestor with an active
+    // `transform` becomes the containing block for `position: fixed`
+    // descendants — so animating transform here was hijacking the mobile
+    // menu's positioning for the ~1s the intro animation played, pushing it
+    // (and the page's effective viewport) far off to the right on phones.
     <motion.div
-      initial={
-        isInitial && !isBlacklisted
-          ? { opacity: 0, y: -20, scale: 0.98 }
-          : false
-      }
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      initial={isInitial && !isBlacklisted ? { opacity: 0 } : false}
+      animate={{ opacity: 1 }}
       transition={{
         duration: 0.8,
         delay: isBlacklisted || !isInitial ? 0 : headerRevealDelay,
@@ -137,15 +143,7 @@ function HeaderWrapper({ children }) {
       }}
       className="sticky top-0 left-0 w-full z-[102] pointer-events-none"
       onAnimationComplete={() => setAnimationDone(true)}
-      style={
-        animationDone
-          ? {
-              opacity: 1,
-              transform: "none",
-              transformOrigin: "center top",
-            }
-          : { transformOrigin: "center top" }
-      }
+      style={animationDone ? { opacity: 1 } : undefined}
     >
       <div className="pointer-events-auto flex flex-col w-full">{children}</div>
     </motion.div>
@@ -181,7 +179,7 @@ function App() {
   /*
   function PromoSection() {
     return (
-      <div className="fixed bottom-2 md:bottom-14 right-2 flex flex-col gap-2 z-10">
+      <div className="fixed bottom-2 left-2 right-2 sm:left-auto md:bottom-14 z-20 flex flex-row sm:flex-col justify-end sm:justify-start gap-2 overflow-x-auto sm:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {events.upcoming.map((e, i) => (
           <PromoDiv
             key={i}
