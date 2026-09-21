@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { FireExtinguisher, Notebook } from "lucide-react";
+// import React from "react";
+// import { Link } from "react-router-dom";
+// import PropTypes from "prop-types";
+// import { FireExtinguisher, Notebook } from "lucide-react";
 
 export const PromoDiv = (props) => {
   return (
@@ -29,8 +29,8 @@ export const PromoDiv = (props) => {
   );
 };
 
-PromoDiv.propTypes = {
-  eventLink: PropTypes.string.isRequired,
-  eventName: PropTypes.string.isRequired,
-  eventStatus: PropTypes.string.isRequired,
-};
+// PromoDiv.propTypes = {
+//   eventLink: PropTypes.string.isRequired,
+//   eventName: PropTypes.string.isRequired,
+//   eventStatus: PropTypes.string.isRequired,
+// };

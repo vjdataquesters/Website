@@ -1,4 +1,41 @@
 export const galleryImages = [
+
+    {
+        title: "DATA HACK",
+        src: "/events/DataHack-2k26/datahack-2.jpeg",
+    },
+    {
+        title: "DATA HACK",
+        src: "/events/DataHack-2k26/datahack-3.jpeg",
+    },
+    {
+        title: "HIT 5.0",
+        src: "/events/HIT-5.0-2K26/hit-3.jpeg",
+    },
+    {
+        title: "HIT 5.0",
+        src: "/events/HIT-5.0-2K26/hit-4.jpeg",
+    },
+    {
+        title: "HIT 5.0",
+        src: "/events/HIT-5.0-2K26/hit-5.jpeg",
+    },
+    {
+        title: "PROFOLIO -2k26",
+        src: "/events/Profolio-2k26/profolio-2.jpeg",
+    },
+    {
+        title: "PROFOLIO-2k26",
+        src: "/events/Profolio-2k26/profolio-4.jpeg",
+    },
+    {
+        title: "SHIP IT!",
+        src: "/events/SHIPIT-2k26/shipit-2.jpeg",
+    },
+    {
+        title: "SHIP IT!",
+        src: "/events/SHIPIT-2k26/shipit-3.jpeg",
+    },
     {
         title: "Decoding BTech 2026",
         src: "/events/DecodingBtech-2026/img3.jpg",

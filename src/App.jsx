@@ -12,11 +12,11 @@ import PropTypes from "prop-types";
 import router from "./pages";
 
 import Header from "./components/Header";
-import ConvergenceMarquee from "./components/ConvergenceMarquee";
+// import ConvergenceMarquee from "./components/ConvergenceMarquee";
 import ScrollToTop from "./components/ScrollToTop";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
-import { PromoDiv } from "./components/PromoDiv";
+// import { PromoDiv } from "./components/PromoDiv";
 import events from "./data/events";
 import {
   introFadeStart,
@@ -176,6 +176,7 @@ function App() {
     }
   };
 
+  /*
   function PromoSection() {
     return (
       <div className="fixed bottom-2 left-2 right-2 sm:left-auto md:bottom-14 z-20 flex flex-row sm:flex-col justify-end sm:justify-start gap-2 overflow-x-auto sm:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -190,6 +191,7 @@ function App() {
       </div>
     );
   }
+  */
 
   return (
     <Router>
@@ -202,10 +204,10 @@ function App() {
       />
       <HeaderWrapper>
         <DynamicComponent Component={Header} blacklist={headerBlacklist} />
-        <DynamicComponent
+        {/* <DynamicComponent
           Component={ConvergenceMarquee}
           blacklist={headerBlacklist}
-        />
+        /> */}
       </HeaderWrapper>
       <ScrollToTop />
       <MainContentLayout>
@@ -219,7 +221,7 @@ function App() {
           ))}
         </Routes>
       </MainContentLayout>
-      <DynamicComponent Component={PromoSection} blacklist={promoBlacklist} />
+      {/* <DynamicComponent Component={PromoSection} blacklist={promoBlacklist} /> */}
       <DynamicComponent Component={Footer} blacklist={headerBlacklist} />
     </Router>
   );

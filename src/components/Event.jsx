@@ -258,16 +258,18 @@ export default function Event() {
                 nextEl: ".event-swiper-button-next",
                 prevEl: ".event-swiper-button-prev",
               }}
-              className="event-swiper w-full max-w-3xl mx-auto rounded-xl overflow-hidden py-4 flex justify-center shadow-lg bg-white/40"
+              className="event-swiper w-full max-w-3xl mx-auto rounded-xl overflow-hidden shadow-lg"
             >
               {event.pics.map((pic, index) => (
                 <SwiperSlide key={index} className="flex justify-center items-center">
-                  <img
-                    src={pic}
-                    alt={`${event.name} - Image ${index + 1}`}
-                    className="max-h-[38rem] w-auto mx-auto rounded-lg object-contain shadow-md"
-                    draggable={false}
-                  />
+                  <div className="w-full h-[260px] sm:h-[380px] md:h-[480px] relative overflow-hidden rounded-xl bg-gray-100">
+                    <img
+                      src={pic}
+                      alt={`${event.name} - Image ${index + 1}`}
+                      className="w-full h-full object-cover object-center"
+                      draggable={false}
+                    />
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -377,21 +379,6 @@ export default function Event() {
               className="text-base sm:text-lg "
               style={{ whiteSpace: "pre-wrap" }}
               dangerouslySetInnerHTML={{ __html: event.outcome }}
-            ></p>
-          </div>
-        )}
-
-        {event.sessionQuery && <EventSessionQuery eventname={eventname} />}
-
-        {event.sessionSubmissions && <EventSubmissions />}
-
-        {event.winners && (
-          <div className="my-10">
-            <h3 className="font-semibold text-2xl">Winners:</h3>
-            <p
-              className="text-base sm:text-lg overflow-x-scroll sm:overflow-x-hidden"
-              style={{ whiteSpace: "pre-wrap" }}
-              dangerouslySetInnerHTML={{ __html: event.winners }}
             ></p>
           </div>
         )}
