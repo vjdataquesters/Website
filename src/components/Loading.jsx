@@ -15,7 +15,7 @@ export default function Loading({ load, onComplete }) {
       transition: {
         duration: introFadeDuration,
         delay: introFadeStart,
-        ease: "easeOut",
+        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
@@ -37,7 +37,7 @@ export default function Loading({ load, onComplete }) {
       transition: {
         duration: introFadeDuration,
         delay: introFadeStart,
-        ease: "easeOut",
+        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
@@ -46,7 +46,7 @@ export default function Loading({ load, onComplete }) {
     initial: { scale: 0.8, opacity: 0 },
     animate: {
       scale: [0.8, 1.2, 0.8, 3.5],
-      opacity: [0, 0.7, 0.7, 0.85],
+      opacity: [0, 0.7, 0.7, 0],
     },
   };
 
@@ -66,16 +66,15 @@ export default function Loading({ load, onComplete }) {
     // which is what was pushing the logo into a corner instead of centering
     // it. All the "zoom out and fade" motion lives on the inner absolute
     // wrapper below instead, where a transform is safe.
-    <div
-      className="fixed inset-0 z-[999999] overflow-hidden select-none"
-      style={{
-        background:
-          "linear-gradient(124deg, #0f323f 29%, #155e79 81%, #0c9acf 100%)",
-      }}
-    >
+    <div className="fixed inset-0 z-[999999] overflow-hidden select-none pointer-events-none">
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
-        style={{ transformOrigin: "center center" }}
+        style={{
+          background:
+            "linear-gradient(124deg, #0f323f 29%, #155e79 81%, #0c9acf 100%)",
+          transformOrigin: "center center",
+          willChange: "transform, opacity",
+        }}
         variants={shouldReduceMotion ? containerVariants : fullContainerVariants}
         initial="initial"
         animate="animate"

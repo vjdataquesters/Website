@@ -78,40 +78,21 @@ function MainContentLayout({ children }) {
   const isBlacklisted = loadingAnimationBlacklist.some(
     (path) => path === currentPath,
   );
-  const isInitial = typeof window !== "undefined" && window.isInitialLoad;
-  const [animationDone, setAnimationDone] = useState(false);
-
-  const contentVariants = {
-    initial: {
-      opacity: isBlacklisted || !isInitial ? 1 : 0,
-    },
-    animate: { opacity: 1 },
-    transition: {
-      duration: introFadeDuration,
-      delay: isBlacklisted || !isInitial ? 0 : pageRevealDelay,
-      ease: "easeOut",
-    },
-  };
-
-  const reducedContentVariants = {
-    initial: { opacity: isBlacklisted || !isInitial ? 1 : 0 },
-    animate: { opacity: 1 },
-    transition: {
-      duration: 0.5,
-      delay: isBlacklisted || !isInitial ? 0 : pageRevealDelay,
-    },
-  };
+  const isInitialRef = useRef(
+    typeof window !== "undefined" && window.isInitialLoad,
+  );
+  const isInitial = isInitialRef.current;
 
   return (
     <motion.div
       className="flex flex-col min-h-screen bg-blue-50/70"
-      variants={shouldReduceMotion ? reducedContentVariants : contentVariants}
-      initial={isInitial && !isBlacklisted ? "initial" : false}
-      animate="animate"
-      onAnimationComplete={() => setAnimationDone(true)}
-      style={
-        animationDone ? { filter: "none", transform: "none", opacity: 1 } : {}
-      }
+      initial={isInitial && !isBlacklisted ? { opacity: 0 } : false}
+      animate={{ opacity: 1 }}
+      transition={{
+        duration: shouldReduceMotion ? 0.5 : introFadeDuration,
+        delay: isBlacklisted || !isInitial ? 0 : pageRevealDelay,
+        ease: "easeOut",
+      }}
     >
       {children}
     </motion.div>
@@ -122,8 +103,10 @@ function HeaderWrapper({ children }) {
   const { pathname: currentPath } = useLocation();
   const shouldReduceMotion = useReducedMotion();
   const isBlacklisted = headerBlacklist.some((path) => path === currentPath);
-  const isInitial = typeof window !== "undefined" && window.isInitialLoad;
-  const [animationDone, setAnimationDone] = useState(false);
+  const isInitialRef = useRef(
+    typeof window !== "undefined" && window.isInitialLoad,
+  );
+  const isInitial = isInitialRef.current;
 
   return (
     // Deliberately animating opacity only here, never `transform` (no y/scale).
@@ -142,8 +125,6 @@ function HeaderWrapper({ children }) {
         ease: "easeOut",
       }}
       className="sticky top-0 left-0 w-full z-[102] pointer-events-none"
-      onAnimationComplete={() => setAnimationDone(true)}
-      style={animationDone ? { opacity: 1 } : undefined}
     >
       <div className="pointer-events-auto flex flex-col w-full">{children}</div>
     </motion.div>
