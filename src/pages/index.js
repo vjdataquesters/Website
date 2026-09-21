@@ -36,9 +36,9 @@ const router = [
   { path: "/register/ssd", component: SSDRegistration },
   ...farewell2K26Routes,
   // { path: "/register", component: RegistrationForm },
-  { path: "/hit", component: Hit },
-  { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
-  { path: "/hit-vol-2k26/control", component: HitVolControlCenter },
+  // { path: "/hit", component: Hit },
+  // { path: "/hit-gen-qr-ultrasecretendpoint", component: GenerateAllQrs },
+  // { path: "/hit-vol-2k26/control", component: HitVolControlCenter },
   { path: "*", component: Home },
 ];
 

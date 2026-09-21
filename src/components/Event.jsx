@@ -64,9 +64,16 @@ export default function Event() {
   return (
     <div className="pt-6 sm:pt-8 pb-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-start mb-6">
+        <div className="flex items-start gap-2.5 sm:gap-3 mb-6">
+          <Link
+            to="/events"
+            className="p-1.5 hover:bg-gray-200/80 rounded-full transition-colors shrink-0 mt-0.5 sm:mt-1"
+            title="Back to Events"
+          >
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
+          </Link>
           <div className="space-y-2">
-            <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl text-gray-900">
+            <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl text-gray-900 leading-tight">
               {event.name}
             </h2>
             {event.event_tags && event.event_tags.length > 0 && (
@@ -82,13 +89,6 @@ export default function Event() {
               </div>
             )}
           </div>
-          <Link
-            to="/events"
-            className="p-2 hover:bg-gray-200/80 rounded-full transition-colors self-start mt-1"
-            title="Back to Events"
-          >
-            <ArrowLeft size={24} className="text-gray-700" />
-          </Link>
         </div>
 
         <div className="rounded-2xl p-4 sm:p-6 bg-white/70 backdrop-blur-sm shadow-sm space-y-4 flex flex-col pb-6 border border-gray-100">

@@ -55,7 +55,7 @@ const events = {
         winners:
           "<b>1st Prize — Team: Comet</b><br>Ragolu Dilip (24071A05J9, VNRVJIET)<br>Harshith Kumar (24071A6799, VNRVJIET)<br><br><b>2nd Prize — Team: Codex</b><br>Mohammed Abdul Althaf (24071A7244, VNRVJIET)<br>Sai Charan (24071A7243, VNRVJIET)<br>M. Sashank (24071A7245, VNRVJIET)<br><br><b>3rd Prize — Team: Decoders</b><br>Sakinala Lalith Bhargav (26071A7252, VNRVJIET)<br>Rohith Pallerla (26071A7252, VNRVJIET)",
         isGFormEmbeddable: false,
-        event_tags: ["Hackathon", "Data Science", "Convergence 2k26"],
+        event_tags: ["Data Science", "Convergence 2k26"],
         description:
           "DATA HACK is a data-focused competition where participants work with a given dataset to discover patterns, generate insights, and develop meaningful data-driven solutions. Participants will apply data analysis, visualization, problem-solving, and analytical thinking skills before presenting their approach and findings.",
         link: "/events/datahack-2k26",
