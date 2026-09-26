@@ -1,4 +1,4 @@
-import Home from "./Home";
+﻿import Home from "./Home";
 import About from "./About";
 import Events from "./Events";
 import Team from "./Team";
@@ -18,7 +18,7 @@ import SSDRegistration from "./SSDRegistration";
 import SSDSubmissions from "./SSDSubmissions";
 import farewell2K26Routes from "./farewell-2k26/routes";
 import HitVolControlCenter from "./hit_vol_2k26/ControlCenter";
-
+import Archive from "./Archive";
 const router = [
   { path: "/", component: Home },
   { path: "/about", component: About },
@@ -30,6 +30,8 @@ const router = [
   { path: "/team", component: Team },
   { path: "/members", component: Members },
   { path: "/newsletter", component: NewsLetter },
+  { path: "/newsletter/archive", component: Archive },
+  { path: "/archive", component: Archive },
   { path: "/reads", component: Reads },
   { path: "/gallery", component: Gallery },
   { path: "/cred", component: Credentials },
