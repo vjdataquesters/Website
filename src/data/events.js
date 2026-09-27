@@ -1,4 +1,4 @@
-// Event format
+﻿// Event format
 // name, eventId, image, date, venue, timings, pics, winners, outcome, register, description, link, isGFormEmbeddable, externalDownloads
 // isGFormEmbeddable is a boolean value that tells whether the event has a google form or not
 // it is not embeddable if it contains "file upload" feature
@@ -53,7 +53,7 @@ const events = {
           "/events/DataHack-2k26/datahack-4.jpeg",
         ],
         winners:
-          "<b>1st Prize — Team: Comet</b><br>Ragolu Dilip (24071A05J9, VNRVJIET)<br>Harshith Kumar (24071A6799, VNRVJIET)<br><br><b>2nd Prize — Team: Codex</b><br>Mohammed Abdul Althaf (24071A7244, VNRVJIET)<br>Sai Charan (24071A7243, VNRVJIET)<br>M. Sashank (24071A7245, VNRVJIET)<br><br><b>3rd Prize — Team: Decoders</b><br>Sakinala Lalith Bhargav (26071A7252, VNRVJIET)<br>Rohith Pallerla (26071A7252, VNRVJIET)",
+          "<b>1st Prize ΓÇö Team: Comet</b><br>Ragolu Dilip (24071A05J9, VNRVJIET)<br>Harshith Kumar (24071A6799, VNRVJIET)<br><br><b>2nd Prize ΓÇö Team: Codex</b><br>Mohammed Abdul Althaf (24071A7244, VNRVJIET)<br>Sai Charan (24071A7243, VNRVJIET)<br>M. Sashank (24071A7245, VNRVJIET)<br><br><b>3rd Prize ΓÇö Team: Decoders</b><br>Sakinala Lalith Bhargav (26071A7252, VNRVJIET)<br>Rohith Pallerla (26071A7252, VNRVJIET)",
         isGFormEmbeddable: false,
         event_tags: ["Data Science", "Convergence 2k26"],
         description:
@@ -81,7 +81,7 @@ const events = {
         isGFormEmbeddable: false,
         event_tags: ["Treasure Hunt", "Fun Event", "Convergence 2k26"],
         description:
-          "HIT 5.0 is a high-energy, campus-wide treasure hunt where teams of 2–3 participants solve clues, complete challenges, and navigate through different locations. The event combines logical reasoning, observation, communication, creativity, teamwork, and quick decision-making in an exciting race against time.",
+          "HIT 5.0 is a high-energy, campus-wide treasure hunt where teams of 2ΓÇô3 participants solve clues, complete challenges, and navigate through different locations. The event combines logical reasoning, observation, communication, creativity, teamwork, and quick decision-making in an exciting race against time.",
         link: "/events/hit-5-2k26",
  
       },
@@ -127,12 +127,35 @@ const events = {
         link: "/events/shipit-2k26",
       },
       {
+        name: "Aksharathon",
+        eventId: "aksharathon-2026",
+        image: "/events/Aksharathon-2026/img1.png",
+        date: "September 15th 2026",
+        venue: "E-415 & E-416, VNRVJIET",
+        timings: "9:00 AM to 5:00 PM",
+        pics: [
+          "/events/Aksharathon-2026/img1.png",
+          "/events/Aksharathon-2026/aksharathon-img1.jpg",
+          "/events/Aksharathon-2026/aksharathon-img2.jpg",
+          "/events/Aksharathon-2026/aksharathon-img3.jpg",
+        ],
+        winners:
+          "<b>1st Place - Team Advaik and team</b><br><b>2nd Place - Team OG</b><br><b>3rd Place - Team Thunder Buddies</b>",
+        outcome:
+          "A unique hackathon jointly organized by Vignana Jyothi Sahiti Vanam and VJ Data Questers as part of Akshara 2k26. Participants tackled real-world challenges across Telugu literature, language preservation, and social innovation. Through creative problem-solving and prototype development, 13 teams (44 participants) showcased innovative solutions, connecting Telugu heritage with modern technology.",
+        isGFormEmbeddable: false,
+        event_tags: ["Hackathon", "Telugu Literature", "Akshara 2k26"],
+        description:
+          "α░åα░▓α▒ïα░Üα░¿ α░¿α▒üα░éα░íα░┐ α░åα░╡α░┐α░╖α▒ìα░òα░░α░ú α░╡α░░α░òα▒ü! A unique hackathon jointly organized by Vignana Jyothi Sahiti Vanam & VJ Data Questers as part of Akshara 2k26. Teams of 2-4 members created innovative solutions and prototypes addressing challenges in Telugu language, literature, and society.",
+        link: "/events/aksharathon-2026",
+      },
+      {
         name: "Decoding BTech",
         eventId: "decoding-btech",
         image: "/events/DecodingBtech-2026/img1.jpg",
         date: "20th August 2026",
         venue: "E-436 (Seminar Hall)",
-        timings: "9:00 AM – 3:30 PM",
+        timings: "9:00 AM ΓÇô 3:30 PM",
         pics: [
           "/events/DecodingBtech-2026/img1.jpg",
           "/events/DecodingBtech-2026/img4.jpg",
@@ -148,7 +171,7 @@ const events = {
         link: "/events/decoding-btech",
         resources: [
           {
-            title: "Decoding BTech — Lecture Notes",
+            title: "Decoding BTech ΓÇö Lecture Notes",
             description:
               "Lecture notes and learning material from the Decoding BTech session",
             type: "pdf",
@@ -165,6 +188,8 @@ const events = {
           },
         ],
       },
+      
+      
       {
         name: "Summer System Design",
         eventId: "SSD",
@@ -189,7 +214,7 @@ const events = {
     ],
     e2025: [
       {
-        name: "Convergence 2k25R – HIT: Reloaded",
+        name: "Convergence 2k25R ΓÇô HIT: Reloaded",
         eventId: "hit-reloaded-2",
         image: "/events/HitReloaded2025Nov/img1.png",
         date: "November 3rd 2025",
@@ -208,7 +233,7 @@ const events = {
         isGFormEmbeddable: false,
         event_tags: ["Fun Event", "Treasure Hunt"],
         description:
-          "The hunt is back, reloaded and ready to set the campus ablaze! HIT: Reloaded returns as part of Convergence 2k25R at VNRVJIET! Grab your team (2-3 members), trust your instincts, and let the hunt begin. Prize pool up to ₹10,000!",
+          "The hunt is back, reloaded and ready to set the campus ablaze! HIT: Reloaded returns as part of Convergence 2k25R at VNRVJIET! Grab your team (2-3 members), trust your instincts, and let the hunt begin. Prize pool up to Γé╣10,000!",
         link: "/events/hit-reloaded-2",
       },
       {
@@ -231,7 +256,7 @@ const events = {
         isGFormEmbeddable: false,
         event_tags: ["Hackathon", "Coding", "National Level"],
         description:
-          "Think, Code, Transform - All in 24 Hours! A 24-hour national-level hackathon as part of Convergence 2k25R. Round 1: PPT Submission (FREE, no Convergence Pass required). Round 2: Prototype Development offline at VNR VJIET for shortlisted teams. Team size: 3-4 members. Prize pool up to ₹50,000 + Certificates!",
+          "Think, Code, Transform - All in 24 Hours! A 24-hour national-level hackathon as part of Convergence 2k25R. Round 1: PPT Submission (FREE, no Convergence Pass required). Round 2: Prototype Development offline at VNR VJIET for shortlisted teams. Team size: 3-4 members. Prize pool up to Γé╣50,000 + Certificates!",
         link: "/events/software-hackathon-2025",
       },
       {
@@ -250,7 +275,7 @@ const events = {
         isGFormEmbeddable: false,
         event_tags: ["Technical Fest", "Hackathon", "Workshops"],
         description:
-          "Join the electrifying second edition of Technovista 2K25 by VJ DataQuesters! A 3-day tech carnival packed with Hackathons, Debug Battles, Workshops, and Tech Talks — where innovation meets creativity.",
+          "Join the electrifying second edition of Technovista 2K25 by VJ DataQuesters! A 3-day tech carnival packed with Hackathons, Debug Battles, Workshops, and Tech Talks ΓÇö where innovation meets creativity.",
         link: "https://tv25.vjdataquesters.com/",
       },
       {
@@ -352,7 +377,7 @@ const events = {
           "Internship Opportunities",
         ],
         description:
-          "MAP-AN-APP at Convergence 2k25 is on February 22, 2025, at VNRVJIET's APJ Abdul Kalam Auditorium (9:30 AM-1:00 PM). Teams of two will develop apps in Healthcare & Fintech themes for a ₹3500 prize pool and internship opportunities. Convergence pass required",
+          "MAP-AN-APP at Convergence 2k25 is on February 22, 2025, at VNRVJIET's APJ Abdul Kalam Auditorium (9:30 AM-1:00 PM). Teams of two will develop apps in Healthcare & Fintech themes for a Γé╣3500 prize pool and internship opportunities. Convergence pass required",
         link: "/events/map-an-app",
       },
       {
@@ -369,12 +394,12 @@ const events = {
           "/events/LangVision/img4.jpg",
         ],
         outcome:
-          "LANGVISION - Exploring Large Language Models and Vector Search was an exciting two-day hands-on workshop that brought together students from all years to explore the power of Large Language Models (LLMs),Retrieval-Augmented Generation (RAG), and Vector Search.The objectives of the event were:\n\n● To introduce students to the fundamentals of LLMs, transformers, and tokenization\n● To explore real-world applications like ChatGPT and Gemini.\n● To Deploy a fine-tuned model on Hugging Face and build a Streamlit app using it.\n● To familiarize participants with accessing pre-trained LLMs via the Hugging Face access tokens.\n● To introduce LoRA (Low-Rank Adaptation) for efficient fine-tuning of LLMs.\n● To guide participants in preprocessing resume data to train an AI model for resume evaluation.\n● To explain the limitations of LLMs alone and the role of RAG in retrieving external knowledge.\n● To familiarize participants with relevant interview questions on LLMs and RAG.",
+          "LANGVISION - Exploring Large Language Models and Vector Search was an exciting two-day hands-on workshop that brought together students from all years to explore the power of Large Language Models (LLMs),Retrieval-Augmented Generation (RAG), and Vector Search.The objectives of the event were:\n\nΓùÅ To introduce students to the fundamentals of LLMs, transformers, and tokenization\nΓùÅ To explore real-world applications like ChatGPT and Gemini.\nΓùÅ To Deploy a fine-tuned model on Hugging Face and build a Streamlit app using it.\nΓùÅ To familiarize participants with accessing pre-trained LLMs via the Hugging Face access tokens.\nΓùÅ To introduce LoRA (Low-Rank Adaptation) for efficient fine-tuning of LLMs.\nΓùÅ To guide participants in preprocessing resume data to train an AI model for resume evaluation.\nΓùÅ To explain the limitations of LLMs alone and the role of RAG in retrieving external knowledge.\nΓùÅ To familiarize participants with relevant interview questions on LLMs and RAG.",
         // register: "https://forms.gle/imgsks2miQkZWHvu5",
         isGFormEmbeddable: false,
         event_tags: ["Artificial Intelligence", "LLMs", "Workshop"],
         description:
-          "The event “LANGVISION - Shaping the Future of Gen AI & LLMs” will be held on February 14th and 15th. This hands-on workshop features Pranali Bose, a Machine Learning Engineer at DBS Bank, providing insights into Generative AI and Large Language Models",
+          "The event ΓÇ£LANGVISION - Shaping the Future of Gen AI & LLMsΓÇ¥ will be held on February 14th and 15th. This hands-on workshop features Pranali Bose, a Machine Learning Engineer at DBS Bank, providing insights into Generative AI and Large Language Models",
         link: "/events/langvision2025",
         externalDownloads: {
           "Workshop Code":
@@ -401,11 +426,11 @@ const events = {
           "/events/GetSetPy/img4.png",
         ],
         outcome:
-          "GET SET PY - A Hands-on Journey with Python was a two-day interactive workshop conducted on October 25th and 26th at the APJ Abdul Kalam Auditorium. Led by Mr. Mahammad Jebibulla, an experienced software developer, the event provided students with practical skills in Python and its applications in data science and machine learning. The objectives of event were: \n\n● To introduce students to Python programming and its applications in data science and machine learning\n● To provide hands-on experience with Python libraries like Numpy and Pandas\n● To enhance students' programming skills and problem-solving abilities\n● To familiarize participants with machine learning basics, including linear regression.\n ● To guide participants through building simple applications using Streamlit and Flask. \n",
+          "GET SET PY - A Hands-on Journey with Python was a two-day interactive workshop conducted on October 25th and 26th at the APJ Abdul Kalam Auditorium. Led by Mr. Mahammad Jebibulla, an experienced software developer, the event provided students with practical skills in Python and its applications in data science and machine learning. The objectives of event were: \n\nΓùÅ To introduce students to Python programming and its applications in data science and machine learning\nΓùÅ To provide hands-on experience with Python libraries like Numpy and Pandas\nΓùÅ To enhance students' programming skills and problem-solving abilities\nΓùÅ To familiarize participants with machine learning basics, including linear regression.\n ΓùÅ To guide participants through building simple applications using Streamlit and Flask. \n",
         // register: "https://docs.google.com/forms/d/e/1FAIpQLScOUxYMQyb-j2XGP1g6IPR6zocaQl14X9BNm5W8BuUQiV_Jwg/viewform",
         event_tags: ["Data Science", "Machine Learning", "Workshop"],
         description:
-          "The event “GET SET PY - A Hands-on Journey with Python” was held on October 25th and 26th from 10:00 AM to 4:40 PM at the APJ Abdul Kalam Auditorium. The two day workshop featured Mr. Mahammad Jebibulla, a Software Developer with expertise in Machine Learning and Python-based development.",
+          "The event ΓÇ£GET SET PY - A Hands-on Journey with PythonΓÇ¥ was held on October 25th and 26th from 10:00 AM to 4:40 PM at the APJ Abdul Kalam Auditorium. The two day workshop featured Mr. Mahammad Jebibulla, a Software Developer with expertise in Machine Learning and Python-based development.",
         link: "/events/getsetpy",
         isGFormEmbeddable: false,
         externalDownloads: {
@@ -431,7 +456,7 @@ const events = {
           "/events/TableauSeniorTrack/img4.png",
         ],
         outcome:
-          "With over 120 participants, the event was a huge success. The participants learned Tableau and Power BI, Data Visualization, and Dashboard Creation. Student feedback was overwhelmingly positive, with many expressing interest in future events. The primary objectives of Mastering Tableau: Senior Track event were\n● Gain practical experience in data visualization tools like Tableau and Power-Bi\n● confidently apply these tools for effective data interpretation and presentation.\n● To strengthen participants' foundational knowledge in data analysis and visualization, \n● Enhance their skills in data analysis and interpretation\n",
+          "With over 120 participants, the event was a huge success. The participants learned Tableau and Power BI, Data Visualization, and Dashboard Creation. Student feedback was overwhelmingly positive, with many expressing interest in future events. The primary objectives of Mastering Tableau: Senior Track event were\nΓùÅ Gain practical experience in data visualization tools like Tableau and Power-Bi\nΓùÅ confidently apply these tools for effective data interpretation and presentation.\nΓùÅ To strengthen participants' foundational knowledge in data analysis and visualization, \nΓùÅ Enhance their skills in data analysis and interpretation\n",
         // register: "https://docs.google.com/forms/d/e/1FAIpQLSc7JB5a9yvN8Xvz8lsng2FpTLuYJkm6UWyqPjzn-k2v8cpJfg/viewform",
         event_tags: ["Data Visualization", "Tableau", "Workshop"],
         description:
@@ -471,7 +496,7 @@ const events = {
         winners:
           "<b>1st</b> Gandham Jayaditya - https://jayadityagandham9.wixstudio.io/jayaditya\n<b>2nd</b> Mudiam Nehal Reddy - https://portfolio-bay-xi-27.vercel.app\n<b>3rd</b> Sai abhijith - https://sai-abhijith.vercel.app/\n<b>4th</b> Sai Abhi Varshini - https://alex-portfolio-gold.vercel.app/ \n<b>5th</b> Kunta Varshith Reddy - https://varshithreddykunta.wixsite.com/varshith\n",
         outcome:
-          "<b>Event Overview</b>\n●Showcase their skills\n●Network with peers\n●Gain exposure\n\n <b>Event Objectives</b>\n●Promote creativity and innovation in the field of web design\n●Recognize and reward outstanding portfolio websites\n●Foster a collaborative and supportive community among designers.\n●Inspire and motivate aspiring designers to pursue their passion for web design\n\nNo of Students Registered: <b>190</b>\nNo of Students Participated: <b>119</b>",
+          "<b>Event Overview</b>\nΓùÅShowcase their skills\nΓùÅNetwork with peers\nΓùÅGain exposure\n\n <b>Event Objectives</b>\nΓùÅPromote creativity and innovation in the field of web design\nΓùÅRecognize and reward outstanding portfolio websites\nΓùÅFoster a collaborative and supportive community among designers.\nΓùÅInspire and motivate aspiring designers to pursue their passion for web design\n\nNo of Students Registered: <b>190</b>\nNo of Students Participated: <b>119</b>",
         // register: "https://docs.google.com/forms/d/e/1FAIpQLSeK8VVFHNDJf84_MPiWryVybIN-cZS6KByLol6RM45H9-JjGA/viewform?embedded=true",
         event_tags: ["Web Design", "Portfolio", "Workshop"],
         description:
@@ -493,7 +518,7 @@ const events = {
         winners:
           "<b>1st</b> Srinikethan(23071A67A2)\n<b>2nd</b> Balaji (22071A6796)\n",
         outcome:
-          "The Sneaky Memer event is designed to engage students in a creative and educational experience by integrating humor with technical knowledge. Through this event, participants will:\n● Enhance their creative skills by contributing original meme ideas that will be shared on our social media platforms.\n● Gain recognition for their creativity and wit as their memes are featured and attributed to them.\n● Deepen their understanding of data science and AI by participating in interactive quizzes posted on our stories.\n● Foster a sense of community and healthy competition as they strive to be among the first to correctly answer quiz questions.\n● Build a stronger connection with our social media presence, contributing to an active and engaged online community.",
+          "The Sneaky Memer event is designed to engage students in a creative and educational experience by integrating humor with technical knowledge. Through this event, participants will:\nΓùÅ Enhance their creative skills by contributing original meme ideas that will be shared on our social media platforms.\nΓùÅ Gain recognition for their creativity and wit as their memes are featured and attributed to them.\nΓùÅ Deepen their understanding of data science and AI by participating in interactive quizzes posted on our stories.\nΓùÅ Foster a sense of community and healthy competition as they strive to be among the first to correctly answer quiz questions.\nΓùÅ Build a stronger connection with our social media presence, contributing to an active and engaged online community.",
         // register: "https://forms.gle/h16fiJjPaoW3Yrcj7",
         event_tags: ["Fun Event", "Creativity", "Humor"],
         description:
@@ -531,7 +556,7 @@ const events = {
           "/events/Tableau2k24/img4.png",
         ],
         outcome:
-          "The workshop aims to equip second-year college students with the fundamental skills to create compelling and informative data visualizations using Tableau. By participating in this workshop, students will: \n● Understand the importance of data visualization and its impact on communication.\n● Gain proficiency in connecting Tableau to various data sources.\n● Master the creation of well-structured and informative dashboards.\n● Learn best practices for designing dashboards that effectively communicate insights.\n● Become familiar with and be able to create basic visualization types, including bar charts, line charts, and pie charts.\n",
+          "The workshop aims to equip second-year college students with the fundamental skills to create compelling and informative data visualizations using Tableau. By participating in this workshop, students will: \nΓùÅ Understand the importance of data visualization and its impact on communication.\nΓùÅ Gain proficiency in connecting Tableau to various data sources.\nΓùÅ Master the creation of well-structured and informative dashboards.\nΓùÅ Learn best practices for designing dashboards that effectively communicate insights.\nΓùÅ Become familiar with and be able to create basic visualization types, including bar charts, line charts, and pie charts.\n",
         event_tags: ["Data Visualization", "Tableau", "Workshop"],
         description:
           "VJ DATA QUESTERS conducted a workshop on Data Visualization using Tableau for 2nd year Data Science students. The workshop was conducted by Mr. Gullapalli Sathar",
