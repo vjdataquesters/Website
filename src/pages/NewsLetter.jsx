@@ -57,7 +57,7 @@ const Newsletter = () => {
           {/* Cover Preview */}
           <div className="aspect-[3/4] bg-slate-800 rounded-lg overflow-hidden shadow-inner border border-slate-700">
             <img
-              src="/newsletter-previews/cover.png.png"
+              src="/newsletter-previews/cover.png"
               alt="Newsletter Cover 2025"
               className="w-full h-full object-cover"
             />
@@ -107,7 +107,7 @@ const Newsletter = () => {
       <section className="max-w-6xl mx-auto py-12 px-4 pb-20">
         <h2 className="text-3xl font-bold text-white mb-8 text-center">Inside the Pages</h2>
         <div className="flex gap-4 overflow-x-auto pb-6 scrollbar-hide">
-          {["cover.png.png", "cover(1).png.png", "cover(2).png.png", "cover(3).png.png"].map((img, i) => (
+          {["cover.png", "cover(1).png", "cover(2).png", "cover(3).png"].map((img, i) => (
             <div
               key={i}
               className="min-w-[220px] aspect-[3/4] bg-slate-800 rounded-lg overflow-hidden border border-slate-700 shadow-lg hover:scale-[102%] transition-transform duration-300"
