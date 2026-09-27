@@ -53,7 +53,7 @@ const events = {
           "/events/DataHack-2k26/datahack-4.jpeg",
         ],
         winners:
-          "<b>1st Prize ΓÇö Team: Comet</b><br>Ragolu Dilip (24071A05J9, VNRVJIET)<br>Harshith Kumar (24071A6799, VNRVJIET)<br><br><b>2nd Prize ΓÇö Team: Codex</b><br>Mohammed Abdul Althaf (24071A7244, VNRVJIET)<br>Sai Charan (24071A7243, VNRVJIET)<br>M. Sashank (24071A7245, VNRVJIET)<br><br><b>3rd Prize ΓÇö Team: Decoders</b><br>Sakinala Lalith Bhargav (26071A7252, VNRVJIET)<br>Rohith Pallerla (26071A7252, VNRVJIET)",
+          "<b>1st Prize Team: Comet</b><br>Ragolu Dilip (24071A05J9, VNRVJIET)<br>Harshith Kumar (24071A6799, VNRVJIET)<br><br><b>2nd Prize Team: Codex</b><br>Mohammed Abdul Althaf (24071A7244, VNRVJIET)<br>Sai Charan (24071A7243, VNRVJIET)<br>M. Sashank (24071A7245, VNRVJIET)<br><br><b>3rd Prize Team: Decoders</b><br>Sakinala Lalith Bhargav (26071A7252, VNRVJIET)<br>Rohith Pallerla (26071A7252, VNRVJIET)",
         isGFormEmbeddable: false,
         event_tags: ["Data Science", "Convergence 2k26"],
         description:
@@ -129,12 +129,12 @@ const events = {
       {
         name: "Aksharathon",
         eventId: "aksharathon-2026",
-        image: "/events/Aksharathon-2026/img1.png",
+        image: "/events/Aksharathon-2026/aksharathon-cover.png",
         date: "September 15th 2026",
         venue: "E-415 & E-416, VNRVJIET",
         timings: "9:00 AM to 5:00 PM",
         pics: [
-          "/events/Aksharathon-2026/img1.png",
+          "/events/Aksharathon-2026/aksharathon-cover.png",
           "/events/Aksharathon-2026/aksharathon-img1.jpg",
           "/events/Aksharathon-2026/aksharathon-img2.jpg",
           "/events/Aksharathon-2026/aksharathon-img3.jpg",
@@ -146,7 +146,7 @@ const events = {
         isGFormEmbeddable: false,
         event_tags: ["Hackathon", "Telugu Literature", "Akshara 2k26"],
         description:
-          "α░åα░▓α▒ïα░Üα░¿ α░¿α▒üα░éα░íα░┐ α░åα░╡α░┐α░╖α▒ìα░òα░░α░ú α░╡α░░α░òα▒ü! A unique hackathon jointly organized by Vignana Jyothi Sahiti Vanam & VJ Data Questers as part of Akshara 2k26. Teams of 2-4 members created innovative solutions and prototypes addressing challenges in Telugu language, literature, and society.",
+          "A unique hackathon jointly organized by Vignana Jyothi Sahiti Vanam & VJ Data Questers as part of Akshara 2k26. Teams of 2-4 members created innovative solutions and prototypes addressing challenges in Telugu language, literature, and society.",
         link: "/events/aksharathon-2026",
       },
       {

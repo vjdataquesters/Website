@@ -35,7 +35,7 @@ export default function Archive() {
           onClick={() => navigate("/newsletter")}
           className="mb-8 px-4 py-2 bg-slate-900 border border-slate-800 rounded-lg hover:bg-slate-800 transition-colors text-sm font-semibold text-slate-300 flex items-center gap-2"
         >
-          ΓåÉ Back to Newsletter
+          Back to Newsletter
         </button>
 
         {/* Header */}
