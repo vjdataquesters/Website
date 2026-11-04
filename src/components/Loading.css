@@ -1,0 +1,58 @@
+.anniversary-intro { position: fixed; inset: 0; z-index: 999999; overflow: hidden; user-select: none; }
+.anniversary-backdrop {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(124deg, #0f323f 29%, #155e79 81%, #0c9acf 100%);
+  color: #f8f9fa;
+}
+.anniversary-content { position: relative; width: 100%; padding: 24px; text-align: center; }
+.anniversary-emblem {
+  position: relative;
+  width: min(390px, 76vw, 48vh);
+  aspect-ratio: 1;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+}
+.anniversary-emblem svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.anniversary-ring {
+  fill: none;
+  stroke: #f8f9fa;
+  stroke-width: 1.8;
+  stroke-dasharray: 100;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  filter: drop-shadow(0 0 5px #2dd4bf) drop-shadow(0 0 12px #0c9acf);
+}
+.anniversary-spark { position: absolute; border-radius: 50%; background: #f8f9fa; box-shadow: 0 0 6px #2dd4bf; }
+.anniversary-logo { position: relative; z-index: 1; width: 84%; height: auto; }
+.anniversary-ring-inner { stroke: #2dd4bf; stroke-width: 0.5; opacity: 0.5; transform: rotate(90deg); }
+.anniversary-atmosphere { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.anniversary-dust { position: absolute; background: #f8f9fa; box-shadow: 0 0 7px #2dd4bf; }
+.anniversary-celebration { position: absolute; top: 20%; bottom: 8%; width: 24%; }
+.anniversary-celebration-left { left: 2%; }
+.anniversary-celebration-right { right: 2%; }
+.anniversary-confetti { position: absolute; width: 3px; height: 9px; opacity: 0; box-shadow: 0 0 6px #0c9acf; }
+.anniversary-confetti-star { width: 9px; height: 9px; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+.anniversary-rule { width: 92px; height: 1px; margin: 18px auto; background: #2dd4bf; }
+.anniversary-date { font-size: 14px; padding-top: 10px; }
+.anniversary-date span { color: #2dd4bf; padding: 0 9px; }
+.anniversary-caption p { margin: 0; }
+.anniversary-caption h1 { margin: 8px 0 12px; font-size: 40px; line-height: 1.2; font-weight: 600; letter-spacing: 0; }
+.anniversary-eyebrow { font-size: 12px; color: #2dd4bf; }
+.anniversary-subtitle { font-size: 12px; color: #f8f9fa; }
+@media (max-width: 540px) {
+  .anniversary-celebration { width: 10%; opacity: 0.5; }
+  .anniversary-celebration-left { left: -5%; }
+  .anniversary-celebration-right { right: -5%; }
+  .anniversary-eyebrow { font-size: 10px; }
+  .anniversary-caption h1 { font-size: 28px; }
+  .anniversary-subtitle { font-size: 10px; }
+}
+@media (max-height: 580px) {
+  .anniversary-emblem { width: min(220px, 42vh); margin-bottom: 8px; }
+  .anniversary-caption h1 { font-size: 26px; }
+  .anniversary-rule { margin: 10px auto; }
+}

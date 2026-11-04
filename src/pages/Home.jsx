@@ -1,17 +1,10 @@
-import { useRef } from "react";
-import { motion } from "framer-motion";
-import GlowBackground from "../components/GlowBackground";
+import AnniversaryLanding from "../components/AnniversaryLanding";
 import Carousel from "../components/Carousel";
 import { Link } from "react-router-dom";
 import { whatwedo } from "../data/whatwedo";
 import { ArrowRight } from "lucide-react";
 import { faculty } from "../data/team";
 import Reveal from "../components/Reveal";
-import {
-  homeLogoRevealDelay,
-  homeBoxRevealDelay,
-  landingEntranceDuration,
-} from "../config/animationConfig";
 import "../clip-art.css";
 
 const TeamCard = ({ person }) => {
@@ -49,71 +42,16 @@ const TeamCard = ({ person }) => {
   );
 };
 
-export default function Home() {
+export default function Home({ introReady, onLandingReady }) {
   const topTeam = faculty || [];
-  const isInitialRef = useRef(
-    typeof window !== "undefined" && window.isInitialLoad,
-  );
-  const isInitial = isInitialRef.current;
 
   return (
-    <div>
+    <div className="bg-[#f8f9fa]">
       {/* Landing section */}
-      <div className="h-screen w-full relative">
-        <div className="z-10 w-full absolute h-full flex flex-row justify-evenly items-center">
-          <motion.div
-            className="hidden lg:block"
-            initial={
-              isInitial
-                ? { opacity: 0, y: -18, scale: 0.96 }
-                : { opacity: 1, y: 0, scale: 1 }
-            }
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{
-              duration: landingEntranceDuration,
-              delay: isInitial ? homeLogoRevealDelay : 0,
-              ease: "easeOut",
-            }}
-          >
-            <img
-              src="/logo.png"
-              alt="Data Questers logo"
-              className="max-w-sm"
-              draggable={false}
-            />
-          </motion.div>
-
-          <motion.div
-            initial={
-              isInitial
-                ? { opacity: 0, y: -18, scale: 0.96 }
-                : { opacity: 1, y: 0, scale: 1 }
-            }
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{
-              duration: landingEntranceDuration,
-              delay: isInitial ? homeBoxRevealDelay : 0,
-              ease: "easeOut",
-            }}
-            className="box max-w-[90%] sm:w-auto flex flex-col justify-center items-center opacity-80 select-none text-white"
-          >
-            <h1 className="font-semibold text-center text-3xl sm:text-5xl my-3 md:my-6">
-              VJ DATA QUESTERS
-            </h1>
-            <p className="text-base text-center sm:text-xl">
-              VNRVJIET, Hyderabad
-            </p>
-            <p className="mt-1 text-xs font-thin sm:text-sm text-center">
-              Differentiated by inputs / Integrated by outputs
-            </p>
-          </motion.div>
-        </div>
-        <GlowBackground />
-        <div className="absolute inset-0 opacity-10 bg-[url('/grid.png')]"></div>
-      </div>
+      <AnniversaryLanding ready={introReady} onReady={onLandingReady} />
 
       {/* About section */}
-      <div className="clip-art-1">
+      <div className="clip-art-1" id="home-about">
         <div className="z-10 text-justify sm:text-left max-w-5xl mx-auto">
           <div className="lg:hidden">
             <img src="/logo.png" className="max-w-64 mx-auto" />

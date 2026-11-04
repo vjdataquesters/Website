@@ -1,0 +1,38 @@
+.anniversary-landing { position: relative; min-height: 640px; height: calc(100svh - 100px); overflow: hidden; background: #0f323f; color: #f8f9fa; }
+.landing-final-background { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.landing-grid { position: absolute; inset: 0; background: url('/grid.png'); opacity: 0.1; }
+.landing-light-stroke { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.landing-celebration { position: absolute; top: 6%; left: 5%; width: 90%; text-align: center; color: #f8f9fa; pointer-events: none; }
+.landing-celebration p { font-size: 22px; font-weight: 600; margin: 0 0 6px; }
+.landing-celebration span { font-size: 12px; color: #2dd4bf; }
+.landing-party { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.landing-party-piece { position: absolute; top: 70%; width: 4px; height: 10px; opacity: 0; }
+.landing-party-shape-1 { width: 7px; height: 7px; }
+.landing-party-shape-2 { width: 4px; height: 14px; border-radius: 2px; }
+.landing-firework { position: absolute; width: 0; height: 0; }
+.landing-firework .landing-party-piece { left: 0; top: 0; }
+.landing-firework-launch { position: absolute; width: 2px; height: 28px; opacity: 0; background: linear-gradient(to top, transparent, currentColor); transform-origin: top; }
+.landing-firework-spark { position: absolute; width: 3px; height: 3px; opacity: 0; border-radius: 50%; background: currentColor; box-shadow: 0 0 7px currentColor; }
+.landing-twinkle { position: absolute; width: 10px; height: 10px; background: #f8f9fa; opacity: 0; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+@media (max-width: 760px) {
+  .landing-party-piece { width: 3px; height: 6px; }
+}
+.landing-composition { position: relative; z-index: 1; width: min(1380px, 94%); height: 100%; margin: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: 42px; }
+.landing-seal { width: min(420px, 100%); aspect-ratio: 1; display: grid; place-items: center; margin: auto; }
+.landing-logo { width: 92%; opacity: 0; }
+.landing-copy { opacity: 0; text-align: center; padding: 28px 16px; }
+.landing-copy > * { opacity: 0; }
+.landing-copy h1 { font-size: 42px; font-weight: 700; line-height: 1.15; margin: 18px 0 24px; letter-spacing: 0; }
+.landing-copy p { font-size: 20px; }
+.landing-copy .landing-motto { font-size: 14px; margin-top: 12px; }
+@media (max-width: 760px) {
+  .landing-celebration p { font-size: 18px; }
+  .landing-celebration span { font-size: 10px; }
+  .anniversary-landing { height: calc(100svh - 76px); min-height: 600px; }
+  .landing-composition { display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 24px 12px 48px; }
+  .landing-seal { width: min(260px, 74vw); margin: 0; flex-shrink: 0; }
+  .landing-copy { width: 100%; padding: 16px 8px; }
+  .landing-copy h1 { font-size: 28px; margin: 12px 0 16px; }
+  .landing-copy p { font-size: 16px; }
+  .landing-copy .landing-motto { font-size: 12px; }
+}
