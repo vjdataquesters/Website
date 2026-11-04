@@ -85,7 +85,7 @@ function MainContentLayout({ children }) {
 
   return (
     <motion.div
-      className="flex flex-col min-h-screen bg-blue-50/70"
+      className="flex flex-col min-h-screen bg-[#f8f9fa]"
       initial={isInitial && !isBlacklisted ? { opacity: 0 } : false}
       animate={{ opacity: 1 }}
       transition={{
@@ -99,7 +99,7 @@ function MainContentLayout({ children }) {
   );
 }
 
-function HeaderWrapper({ children }) {
+function HeaderWrapper({ children, landingReady }) {
   const { pathname: currentPath } = useLocation();
   const shouldReduceMotion = useReducedMotion();
   const isBlacklisted = headerBlacklist.some((path) => path === currentPath);
@@ -125,13 +125,15 @@ function HeaderWrapper({ children }) {
         ease: "easeOut",
       }}
       className="sticky top-0 left-0 w-full z-[102] pointer-events-none"
+      style={{ background: currentPath === "/" && !landingReady ? "#0f323f" : undefined }}
     >
-      <div className="pointer-events-auto flex flex-col w-full">{children}</div>
+      <div className="pointer-events-auto flex flex-col w-full" style={{ visibility: currentPath === "/" && !landingReady ? "hidden" : "visible" }}>{children}</div>
     </motion.div>
   );
 }
 
 function App() {
+  const [landingReady, setLandingReady] = useState(false);
   const [load, setLoad] = useState(true);
   const fallbackTimer = useRef(null);
 
@@ -183,7 +185,7 @@ function App() {
         load={load}
         onComplete={handleIntroComplete}
       />
-      <HeaderWrapper>
+      <HeaderWrapper landingReady={landingReady}>
         <DynamicComponent Component={Header} blacklist={headerBlacklist} />
         {/* <DynamicComponent
           Component={ConvergenceMarquee}
@@ -197,7 +199,7 @@ function App() {
             <Route
               key={index}
               path={route.path}
-              element={<route.component />}
+              element={<route.component introReady={!load} onLandingReady={() => setLandingReady(true)} />}
             />
           ))}
         </Routes>
