@@ -34,6 +34,7 @@ export default function AnniversaryLanding({ ready, onReady }) {
   const reduced = useReducedMotion();
 
   useLayoutEffect(() => {
+    callback.current?.(false);
     if (!ready) return;
     const surface = canvas.current;
     const ctx = surface.getContext("2d");
@@ -170,7 +171,7 @@ export default function AnniversaryLanding({ ready, onReady }) {
           }, 0.5)
           .to(pieces, { opacity: 0, y: "+=115", rotation: "+=160", duration: 1.2, stagger: 0.008, ease: "sine.in" }, 1.2);
       });
-      gsap.timeline({ onComplete: () => gsap.ticker.remove(draw) })
+      gsap.timeline({ onComplete: () => { gsap.ticker.remove(draw); callback.current?.(true); } })
         .to(state, { trace: 1, duration: 1.25, ease: "power1.out" }, 0)
         .fromTo(".landing-twinkle", { opacity: 0, scale: 0.2, rotation: 0 }, {
           opacity: 0.8, scale: 1, rotation: 90, duration: 0.5,
@@ -188,8 +189,7 @@ export default function AnniversaryLanding({ ready, onReady }) {
         }, { opacity: 1, scale: 1.08, x: () => centerOffset("x"), y: () => centerOffset("y"), duration: 1, ease: "power3.out" }, 4.5)
         .to(".landing-logo", { x: 0, y: 0, scale: 1, duration: 1.1, ease: "power3.inOut" }, 5.65)
         .fromTo(".landing-copy", { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.8 }, 6.15)
-        .fromTo(".landing-copy > *", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.65, stagger: 0.15 }, 6.3)
-        .call(() => callback.current?.(), [], 7);
+        .fromTo(".landing-copy > *", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.65, stagger: 0.15 }, 6.3);
     }, root);
     return () => {
       context.revert();

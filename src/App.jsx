@@ -16,6 +16,7 @@ import Header from "./components/Header";
 import ScrollToTop from "./components/ScrollToTop";
 import Loading from "./components/Loading";
 import Footer from "./components/Footer";
+import AnniversaryDiary from "./components/AnniversaryDiary";
 // import { PromoDiv } from "./components/PromoDiv";
 import events from "./data/events";
 import {
@@ -132,6 +133,19 @@ function HeaderWrapper({ children, landingReady }) {
   );
 }
 
+function DiaryWrapper({ landingReady, load }) {
+  const { pathname } = useLocation();
+  const ready = pathname === "/"
+    ? landingReady
+    : !load || loadingAnimationBlacklist.includes(pathname);
+  return ready ? <AnniversaryDiary /> : null;
+}
+
+DiaryWrapper.propTypes = {
+  landingReady: PropTypes.bool.isRequired,
+  load: PropTypes.bool.isRequired,
+};
+
 function App() {
   const [landingReady, setLandingReady] = useState(false);
   const [load, setLoad] = useState(true);
@@ -179,6 +193,7 @@ function App() {
   return (
     <Router>
       <Analytics />
+      <DiaryWrapper landingReady={landingReady} load={load} />
       <DynamicComponent
         Component={Loading}
         blacklist={loadingAnimationBlacklist}
@@ -199,7 +214,7 @@ function App() {
             <Route
               key={index}
               path={route.path}
-              element={<route.component introReady={!load} onLandingReady={() => setLandingReady(true)} />}
+              element={<route.component introReady={!load} onLandingReady={(ready = true) => setLandingReady(ready)} />}
             />
           ))}
         </Routes>
